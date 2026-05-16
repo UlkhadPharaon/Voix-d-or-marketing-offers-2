@@ -401,7 +401,7 @@ export function Home() {
               const formData = new FormData(e.currentTarget);
               const phone = formData.get('whatsapp');
               if (phone) {
-                window.location.href = `https://wa.me/22645906629?text=Bonjour,%20je%20souhaite%20recevoir%20le%20guide%20PDF%20gratuit%20sur%20les%20vidéos%20qui%20convertissent.%20Mon%20numéro%20:%20${phone}`;
+                window.location.href = `https://wa.me/22644906629?text=Bonjour,%20je%20souhaite%20recevoir%20le%20guide%20PDF%20gratuit%20sur%20les%20vidéos%20qui%20convertissent.%20Mon%20numéro%20:%20${phone}`;
               }
             }}>
               <input 
@@ -489,14 +489,14 @@ export function Home() {
               <Button onClick={() => window.location.href = '/contact'} className="w-full sm:w-auto px-[32px] py-[16px] h-auto text-[14px] uppercase font-bold tracking-[1px] bg-primary text-black-deep rounded-[2px] hover:bg-gold-accent transition-colors relative overflow-hidden group shadow-[0_0_30px_rgba(212,175,55,0.4)]">
                 <span className="relative z-10">Commencer maintenant</span>
               </Button>
-              <Button onClick={() => window.location.href = 'https://wa.me/22645906629'} className="w-full sm:w-auto px-[32px] py-[16px] h-auto text-[14px] uppercase font-bold tracking-[1px] border border-white text-white bg-transparent rounded-[2px] hover:bg-white hover:text-black-deep transition-colors">
+              <Button onClick={() => window.location.href = 'https://wa.me/22644906629'} className="w-full sm:w-auto px-[32px] py-[16px] h-auto text-[14px] uppercase font-bold tracking-[1px] border border-white text-white bg-transparent rounded-[2px] hover:bg-white hover:text-black-deep transition-colors">
                 Parler à un conseiller
               </Button>
             </div>
             
             <div className="mt-[48px] inline-flex items-center gap-[12px] text-white border border-white/10 bg-dark-accent px-[24px] py-[12px] rounded-[2px]">
               <span className="text-[#25D366]">📱</span>
-              <span className="font-mono font-bold text-[14px]">+226 45 90 66 29</span>
+              <span className="font-mono font-bold text-[14px]">+226 44 90 66 29</span>
               <span className="text-gray-text text-[12px] italic ml-[8px] uppercase tracking-[1px]">- (Réponse en 1H)</span>
             </div>
           </motion.div>
