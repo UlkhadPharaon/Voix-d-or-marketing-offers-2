@@ -11,14 +11,57 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 export function Contact() {
   const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState({
+    company: '',
+    firstName: '',
+    phone: '',
+    sector: '',
+    city: '',
+    offer: 'pro',
+    networks: [] as string[],
+    objective: '',
+    brief: '',
+    examples: '',
+    source: ''
+  });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const nextStep = () => setStep(s => Math.min(s + 1, 3));
   const prevStep = () => setStep(s => Math.max(s - 1, 1));
+
+  const handleNetworkChange = (network: string, checked: boolean) => {
+    setFormData(prev => ({
+      ...prev,
+      networks: checked 
+        ? [...prev.networks, network]
+        : prev.networks.filter(n => n !== network)
+    }));
+  };
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate submission to WhatsApp logic here
+    
+    const message = `Bonjour Voix d'Or ! 👋 
+Je suis ${formData.firstName} de l'entreprise *${formData.company}*.
+
+J'aimerais démarrer un projet vidéo avec vous. Voici les détails :
+
+📦 *Offre choisie :* ${formData.offer.toUpperCase()}
+📍 *Secteur :* ${formData.sector} (${formData.city})
+🎯 *Objectif :* ${formData.objective}
+📱 *Réseaux cibles :* ${formData.networks.length > 0 ? formData.networks.join(', ') : 'Non spécifié'}
+
+📝 *Brief :*
+${formData.brief}
+
+${formData.examples ? `🔗 *Exemples :* ${formData.examples}` : ''}
+${formData.source ? `\n(Je vous ai connu via : ${formData.source})` : ''}
+
+Merci !`;
+
+    const encodedMessage = encodeURIComponent(message);
+    window.location.href = `https://wa.me/22644906629?text=${encodedMessage}`;
+    
     setIsSubmitted(true);
   };
 
@@ -85,23 +128,23 @@ export function Contact() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-3">
                         <Label className="uppercase text-[11px] text-gray-text tracking-[1px]">Nom de l'entreprise *</Label>
-                        <Input required placeholder="Ex: Faso Tech" className="bg-black-deep border-white/10 text-white rounded-[2px]" />
+                        <Input required placeholder="Ex: Faso Tech" className="bg-black-deep border-white/10 text-white rounded-[2px]" value={formData.company} onChange={e => setFormData({...formData, company: e.target.value})} />
                       </div>
                       <div className="space-y-3">
                         <Label className="uppercase text-[11px] text-gray-text tracking-[1px]">Votre prénom *</Label>
-                        <Input required placeholder="Ex: Oumar" className="bg-black-deep border-white/10 text-white rounded-[2px]" />
+                        <Input required placeholder="Ex: Oumar" className="bg-black-deep border-white/10 text-white rounded-[2px]" value={formData.firstName} onChange={e => setFormData({...formData, firstName: e.target.value})} />
                       </div>
                     </div>
                     
                     <div className="space-y-3">
                       <Label className="uppercase text-[11px] text-gray-text tracking-[1px]">Votre numéro WhatsApp *</Label>
-                      <Input required placeholder="+226 XX XX XX XX" type="tel" className="bg-black-deep border-white/10 text-white rounded-[2px]" />
+                      <Input required placeholder="+226 XX XX XX XX" type="tel" className="bg-black-deep border-white/10 text-white rounded-[2px]" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
                     </div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-3">
                         <Label className="uppercase text-[11px] text-gray-text tracking-[1px]">Secteur d'activité *</Label>
-                        <Select required>
+                        <Select required value={formData.sector} onValueChange={val => setFormData({...formData, sector: val})}>
                           <SelectTrigger className="bg-black-deep border-white/10 rounded-[2px]">
                             <SelectValue placeholder="Sélectionnez..." />
                           </SelectTrigger>
@@ -117,7 +160,7 @@ export function Contact() {
                       </div>
                       <div className="space-y-3">
                         <Label className="uppercase text-[11px] text-gray-text tracking-[1px]">Ville *</Label>
-                        <Select required>
+                        <Select required value={formData.city} onValueChange={val => setFormData({...formData, city: val})}>
                           <SelectTrigger className="bg-black-deep border-white/10 rounded-[2px]">
                             <SelectValue placeholder="Sélectionnez..." />
                           </SelectTrigger>
@@ -151,7 +194,7 @@ export function Contact() {
                     
                     <div className="space-y-4">
                       <Label className="uppercase text-[11px] text-gray-text tracking-[1px]">Offre qui vous intéresse</Label>
-                      <RadioGroup defaultValue="pro" className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <RadioGroup value={formData.offer} onValueChange={val => setFormData({...formData, offer: val})} className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
                           <RadioGroupItem value="basic" id="pkg-basic" className="peer sr-only" />
                           <Label htmlFor="pkg-basic" className="flex flex-col items-center justify-between rounded-[2px] border border-white/10 bg-black-deep p-4 hover:border-primary/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center">
@@ -182,7 +225,7 @@ export function Contact() {
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                         {['TikTok', 'Instagram Reels', 'Facebook', 'YouTube Shorts', 'WhatsApp Status'].map(network => (
                           <div key={network} className="flex items-center space-x-2">
-                            <Checkbox id={`net-${network}`} className="border-white/20 data-[state=checked]:bg-primary data-[state=checked]:text-black-deep" />
+                            <Checkbox id={`net-${network}`} className="border-white/20 data-[state=checked]:bg-primary data-[state=checked]:text-black-deep" checked={formData.networks.includes(network)} onCheckedChange={(checked) => handleNetworkChange(network, checked as boolean)} />
                             <label htmlFor={`net-${network}`} className="text-[13px] leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer text-white">
                               {network}
                             </label>
@@ -193,7 +236,7 @@ export function Contact() {
 
                     <div className="space-y-3 pt-4">
                       <Label className="uppercase text-[11px] text-gray-text tracking-[1px]">Objectif principal</Label>
-                      <Select required>
+                      <Select required value={formData.objective} onValueChange={val => setFormData({...formData, objective: val})}>
                         <SelectTrigger className="bg-black-deep border-white/10 rounded-[2px]">
                           <SelectValue placeholder="Sélectionnez..." />
                         </SelectTrigger>
@@ -229,17 +272,17 @@ export function Contact() {
                     
                     <div className="space-y-3">
                       <Label className="uppercase text-[11px] text-gray-text tracking-[1px]">Décrivez votre produit, service ou marque en quelques phrases *</Label>
-                      <Textarea required placeholder="Ex: Nous vendons des produits de beauté bio pour femmes..." className="h-32 bg-black-deep border-white/10 rounded-[2px]" />
+                      <Textarea required placeholder="Ex: Nous vendons des produits de beauté bio pour femmes..." className="h-32 bg-black-deep border-white/10 rounded-[2px]" value={formData.brief} onChange={e => setFormData({...formData, brief: e.target.value})} />
                     </div>
                     
                     <div className="space-y-3">
                       <Label className="uppercase text-[11px] text-gray-text tracking-[1px]">Avez-vous des exemples de vidéos que vous aimez ? (Optionnel)</Label>
-                      <Input placeholder="Lien Instagram, TikTok..." className="bg-black-deep border-white/10 rounded-[2px]" />
+                      <Input placeholder="Lien Instagram, TikTok..." className="bg-black-deep border-white/10 rounded-[2px]" value={formData.examples} onChange={e => setFormData({...formData, examples: e.target.value})} />
                     </div>
 
                     <div className="space-y-3">
                       <Label className="uppercase text-[11px] text-gray-text tracking-[1px]">Comment avez-vous connu Studio Voix d'Or ?</Label>
-                      <Select>
+                      <Select value={formData.source} onValueChange={val => setFormData({...formData, source: val})}>
                         <SelectTrigger className="bg-black-deep border-white/10 rounded-[2px]">
                           <SelectValue placeholder="Sélectionnez..." />
                         </SelectTrigger>
