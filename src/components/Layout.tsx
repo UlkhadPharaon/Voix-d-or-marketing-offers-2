@@ -56,9 +56,6 @@ export function Layout() {
                 {link.label}
               </a>
             ))}
-            <div className="ml-4 border border-white px-4 py-2 text-[12px] uppercase tracking-[1px] text-white hover:bg-white hover:text-black-deep transition-colors cursor-pointer">
-              Espace Client
-            </div>
           </nav>
 
           {/* Mobile Menu Toggle */}
@@ -90,9 +87,6 @@ export function Layout() {
                 {link.label}
               </a>
             ))}
-            <div className="border border-white px-6 py-3 text-[14px] uppercase tracking-[1px] text-white hover:bg-white hover:text-black-deep transition-colors cursor-pointer">
-              Espace Client
-            </div>
           </motion.div>
         )}
       </AnimatePresence>
