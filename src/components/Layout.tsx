@@ -4,7 +4,7 @@ import { PlayCircle, Menu, X, MessageCircle } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 // @ts-ignore
-import logoImg from '../logo.png';
+import logoImg from '../../logo/logo studio voix d\'or.png';
 
 function Logo() {
   const [imgError, setImgError] = useState(false);
