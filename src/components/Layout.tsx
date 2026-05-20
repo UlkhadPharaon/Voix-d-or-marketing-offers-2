@@ -3,8 +3,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import { PlayCircle, Menu, X, MessageCircle } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
-// @ts-ignore
-import logoImg from '../../logo/logo studio voix d\'or.png';
 
 function Logo() {
   const [imgError, setImgError] = useState(false);
@@ -12,7 +10,7 @@ function Logo() {
     <div className="w-[40px] h-[40px] rounded-full border-2 border-primary flex items-center justify-center overflow-hidden bg-black-deep">
       {!imgError ? (
         <img 
-          src={logoImg} 
+          src="/logo.png" 
           alt="Logo" 
           className="w-full h-full object-cover"
           onError={() => setImgError(true)}
