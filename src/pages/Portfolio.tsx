@@ -25,7 +25,7 @@ export function Portfolio() {
           <div className="relative w-full aspect-video md:aspect-[21/9] lg:aspect-video overflow-hidden rounded-[8px] border border-primary/30 shadow-[0_0_50px_rgba(212,175,55,0.15)] bg-black-deep">
             <iframe
               className="absolute top-0 left-0 w-full h-full"
-              src="https://www.youtube.com/embed/videoseries?list=PL2QtNxnnsuX-3SU1j5AotUiZldOi5pU-Q"
+              src="https://www.youtube.com/embed/videoseries?list=PL2QtNxnnsuX-3SU1j5AotUiZldOi5pU-Q&vq=hd1080"
               title="Studio Voix d'Or Showcase"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen

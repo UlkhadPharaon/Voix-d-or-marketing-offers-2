@@ -3,6 +3,27 @@ import { motion, AnimatePresence } from 'motion/react';
 import { PlayCircle, Menu, X, MessageCircle } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
+// @ts-ignore
+import logoImg from '../../logo/logo studio voix d\'or.png';
+
+function Logo() {
+  const [imgError, setImgError] = useState(false);
+  return (
+    <div className="w-[40px] h-[40px] rounded-full border-2 border-primary flex items-center justify-center overflow-hidden bg-black-deep">
+      {!imgError ? (
+        <img 
+          src={logoImg} 
+          alt="Logo" 
+          className="w-full h-full object-cover"
+          onError={() => setImgError(true)}
+          referrerPolicy="no-referrer"
+        />
+      ) : (
+        <span className="font-heading text-primary font-bold text-[24px]">V</span>
+      )}
+    </div>
+  );
+}
 
 export function Layout() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -37,9 +58,7 @@ export function Layout() {
       >
         <div className="w-full flex items-center justify-between">
           <Link to="/" className="flex items-center gap-[12px] z-50 group">
-            <div className="w-[40px] h-[40px] rounded-full border-2 border-primary flex items-center justify-center font-heading text-primary font-bold text-[24px]">
-              V
-            </div>
+            <Logo />
             <div className="flex flex-col">
               <span className="font-heading text-[20px] tracking-[1px] uppercase text-white">Studio Voix d'Or</span>
             </div>
@@ -107,9 +126,7 @@ export function Layout() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
             <div className="col-span-1 md:col-span-1">
               <div className="flex items-center gap-[12px] mb-6">
-                <div className="w-[40px] h-[40px] rounded-full border-2 border-primary flex items-center justify-center font-heading text-primary font-bold text-[24px]">
-                  V
-                </div>
+                <Logo />
                 <span className="font-heading text-[20px] tracking-[1px] uppercase">Studio Voix d'Or</span>
               </div>
               <p className="text-gray-text text-[14px] mb-6 max-w-sm leading-relaxed">
