@@ -122,8 +122,8 @@ export function Layout() {
              style={{ backgroundImage: 'repeating-linear-gradient(90deg, rgba(212, 175, 55, 0.03) 0px, rgba(212, 175, 55, 0.03) 1px, transparent 1px, transparent 20px), repeating-linear-gradient(0deg, rgba(212, 175, 55, 0.03) 0px, rgba(212, 175, 55, 0.03) 1px, transparent 1px, transparent 20px)' }}>
         </div>
         
-        <div className="container mx-auto px-4 md:px-[40px] py-16 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div className="container mx-auto px-4 md:px-[40px] py-10 md:py-16 relative z-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-12">
             <div className="col-span-1 md:col-span-1">
               <div className="flex items-center gap-[12px] mb-6">
                 <Logo />
@@ -138,9 +138,9 @@ export function Layout() {
               <h4 className="font-heading text-primary text-[14px] uppercase tracking-widest mb-6 font-bold">Navigation</h4>
               <ul className="space-y-4">
                 <li><Link to="/#offres" className="text-gray-text hover:text-primary transition-colors text-[14px] uppercase tracking-[1px]">Offres</Link></li>
-                <li><Link to="/portfolio" className="text-gray-text hover:text-primary transition-colors text-[14px] uppercase tracking-[1px]">Exemples Vidéos</Link></li>
+                <li><Link to="/portfolio" className="text-gray-text hover:text-primary transition-colors text-[14px] uppercase tracking-[1px]">Exemples</Link></li>
                 <li><Link to="/#faq" className="text-gray-text hover:text-primary transition-colors text-[14px] uppercase tracking-[1px]">FAQ</Link></li>
-                <li><Link to="/contact" className="text-gray-text hover:text-primary transition-colors text-[14px] uppercase tracking-[1px]">Contact & Devis</Link></li>
+                <li><Link to="/contact" className="text-gray-text hover:text-primary transition-colors text-[14px] uppercase tracking-[1px]">Démarrer</Link></li>
               </ul>
             </div>
             
@@ -171,7 +171,7 @@ export function Layout() {
           </div>
           
           <div className="mt-16 pt-8 border-t border-primary/20 text-center text-gray-text text-sm flex flex-col md:flex-row justify-between items-center">
-            <p>© {new Date().getFullYear()} Studio Voix d'Or. Tous droits réservés.</p>
+            <p>© {new Date().getFullYear()} Studio Voix d'Or - L'image de marque que votre établissement mérite.</p>
             <div className="mt-4 md:mt-0 space-x-6">
               <a href="#" className="hover:text-primary transition-colors">Mentions légales</a>
               <a href="#" className="hover:text-primary transition-colors">Politique de confidentialité</a>

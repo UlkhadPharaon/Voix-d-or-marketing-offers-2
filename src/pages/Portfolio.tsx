@@ -3,15 +3,17 @@ import { Button } from '@/components/ui/button';
 
 export function Portfolio() {
   return (
-    <div className="min-h-screen bg-black-deep text-white pt-[120px] pb-24 border-t border-primary/20">
+    <div className="min-h-screen bg-black-deep text-white pt-[100px] md:pt-[120px] pb-12 md:pb-24 border-t border-primary/20">
       <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col items-center">
-          <div className="inline-flex self-center bg-primary/10 border border-primary text-primary px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[24px]">
-            Notre Showcase
+        <div className="text-center max-w-3xl mx-auto mb-10 md:mb-16 flex flex-col items-center">
+          <div className="inline-flex self-center bg-transparent border border-white/20 text-gray-text px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[24px]">
+            La Preuve Irréfutable
           </div>
-          <h1 className="text-[40px] md:text-[48px] font-heading font-normal mb-[16px] uppercase tracking-[1px]">Exemples de vidéos</h1>
+          <h1 className="text-[28px] sm:text-[40px] md:text-[48px] font-heading font-normal mb-[16px] uppercase tracking-[1px] leading-tight">
+            Ce que "professionnel" <span className="text-primary italic font-serif">veut dire</span> pour des marques burkinabè
+          </h1>
           <p className="text-gray-text text-[15px] max-w-[500px]">
-            Découvrez nos productions de spots publicitaires et vidéos UGC pour nos clients à travers l'Afrique.
+            Ce ne sont pas des vidéos génériques. Ce sont des marques locales, filmées avec les standards des grandes enseignes internationales.
           </p>
         </div>
 
@@ -22,20 +24,77 @@ export function Portfolio() {
           transition={{ duration: 0.5 }}
           className="max-w-4xl mx-auto"
         >
-          <div className="relative w-full aspect-video md:aspect-[21/9] lg:aspect-video overflow-hidden rounded-[8px] border border-primary/30 shadow-[0_0_50px_rgba(212,175,55,0.15)] bg-black-deep">
-            <iframe
-              className="absolute top-0 left-0 w-full h-full"
-              src="https://www.youtube.com/embed/videoseries?list=PL2QtNxnnsuX-3SU1j5AotUiZldOi5pU-Q&vq=hd1080"
-              title="Studio Voix d'Or Showcase"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            ></iframe>
+          {/* Liste des secteurs */}
+          <div className="flex flex-col gap-16 mb-20">
+            <div className="flex flex-col gap-4">
+              <div className="text-center">
+                <h3 className="font-heading uppercase tracking-[1px] text-[18px] text-primary">Gastronomie</h3>
+                <span className="text-[12px] uppercase tracking-[1px] text-gray-500 font-bold block mt-1">Exemple offre Pro</span>
+              </div>
+              <div className="relative w-full aspect-video overflow-hidden rounded-[8px] border border-primary/30 shadow-[0_0_20px_rgba(212,175,55,0.1)] bg-dark-accent mb-4 md:mb-0">
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full"
+                  src="https://www.youtube.com/embed/yImx6vMXneI?si=gxx-izFssIEQ05gH&vq=hd1080"
+                  title="Exemple Gastronomie"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </div>
+            
+            <div className="flex flex-col gap-4">
+              <div className="text-center">
+                <h3 className="font-heading uppercase tracking-[1px] text-[18px] text-primary">Supermarché</h3>
+                <span className="text-[12px] uppercase tracking-[1px] text-gray-500 font-bold block mt-1">Exemple offre Starter</span>
+              </div>
+              <div className="relative w-full aspect-video overflow-hidden rounded-[8px] border border-primary/30 shadow-[0_0_20px_rgba(212,175,55,0.1)] bg-dark-accent mb-4 md:mb-0">
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full"
+                  src="https://www.youtube.com/embed/j5ktRSbDMEU?si=XhSqVt8W_ospRwQH&vq=hd1080"
+                  title="Exemple Supermarché"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <div className="text-center">
+                <h3 className="font-heading uppercase tracking-[1px] text-[18px] text-primary">Retail & Commerce</h3>
+                <span className="text-[12px] uppercase tracking-[1px] text-gray-500 font-bold block mt-1">Exemple offre Starter</span>
+              </div>
+              <div className="relative w-full aspect-video overflow-hidden rounded-[8px] border border-primary/30 shadow-[0_0_20px_rgba(212,175,55,0.1)] bg-dark-accent mb-4 md:mb-0">
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full"
+                  src="https://www.youtube.com/embed/wLzagc6DvDE?si=V6uD7PsWi_bIsQWP&vq=hd1080"
+                  title="Exemple Retail"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <div className="text-center mb-2">
+                <h3 className="font-heading uppercase tracking-[1px] text-[20px] text-primary mb-2">Parfumerie et Luxe</h3>
+                <span className="text-[12px] uppercase tracking-[1px] text-gray-500 font-bold block">Exemple offre Business</span>
+              </div>
+              <div className="relative w-full aspect-video overflow-hidden rounded-[8px] border border-primary/30 shadow-[0_0_50px_rgba(212,175,55,0.15)] bg-black-deep">
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full"
+                  src="https://www.youtube.com/embed/videoseries?list=PL2QtNxnnsuX-3SU1j5AotUiZldOi5pU-Q&vq=hd1080"
+                  title="Studio Voix d'Or Showcase"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </div>
           </div>
           
-          <div className="mt-16 flex flex-col items-center">
-            <h3 className="text-[24px] font-heading font-normal mb-6 uppercase tracking-[1px] text-center">Vous aimez ce que vous voyez ?</h3>
+          <div className="mt-8 flex flex-col items-center">
+            <h3 className="text-[24px] sm:text-[32px] font-heading font-normal mb-8 uppercase tracking-[1px] text-center text-white">Vous aimez ce que vous voyez pour votre marque ?</h3>
             <Button onClick={() => window.location.href = '/contact'} className="px-[32px] py-[16px] h-auto text-[14px] uppercase font-bold tracking-[1px] bg-primary text-black-deep rounded-[2px] hover:bg-gold-accent transition-all shadow-[0_0_30px_rgba(212,175,55,0.3)] hover:shadow-[0_0_50px_rgba(212,175,55,0.5)] hover:-translate-y-1">
-              Démarrer votre projet
+              → On produit la vôtre en 48h
             </Button>
           </div>
         </motion.div>
@@ -43,4 +102,3 @@ export function Portfolio() {
     </div>
   );
 }
-
