@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { ArrowDown, Play } from 'lucide-react';
+import { ArrowDown, Play, Clock, Smartphone, Wallet, TrendingUp, Send, ShieldCheck } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export function Home() {
@@ -24,30 +24,35 @@ export function Home() {
     <div className="w-full">
       {/* SECTION 1: HERO */}
       <section className="relative min-h-screen flex items-center justify-start bg-black-deep overflow-hidden pt-32 pb-20 px-6 md:px-[40px]">
-        {/* Background image & gradient overlay */}
-        <div className="absolute inset-0 z-0 opacity-40">
-          <img src="https://images.unsplash.com/photo-1601506521937-0121a7fc2b6b?q=80&w=2071&auto=format&fit=crop" alt="Cinematic studio" className="w-full h-full object-cover object-center" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black-deep via-black-deep/90 to-black-deep/20"></div>
+        {/* Background Video overlay */}
+        <div className="absolute inset-0 z-0 bg-black-deep pointer-events-none overflow-hidden">
+          <iframe
+            className="absolute top-1/2 left-1/2 w-[100vw] h-[56.25vw] min-h-[100vh] min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2 scale-[1.3] opacity-[0.25]"
+            src="https://www.youtube.com/embed/videoseries?list=PL2QtNxnnsuX-3SU1j5AotUiZldOi5pU-Q&vq=hd1080&autoplay=1&mute=1&controls=0&disablekb=1&fs=0&modestbranding=1&playsinline=1&rel=0&loop=1"
+            allow="autoplay; encrypted-media"
+          ></iframe>
+          <div className="absolute inset-0 bg-black-deep/50"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-black-deep via-transparent to-black-deep"></div>
+          <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-primary/10 blur-[120px] rounded-full"></div>
         </div>
 
-        <div className="container relative z-10 mx-auto w-full flex flex-col lg:flex-row items-center justify-between gap-[60px]">
-          {/* Left Content */}
-          <div className="flex-1 flex flex-col justify-center max-w-3xl">
+        <div className="container relative z-10 mx-auto w-full flex flex-col items-center justify-center">
+          {/* Content */}
+          <div className="flex flex-col items-center justify-center max-w-4xl text-center mt-12 mb-8">
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="font-heading text-[40px] sm:text-[48px] md:text-[60px] lg:text-[72px] font-normal leading-[1.05] mb-[32px] text-white text-left shadow-black-deep drop-shadow-2xl"
+              className="font-heading text-[40px] sm:text-[48px] md:text-[60px] lg:text-[72px] font-normal leading-[1.05] mb-[32px] text-white shadow-black-deep drop-shadow-2xl"
             >
-              Vos concurrents publient. Vous, vous <span className="text-primary italic font-serif">construisez une marque.</span>
+              Vos concurrents publient. Vous, vous <br className="hidden lg:block"/> <span className="text-primary italic font-serif">construisez une marque.</span>
             </motion.h1>
 
             <motion.p 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-[15px] sm:text-[16px] md:text-[18px] text-gray-text max-w-[600px] leading-[1.6] mb-[48px] text-left drop-shadow-md"
+              className="text-[15px] sm:text-[16px] md:text-[18px] text-gray-text max-w-[600px] leading-[1.6] mb-[48px] drop-shadow-md"
             >
               28 vidéos professionnelles par mois. Livrées en 48h. Sans tournage.
             </motion.p>
@@ -56,7 +61,7 @@ export function Home() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="flex flex-col sm:flex-row items-center justify-start gap-[15px]"
+              className="flex flex-col sm:flex-row items-center justify-center gap-[15px] w-full"
             >
               <Button onClick={() => window.location.href = '/#offres'} className="w-full sm:w-auto px-[32px] py-[16px] h-auto text-[13px] uppercase font-bold tracking-[1px] bg-primary text-black-deep rounded-[4px] shadow-[0_0_40px_rgba(212,175,55,0.3)] hover:shadow-[0_0_60px_rgba(212,175,55,0.5)] hover:-translate-y-1 transition-all">
                 → Voir les offres
@@ -67,25 +72,9 @@ export function Home() {
             </motion.div>
           </div>
 
-          {/* Right Visual Element */}
-          <motion.div 
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.6 }}
-            className="flex-1 hidden lg:flex justify-end relative"
-          >
-            {/* Minimalist abstract reel or play element */}
-            <div className="w-[450px] justify-end flex relative">
-               <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full"></div>
-               <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1925&auto=format&fit=crop" alt="Director's view" className="w-[80%] aspect-[3/4] object-cover rounded-[4px] border border-white/10 shadow-2xl relative z-10 filter grayscale hover:grayscale-0 transition-all duration-700" />
-               <div className="absolute -bottom-10 -left-10 w-[60%] aspect-square object-cover rounded-[4px] border border-white/10 shadow-2xl z-20 overflow-hidden bg-black-deep flex items-center justify-center group cursor-pointer" onClick={() => window.location.href = '/portfolio'}>
-                 <img src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?q=80&w=2070&auto=format&fit=crop" alt="BTS" className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
-                 <div className="w-16 h-16 rounded-full bg-primary/20 backdrop-blur-md flex items-center justify-center border border-primary/50 text-primary z-30 group-hover:scale-110 transition-transform">
-                   <Play className="w-6 h-6 ml-1" />
-                 </div>
-               </div>
-            </div>
-          </motion.div>
+          {/* 
+            (Visual element removed)
+          */}
         </div>
 
         {/* Proof Bar - Positioned at bottom */}
@@ -121,7 +110,7 @@ export function Home() {
               <Card className="h-full bg-dark-accent border border-white/10 rounded-[4px] shadow-none hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-2 transition-all">
                 <CardContent className="p-[32px]">
                   <h3 className="font-heading uppercase tracking-[1px] text-[18px] mb-[12px] text-white flex items-center gap-3">
-                    <span className="text-[24px]">😴</span> Vous ne publiez pas encore
+                    <Clock className="w-5 h-5 text-primary" /> Vous ne publiez pas encore
                   </h3>
                   <p className="text-gray-text text-[15px] leading-relaxed">
                     Chaque semaine sans contenu = des clients qui cherchent sur Google et trouvent votre concurrent à la place.
@@ -133,7 +122,7 @@ export function Home() {
               <Card className="h-full bg-dark-accent border border-white/10 rounded-[4px] shadow-none hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-2 transition-all">
                 <CardContent className="p-[32px]">
                   <h3 className="font-heading uppercase tracking-[1px] text-[18px] mb-[12px] text-white flex items-center gap-3">
-                    <span className="text-[24px]">📱</span> Vous publiez déjà
+                    <Smartphone className="w-5 h-5 text-primary" /> Vous publiez déjà
                   </h3>
                   <p className="text-gray-text text-[15px] leading-relaxed">
                     Téléphone, CapCut, influenceur... Ça ramène des gens. Mais ça plafonne votre image. Vos clients voient une marque "sympa". Pas une référence.
@@ -145,7 +134,7 @@ export function Home() {
               <Card className="h-full bg-dark-accent border border-white/10 rounded-[4px] shadow-none hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-2 transition-all">
                 <CardContent className="p-[32px]">
                   <h3 className="font-heading uppercase tracking-[1px] text-[18px] mb-[12px] text-white flex items-center gap-3">
-                    <span className="text-[24px]">💸</span> Vous avez essayé une agence
+                    <Wallet className="w-5 h-5 text-primary" /> Vous avez essayé une agence
                   </h3>
                   <p className="text-gray-text text-[15px] leading-relaxed">
                     500 000 FCFA. 3 semaines d'attente. Une seule vidéo. On comprend que vous ayez arrêté.
@@ -157,7 +146,7 @@ export function Home() {
               <Card className="h-full bg-dark-accent border border-white/10 rounded-[4px] shadow-none hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-2 transition-all">
                 <CardContent className="p-[32px]">
                   <h3 className="font-heading uppercase tracking-[1px] text-[18px] mb-[12px] text-white flex items-center gap-3">
-                    <span className="text-[24px]">🚀</span> Vous voulez passer un niveau
+                    <TrendingUp className="w-5 h-5 text-primary" /> Vous voulez passer un niveau
                   </h3>
                   <p className="text-gray-text text-[15px] leading-relaxed">
                     Vous avez une base. Vous voulez l'image qui justifie des prix plus élevés et une clientèle plus qualifiée.
@@ -395,7 +384,7 @@ export function Home() {
 
           <div className="text-center mt-10 md:mt-12 flex flex-col items-center justify-center">
             <div className="inline-flex flex-col sm:flex-row items-center gap-[8px] sm:gap-[12px] bg-dark-accent border border-white/10 px-[16px] sm:px-[24px] py-[12px] text-[12px] sm:text-[13px] text-gray-text rounded-[2px] shadow-sm text-center">
-              <span className="text-[18px] sm:text-[18px]">🛡️</span> <span>Sans engagement. Résiliable à tout moment.</span>
+              <ShieldCheck className="w-5 h-5 text-primary" /> <span>Sans engagement. Résiliable à tout moment.</span>
             </div>
           </div>
         </div>

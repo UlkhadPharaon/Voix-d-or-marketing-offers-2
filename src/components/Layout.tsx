@@ -54,7 +54,7 @@ export function Layout() {
     <div className="min-h-screen bg-black-deep text-white flex flex-col font-sans selection:bg-primary selection:text-black-deep">
       {/* Navbar fixed */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 h-[80px] flex items-center px-6 md:px-[40px] border-b border-primary/20 bg-black-deep/90 backdrop-blur-md`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 h-[80px] flex items-center px-6 md:px-[40px] border-b ${isScrolled ? 'border-primary/20 bg-black-deep/90 backdrop-blur-md' : 'border-transparent bg-transparent'}`}
       >
         <div className="w-full flex items-center justify-between">
           <Link to="/" className="flex items-center gap-[12px] z-50 group">

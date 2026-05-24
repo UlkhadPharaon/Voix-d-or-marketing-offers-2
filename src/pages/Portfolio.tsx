@@ -26,7 +26,7 @@ export function Portfolio() {
         >
           {/* Liste des secteurs */}
           <div className="flex flex-col gap-16 mb-20">
-            <div className="flex flex-col gap-4">
+            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="flex flex-col gap-4">
               <div className="text-center">
                 <h3 className="font-heading uppercase tracking-[1px] text-[18px] text-primary">Gastronomie</h3>
                 <span className="text-[12px] uppercase tracking-[1px] text-gray-500 font-bold block mt-1">Exemple offre Pro</span>
@@ -40,9 +40,9 @@ export function Portfolio() {
                   allowFullScreen
                 ></iframe>
               </div>
-            </div>
+            </motion.div>
             
-            <div className="flex flex-col gap-4">
+            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="flex flex-col gap-4">
               <div className="text-center">
                 <h3 className="font-heading uppercase tracking-[1px] text-[18px] text-primary">Supermarché</h3>
                 <span className="text-[12px] uppercase tracking-[1px] text-gray-500 font-bold block mt-1">Exemple offre Starter</span>
@@ -56,9 +56,9 @@ export function Portfolio() {
                   allowFullScreen
                 ></iframe>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="flex flex-col gap-4">
+            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="flex flex-col gap-4">
               <div className="text-center">
                 <h3 className="font-heading uppercase tracking-[1px] text-[18px] text-primary">Retail & Commerce</h3>
                 <span className="text-[12px] uppercase tracking-[1px] text-gray-500 font-bold block mt-1">Exemple offre Starter</span>
@@ -72,9 +72,9 @@ export function Portfolio() {
                   allowFullScreen
                 ></iframe>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="flex flex-col gap-4">
+            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="flex flex-col gap-4">
               <div className="text-center mb-2">
                 <h3 className="font-heading uppercase tracking-[1px] text-[20px] text-primary mb-2">Parfumerie et Luxe</h3>
                 <span className="text-[12px] uppercase tracking-[1px] text-gray-500 font-bold block">Exemple offre Business</span>
@@ -88,7 +88,7 @@ export function Portfolio() {
                   allowFullScreen
                 ></iframe>
               </div>
-            </div>
+            </motion.div>
           </div>
           
           <div className="mt-8 flex flex-col items-center">
