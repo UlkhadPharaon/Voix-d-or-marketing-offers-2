@@ -8,6 +8,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { SEO } from '@/components/SEO';
+import { PageTransition } from '@/components/PageTransition';
 
 export function Contact() {
   const [step, setStep] = useState(1);
@@ -71,7 +73,8 @@ Merci !`;
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-black-deep flex items-center justify-center pt-24 px-4 pb-12">
+      <PageTransition className="min-h-screen bg-black-deep flex items-center justify-center pt-24 px-4 pb-12">
+        <SEO title="Demande Envoyée" description="Votre demande a été envoyée avec succès." />
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -89,12 +92,16 @@ Merci !`;
             Retour à l'accueil
           </Button>
         </motion.div>
-      </div>
+      </PageTransition>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black-deep text-white pt-[100px] md:pt-[120px] pb-12 md:pb-24 border-t border-primary/20">
+    <PageTransition className="min-h-screen bg-black-deep text-white pt-[100px] md:pt-[120px] pb-12 md:pb-24 border-t border-primary/20">
+      <SEO 
+        title="Démarrer votre projet | Studio Voix d'Or"
+        description="Remplissez notre brief stratégique pour commencer à transformer l'image de votre marque sur les réseaux sociaux. Production en 48h."
+      />
       <div className="container mx-auto px-4 max-w-3xl">
         <div className="text-center mb-8 md:mb-12 flex flex-col items-center">
           <div className="inline-flex self-center bg-primary/10 border border-primary text-primary px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[24px]">
@@ -318,6 +325,6 @@ Merci !`;
           </CardContent>
         </Card>
       </div>
-    </div>
+    </PageTransition>
   );
 }

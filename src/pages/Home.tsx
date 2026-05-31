@@ -2,8 +2,62 @@ import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { ArrowDown, Play, Clock, Smartphone, Wallet, TrendingUp, Send, ShieldCheck } from 'lucide-react';
+import { ArrowDown, Play, Clock, Smartphone, Wallet, TrendingUp, Send, ShieldCheck, Calendar, FileText, User as UserIcon, MessagesSquare, Lightbulb, PenTool, PhoneCall, Check, Minus } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { SEO } from '@/components/SEO';
+import { PageTransition } from '@/components/PageTransition';
+import { InfiniteMarquee } from '@/components/InfiniteMarquee';
+import { SplineScene } from "@/components/ui/splite";
+import { Spotlight } from "@/components/ui/spotlight";
+import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
+import PricingSection4 from "@/components/ui/pricing-section-4";
+
+const timelineData = [
+  {
+    id: 1,
+    title: "Audit & Analyse",
+    date: "Lundi",
+    content: "Le système analyse automatiquement les performances de la semaine pour identifier les posts performants et ajuster les heures de publication optimales.",
+    category: "Analyse",
+    icon: Calendar,
+    relatedIds: [2],
+    status: "completed" as const,
+    energy: 100,
+  },
+  {
+    id: 2,
+    title: "Apprentissage",
+    date: "Mardi",
+    content: "Ré-entraînement et mise à jour de sa base de connaissances : nouveaux produits, promotions, affinage des réponses WhatsApp.",
+    category: "Système",
+    icon: Lightbulb,
+    relatedIds: [1, 3],
+    status: "completed" as const,
+    energy: 80,
+  },
+  {
+    id: 3,
+    title: "Production",
+    date: "Mercredi",
+    content: "Génération du pack de visuels premium, rédaction des publicités et préparation du plan de publication. Vous validez en 5 min.",
+    category: "Design",
+    icon: PenTool,
+    relatedIds: [2, 4],
+    status: "in-progress" as const,
+    energy: 95,
+  },
+  {
+    id: 4,
+    title: "Relation Client",
+    date: "Jeu - Dim",
+    content: "Publication autonome, réponses FB et surveillance active sur WhatsApp. Devis, proposition d'offres et rendez-vous.",
+    category: "Ventes",
+    icon: PhoneCall,
+    relatedIds: [1, 3],
+    status: "pending" as const,
+    energy: 100,
+  },
+];
 
 export function Home() {
   const [billingCycle, setBillingCycle] = useState<'mensuel' | 'trimestriel'>('mensuel');
@@ -21,47 +75,71 @@ export function Home() {
   }, []);
 
   return (
-    <div className="w-full">
+    <PageTransition className="w-full">
+      <SEO 
+        title="L'Employé Virtuel Permanent à 50 000 FCFA/mois | Studio Voix d'Or"
+        description="Studio Voix d'Or déploie votre premier collaborateur virtuel 24h/24, 7j/7. Réponses aux clients sur WhatsApp en moins de 30s, création de visuels et vidéos de prestige, et génération automatique de prospects."
+        schemas={[
+          {
+            "@context": "https://schema.org",
+            "@type": "ProfessionalService",
+            "name": "Studio Voix d'Or",
+            "image": "https://images.unsplash.com/photo-1601506521937-0121a7fc2b6b?q=80&w=2071&auto=format&fit=crop",
+            "description": "L'Employé Virtuel Permanent à 50 000 FCFA/mo. Réponses WhatsApp < 30 sec et production marketing de prestige.",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Ouagadougou",
+              "addressCountry": "Burkina Faso"
+            },
+            "telephone": "+22644906629"
+          }
+        ]}
+      />
       {/* SECTION 1: HERO */}
-      <section className="relative min-h-screen flex items-center justify-start bg-black-deep overflow-hidden pt-32 pb-20 px-6 md:px-[40px]">
-        {/* Background Video overlay */}
-        <div className="absolute inset-0 z-0 bg-black-deep pointer-events-none overflow-hidden">
-          <iframe
-            className="absolute top-1/2 left-1/2 w-[100vw] h-[56.25vw] min-h-[100vh] min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2 scale-[1.3] opacity-[0.25]"
-            src="https://www.youtube.com/embed/videoseries?list=PL2QtNxnnsuX-3SU1j5AotUiZldOi5pU-Q&vq=hd1080&autoplay=1&mute=1&controls=0&disablekb=1&fs=0&modestbranding=1&playsinline=1&rel=0&loop=1"
-            allow="autoplay; encrypted-media"
-          ></iframe>
-          <div className="absolute inset-0 bg-black-deep/50"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black-deep via-transparent to-black-deep"></div>
-          <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-primary/10 blur-[120px] rounded-full"></div>
+      <section className="relative min-h-screen flex items-center justify-start bg-black-deep overflow-hidden pt-32 pb-6 px-6 md:px-[40px]">
+        {/* Spotlight Effect */}
+        <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="#D4AF37" />
+
+        {/* splite 3D integration with proper z-index */}
+        <div className="absolute inset-0 z-0 h-full w-full opacity-60">
+          <SplineScene 
+            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+            className="w-full h-full"
+          />
+          <div className="absolute inset-0 bg-black-deep/50 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black-deep via-transparent to-black-deep pointer-events-none"></div>
+          <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-primary/10 blur-[120px] rounded-full pointer-events-none"></div>
         </div>
 
-        <div className="container relative z-10 mx-auto w-full flex flex-col items-center justify-center">
+        <div className="container relative z-10 mx-auto w-full flex flex-col md:flex-row items-center justify-between pointer-events-none">
           {/* Content */}
-          <div className="flex flex-col items-center justify-center max-w-4xl text-center mt-12 mb-8">
+          <div className="flex flex-col items-start justify-center max-w-2xl mt-12 mb-8 pointer-events-auto">
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.8 }}
-              className="font-heading text-[40px] sm:text-[48px] md:text-[60px] lg:text-[72px] font-normal leading-[1.05] mb-[32px] text-white shadow-black-deep drop-shadow-2xl"
+              className="font-heading text-[36px] sm:text-[46px] md:text-[52px] lg:text-[60px] font-normal leading-[1.1] mb-[28px] text-white shadow-black-deep drop-shadow-2xl"
             >
-              Vos concurrents publient. Vous, vous <br className="hidden lg:block"/> <span className="text-primary italic font-serif">construisez une marque.</span>
+              Recrutez un <span className="text-primary italic font-serif">Employé Virtuel Permanent</span> <br className="hidden lg:block"/> pour seulement 50 000 FCFA/mois.
             </motion.h1>
 
             <motion.p 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-[15px] sm:text-[16px] md:text-[18px] text-gray-text max-w-[600px] leading-[1.6] mb-[48px] drop-shadow-md"
+              className="text-[15px] sm:text-[16px] md:text-[18px] text-gray-text max-w-[650px] leading-[1.6] mb-[40px] drop-shadow-md text-left"
             >
-              28 vidéos professionnelles par mois. Livrées en 48h. Sans tournage.
+              Moins cher qu'un stagiaire. Il travaille 24h/24, répond à vos clients sur WhatsApp en moins de 30 secondes, génère vos contenus visuels de prestige et vous apporte des prospects qualifiés pendant que vous dormez.
             </motion.p>
 
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-[15px] w-full"
+              className="flex flex-col sm:flex-row items-start justify-start gap-[15px] w-full"
             >
               <Button onClick={() => window.location.href = '/#offres'} className="w-full sm:w-auto px-[32px] py-[16px] h-auto text-[13px] uppercase font-bold tracking-[1px] bg-primary text-black-deep rounded-[4px] shadow-[0_0_40px_rgba(212,175,55,0.3)] hover:shadow-[0_0_60px_rgba(212,175,55,0.5)] hover:-translate-y-1 transition-all">
                 → Voir les offres
@@ -71,49 +149,55 @@ export function Home() {
               </Button>
             </motion.div>
           </div>
-
-          {/* 
-            (Visual element removed)
-          */}
+          
+          <div className="hidden lg:block flex-1">
+             {/* Spline area */}
+          </div>
         </div>
 
         {/* Proof Bar - Positioned at bottom */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="absolute bottom-0 left-0 w-full bg-black-deep/80 backdrop-blur-md border-t border-white/10 py-6"
+          className="absolute bottom-0 left-0 w-full bg-black-deep/80 backdrop-blur-md border-t border-white/10 py-5"
         >
           <div className="container mx-auto px-6 md:px-[40px]">
             <div className="grid grid-cols-2 lg:flex lg:flex-row items-center justify-center lg:gap-[40px] max-w-6xl mx-auto gap-4 text-center">
-              <span className="text-[12px] md:text-[14px] uppercase text-gray-text tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> 28 vidéos / mois</span>
-              <span className="text-[12px] md:text-[14px] uppercase text-gray-text tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> 48h de délai</span>
-              <span className="text-[12px] md:text-[14px] uppercase text-gray-text tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> Zéro logistique</span>
-              <span className="text-[12px] md:text-[14px] uppercase text-gray-text tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> 100% identité visuelle</span>
+              <span className="text-[12px] md:text-[14px] uppercase text-gray-text tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> Réponse WhatsApp &lt; 30s</span>
+              <span className="text-[12px] md:text-[14px] uppercase text-gray-text tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> Disponible 24h / 24 &amp; 7j / 7</span>
+              <span className="text-[12px] md:text-[14px] uppercase text-gray-text tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> Métier de Marque &amp; Contenus Premium</span>
+              <span className="text-[12px] md:text-[14px] uppercase text-gray-text tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> Moins cher qu'un stagiaire</span>
             </div>
           </div>
         </motion.div>
       </section>
+
+      {/* Infinite Marquee Section */}
+      <InfiniteMarquee />
 
       {/* SECTION 2: VOTRE SITUATION AUJOURD'HUI */}
       <section className="py-[60px] md:py-[120px] bg-black-deep text-white relative border-t border-white/10">
         <div className="container mx-auto px-4">
           <div className="text-center mb-10 md:mb-16 flex flex-col items-center">
             <div className="inline-flex self-center bg-transparent border border-white/20 text-gray-text px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[24px]">
-              Votre situation aujourd'hui
+              Le Problème Réel du Commerce Local
             </div>
-            <h2 className="text-[28px] sm:text-[40px] md:text-[48px] font-heading font-normal mb-[16px] uppercase tracking-[1px]">Laquelle vous ressemble ?</h2>
+            <h2 className="text-[28px] sm:text-[40px] md:text-[48px] font-heading font-normal mb-[16px] uppercase tracking-[1px] text-center max-w-4xl">
+              Pourquoi vos concurrents stagnent et comment vous allez dominer
+            </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
               <Card className="h-full bg-dark-accent border border-white/10 rounded-[4px] shadow-none hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-2 transition-all">
                 <CardContent className="p-[32px]">
                   <h3 className="font-heading uppercase tracking-[1px] text-[18px] mb-[12px] text-white flex items-center gap-3">
-                    <Clock className="w-5 h-5 text-primary" /> Vous ne publiez pas encore
+                    <span className="text-red-500 font-bold">🔴</span> WhatsApp : Des Clients Qui Disparaissent
                   </h3>
                   <p className="text-gray-text text-[15px] leading-relaxed">
-                    Chaque semaine sans contenu = des clients qui cherchent sur Google et trouvent votre concurrent à la place.
+                    Un client envoie "combien ça coûte ?" à 21h. Vous dormez. Le lendemain matin, vous répondez mais il a déjà commandé chez une boutique plus réactive. Notre système répond en 30 secondes et boucle la vente.
                   </p>
                 </CardContent>
               </Card>
@@ -122,10 +206,10 @@ export function Home() {
               <Card className="h-full bg-dark-accent border border-white/10 rounded-[4px] shadow-none hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-2 transition-all">
                 <CardContent className="p-[32px]">
                   <h3 className="font-heading uppercase tracking-[1px] text-[18px] mb-[12px] text-white flex items-center gap-3">
-                    <Smartphone className="w-5 h-5 text-primary" /> Vous publiez déjà
+                    <span className="text-red-500 font-bold">🔴</span> Le Fléau du Contenu Amateur
                   </h3>
                   <p className="text-gray-text text-[15px] leading-relaxed">
-                    Téléphone, CapCut, influenceur... Ça ramène des gens. Mais ça plafonne votre image. Vos clients voient une marque "sympa". Pas une référence.
+                    Photos floues faites à la va-vite, visuels encombrés et pleins de coquilles. Cela détruit votre positionnement de marque haut de gamme. Notre technologie génère des visuels photo-réalistes cinématiques d'excellence.
                   </p>
                 </CardContent>
               </Card>
@@ -134,22 +218,10 @@ export function Home() {
               <Card className="h-full bg-dark-accent border border-white/10 rounded-[4px] shadow-none hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-2 transition-all">
                 <CardContent className="p-[32px]">
                   <h3 className="font-heading uppercase tracking-[1px] text-[18px] mb-[12px] text-white flex items-center gap-3">
-                    <Wallet className="w-5 h-5 text-primary" /> Vous avez essayé une agence
+                    <span className="text-red-500 font-bold">🔴</span> Gérant Complètement Surchargé
                   </h3>
                   <p className="text-gray-text text-[15px] leading-relaxed">
-                    500 000 FCFA. 3 semaines d'attente. Une seule vidéo. On comprend que vous ayez arrêté.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.3 }}>
-              <Card className="h-full bg-dark-accent border border-white/10 rounded-[4px] shadow-none hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-2 transition-all">
-                <CardContent className="p-[32px]">
-                  <h3 className="font-heading uppercase tracking-[1px] text-[18px] mb-[12px] text-white flex items-center gap-3">
-                    <TrendingUp className="w-5 h-5 text-primary" /> Vous voulez passer un niveau
-                  </h3>
-                  <p className="text-gray-text text-[15px] leading-relaxed">
-                    Vous avez une base. Vous voulez l'image qui justifie des prix plus élevés et une clientèle plus qualifiée.
+                    Vous gérez la boutique, vos fournisseurs, vos équipes... Trouver du temps pour imaginer, créer et poster des publications régulièrement sur les réseaux est infaisable. Notre collaborateur virtuel gère cette charge à 100%.
                   </p>
                 </CardContent>
               </Card>
@@ -157,7 +229,7 @@ export function Home() {
           </div>
 
           <div className="mt-20 flex flex-col items-center justify-center text-center">
-            <p className="font-heading uppercase tracking-[1px] text-[18px] text-primary mb-8 max-w-2xl">Dans tous les cas : on a construit l'offre pour vous.</p>
+            <p className="font-heading uppercase tracking-[1px] text-[18px] text-primary mb-8 max-w-2xl">L'Employé Virtuel est la solution ultime à ces problèmes.</p>
             <motion.div 
               animate={{ y: [0, 10, 0] }} 
               transition={{ repeat: Infinity, duration: 2 }}
@@ -168,67 +240,56 @@ export function Home() {
         </div>
       </section>
 
-      {/* SECTION 3: CE QUE VOUS PERDEZ CHAQUE MOIS */}
-      <section className="py-[60px] md:py-[120px] bg-[#0a0a0a] text-white relative border-t border-white/5">
-        <div className="container mx-auto px-4 max-w-4xl">
-           <div className="text-center mb-10 md:mb-16 flex flex-col items-center">
+      {/* SECTION 3: CALENDRIER OPERATOIRE DE L'ASSISTANT */}
+      <section className="py-[60px] md:py-[120px] bg-[#0a0a0a] text-white relative border-t border-white/5 overflow-hidden">
+        <div className="container mx-auto px-4 max-w-5xl relative z-20">
+          <div className="text-center mb-10 md:mb-16 flex flex-col items-center">
             <div className="inline-flex self-center bg-transparent border border-white/20 text-gray-text px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[24px]">
-              Ce que vous perdez chaque mois sans nous
+              Efficacité Systématique
             </div>
-            <h2 className="text-[28px] sm:text-[40px] md:text-[48px] font-heading font-normal mb-[16px] uppercase tracking-[1px]">Le vrai coût de l'inaction</h2>
+            <h2 className="text-[28px] sm:text-[40px] md:text-[48px] font-heading font-normal mb-[16px] uppercase tracking-[1px]">Le Planning de votre Employé Virtuel</h2>
+            <p className="text-gray-text text-[15px] max-w-2xl mx-auto">
+              Chaque semaine, l'assistant exécute de manière infatigable un cycle complet de suivi commercial et créations visuelles. Cliquez sur un axe pour l'explorer.
+            </p>
           </div>
+        </div>
+        
+        <div className="-my-[150px] relative z-10 w-full">
+          {/* We import the new orbital timeline component here */}
+          <RadialOrbitalTimeline timelineData={timelineData} />
+        </div>
 
-          <ul className="space-y-6 text-[16px] md:text-[18px] text-gray-text">
-             <li className="flex gap-4 items-start bg-dark-accent p-6 border border-white/10 rounded-[4px]">
-                <span className="text-red-500 font-bold mt-1">→</span>
-                <div>
-                  <strong className="text-white block mb-1">Sans contenu régulier</strong>
-                  Invisible sur les réseaux. Vos concurrents prennent votre place.
-                </div>
-             </li>
-             <li className="flex gap-4 items-start bg-dark-accent p-6 border border-white/10 rounded-[4px]">
-                <span className="text-red-500 font-bold mt-1">→</span>
-                <div>
-                  <strong className="text-white block mb-1">Avec du contenu low-quality</strong>
-                  Vous remplissez des tables. Vous ne construisez pas de marque.
-                </div>
-             </li>
-             <li className="flex gap-4 items-start bg-dark-accent p-6 border border-white/10 rounded-[4px]">
-                <span className="text-red-500 font-bold mt-1">→</span>
-                <div>
-                  <strong className="text-white block mb-1">Avec une agence classique</strong>
-                  Vous attendez 3 semaines et videz votre budget sur une seule vidéo.
-                </div>
-             </li>
-          </ul>
-
+        <div className="container mx-auto px-4 max-w-5xl relative z-20">
           <div className="mt-12 text-center border border-primary/30 bg-primary/5 p-8 rounded-[4px]">
-            <p className="text-[18px] md:text-[20px] font-heading uppercase tracking-[1px] text-primary mb-2">La Solution Voix d'Or :</p>
-            <p className="text-white text-[16px] md:text-[18px]">
-              28 vidéos/mois pour 300 000 FCFA. <br/><span className="text-gray-400 text-[14px]">Soit 10 714 FCFA la vidéo professionnelle.</span>
+            <p className="text-[18px] md:text-[20px] font-heading uppercase tracking-[1px] text-primary mb-2">LA SÉCURITÉ CONTRACTUELLE :</p>
+            <p className="text-white text-[15px] md:text-[17px] max-w-3xl mx-auto leading-relaxed">
+              Pour garantir votre sérénité, nous verrouillons par écrit : des temps de réponse WhatsApp inférieurs à l'offre choisie, notre disponibilité absolue 24h/24 et la constitution complète de votre base de données cibles.
             </p>
           </div>
         </div>
       </section>
 
-      {/* SECTION 4: COMMENT ÇA MARCHE */}
+      {/* SECTION 4: COMMENT ÇA MARCHE / NOTRE DÉMO LIVE */}
       <section className="py-[60px] md:py-[120px] bg-black-deep text-white relative border-t border-white/10">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mb-8 md:mb-12 flex flex-col items-start">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <div className="mb-10 text-center flex flex-col items-center">
             <div className="inline-flex bg-transparent border border-white/20 text-gray-text px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[24px]">
-              Comment ça marche
+              La Méthodologie Imbattable
             </div>
-            <h2 className="text-[28px] sm:text-[40px] md:text-[56px] font-heading font-normal mb-[16px] md:mb-[24px] leading-tight uppercase tracking-[1px]">
-              En 4 étapes. <br/> <span className="text-primary">Vous faites uniquement l'étape 1.</span>
+            <h2 className="text-[28px] sm:text-[40px] md:text-[48px] font-heading font-normal mb-[16px] leading-tight uppercase tracking-[1px]">
+              Notre Démo Live <br/> <span className="text-primary italic font-serif">Vaut 10 000 mots</span>
             </h2>
+            <p className="text-gray-text text-[15px] max-w-2xl mx-auto">
+              Pas de discours commerciaux. Nous basons notre relation sur des preuves directes pour éliminer toute hésitation.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-6xl mb-[40px]">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-[40px]">
             {[
-              { num: 'I', title: 'Brief', desc: 'Vous nous envoyez votre produit, votre cible, votre message. WhatsApp suffit.' },
-              { num: 'II', title: 'Stratégie', desc: 'On analyse ce qui performe dans votre secteur en temps réel. Automatique.' },
-              { num: 'III', title: 'Production', desc: 'Vos vidéos sont générées avec votre logo, vos couleurs, votre identité.' },
-              { num: 'IV', title: 'Livraison', desc: 'MP4 prêts à publier sur vos réseaux. En 48h. Chaque semaine.' },
+              { num: 'I', title: 'Le Constat', desc: 'Combien de messages WhatsApp perdez-vous en soirée ? Près de 80% des entreprises perdent leurs prospects après la fermeture.' },
+              { num: 'II', title: 'Démo Instantanée', desc: 'Vous nous donnez votre numéro. Notre collaborateur virtuel vous écrit et gère une conversation simulée de vente de manière parfaite.' },
+              { num: 'III', title: 'Comparatif Direct', desc: 'Un employé classique au Burkina coûte 50 000 à 75 000 FCFA/mois — et il dort. Notre employé virtuel ne dort jamais et ne fait pas d\'erreur.' },
+              { num: 'IV', title: 'Essai Garanti', desc: 'Lancez un mois complet d\'essai à moitié prix (25 000 FCFA). Si vous n\'êtes pas absolument conquis, vous êtes remboursé intégralement.' },
             ].map((step, i) => (
               <motion.div 
                 key={i} 
@@ -236,13 +297,13 @@ export function Home() {
                 whileInView={{ opacity: 1, y: 0 }} 
                 viewport={{ once: true }} 
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="flex flex-col items-start border border-white/10 bg-dark-accent p-[24px] rounded-[4px] hover:border-primary/50 transition-colors"
+                className="flex flex-col items-start border border-white/10 bg-dark-accent p-6 rounded-[4px] hover:border-primary/50 transition-colors"
               >
                 <div className="font-heading text-[24px] text-primary mb-[16px]">
                   {step.num}
                 </div>
                 <h4 className="font-bold text-[13px] mb-[12px] uppercase tracking-[1px] text-white">{step.title}</h4>
-                <p className="text-gray-text text-[13px] leading-relaxed max-w-xs">{step.desc}</p>
+                <p className="text-gray-text text-[13px] leading-relaxed">{step.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -250,143 +311,129 @@ export function Home() {
       </section>
 
       {/* SECTION 4: PRICING */}
-      <section id="offres" className="py-[60px] md:py-24 bg-black-deep text-white border-t border-primary/20 relative">
-        <div className="absolute inset-0 pointer-events-none z-0" 
-             style={{ backgroundImage: 'repeating-linear-gradient(90deg, rgba(212, 175, 55, 0.03) 0px, rgba(212, 175, 55, 0.03) 1px, transparent 1px, transparent 20px)' }}>
+      <section id="offres" className="bg-black-deep border-t border-primary/20 relative">
+        <PricingSection4 />
+
+        <div className="bg-black-deep relative pb-24 border-t border-white/5 pt-16">
+          <div className="container mx-auto px-4 relative z-10">
+          {/* Table of guarantees */}
+          <div className="mt-20 max-w-[1000px] mx-auto hidden lg:block">
+            <div className="text-center mb-8 flex flex-col items-center">
+              <div className="inline-flex self-center bg-transparent border border-white/20 text-gray-text px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[16px]">
+                Transparence
+              </div>
+              <h3 className="font-heading uppercase tracking-[1.5px] text-[28px] text-white">Comparaison Détaillée</h3>
+              <p className="text-gray-text text-[14px] mt-3 max-w-2xl text-center">Détails des capacités, garanties contractuelles et fonctionnalités de votre Employé Virtuel selon le niveau d'offres.</p>
+            </div>
+            
+            <div className="bg-[#0f0f0f] border border-white/10 rounded-[8px] overflow-hidden shadow-2xl relative">
+              <div className="absolute top-0 right-1/4 w-1/4 h-full bg-primary/[0.03] pointer-events-none"></div>
+              <table className="w-full text-left border-collapse relative z-10">
+                <thead>
+                  <tr>
+                    <th className="p-6 text-[13px] text-gray-400 uppercase tracking-[1px] font-bold border-b border-white/10 w-1/4 align-bottom">Garantie & Fonctionnalité</th>
+                    <th className="p-6 text-[13px] text-white uppercase tracking-[1px] font-bold border-b border-white/10 text-center w-1/4 bg-[#141414] align-bottom">Tier 1 <span className="block text-[10px] text-gray-500 font-normal mt-1 normal-case tracking-normal">L'Employé de Base</span></th>
+                    <th className="p-6 text-[13px] text-primary uppercase tracking-[1px] font-bold border-b border-primary/20 text-center relative w-1/4 bg-[#141414] align-bottom">
+                      <div className="absolute top-0 left-0 w-full h-[2px] bg-primary"></div>
+                      Tier 2 <span className="block text-[10px] text-primary/70 font-normal mt-1 normal-case tracking-normal">L'Employé Commercial</span>
+                    </th>
+                    <th className="p-6 text-[13px] text-white uppercase tracking-[1px] font-bold border-b border-white/10 text-center w-1/4 bg-[#141414] align-bottom">Tier 3 <span className="block text-[10px] text-gray-500 font-normal mt-1 normal-case tracking-normal">Le Département</span></th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5 text-[14px]">
+                  <tr className="hover:bg-white/5 transition-colors">
+                    <td className="p-4 pl-6 text-gray-300 font-medium">Temps de Réponse WhatsApp</td>
+                    <td className="p-4 text-center text-white bg-[#141414]/90">&lt; 60 sec</td>
+                    <td className="p-4 text-center text-primary font-bold bg-[#141414]/90">&lt; 30 sec</td>
+                    <td className="p-4 text-center text-white bg-[#141414]/90">&lt; 15 sec</td>
+                  </tr>
+                  <tr className="hover:bg-white/5 transition-colors">
+                    <td className="p-4 pl-6 text-gray-300 font-medium">Création de Contenus / Mois</td>
+                    <td className="p-4 text-center text-white bg-[#141414]/90">12 visuels + 4 vidéos</td>
+                    <td className="p-4 text-center text-primary font-bold bg-[#141414]/90">20 visuels + 8 vidéos TV</td>
+                    <td className="p-4 text-center text-white font-bold bg-[#141414]/90">40+ visuels + 15 vidéos TV</td>
+                  </tr>
+                  <tr className="hover:bg-white/5 transition-colors">
+                    <td className="p-4 pl-6 text-gray-300 font-medium">Fréquence des Analyses</td>
+                    <td className="p-4 text-center text-gray-400 bg-[#141414]/90">Mensuelle</td>
+                    <td className="p-4 text-center text-white bg-[#141414]/90">Bimensuelle</td>
+                    <td className="p-4 text-center text-white bg-[#141414]/90">Hebdomadaire + Visio</td>
+                  </tr>
+                  <tr className="hover:bg-white/5 transition-colors">
+                    <td className="p-4 pl-6 text-gray-300 font-medium">Base de Données Clients</td>
+                    <td className="p-4 text-center text-gray-400 bg-[#141414]/90">Simple (Capture)</td>
+                    <td className="p-4 text-center text-white bg-[#141414]/90">Segmentée & Enrichie</td>
+                    <td className="p-4 text-center text-primary font-bold bg-[#141414]/90">Exploitation par Campagne</td>
+                  </tr>
+                  <tr className="hover:bg-white/5 transition-colors">
+                    <td className="p-4 pl-6 text-gray-300 font-medium">Gestion Publicitaire (Ads)</td>
+                    <td className="p-4 text-center text-gray-600 bg-[#141414]/90"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
+                    <td className="p-4 text-center text-white bg-[#141414]/90"><Check className="w-5 h-5 mx-auto text-primary" /> <span className="text-[12px] text-gray-400">Automatisée</span></td>
+                    <td className="p-4 text-center text-white bg-[#141414]/90"><Check className="w-5 h-5 mx-auto text-primary" /> <span className="text-[12px] text-gray-400">Budget 50K Inclus</span></td>
+                  </tr>
+                  <tr className="hover:bg-white/5 transition-colors">
+                    <td className="p-4 pl-6 text-gray-300 font-medium">Séquences de Relances Froids</td>
+                    <td className="p-4 text-center text-gray-600 bg-[#141414]/90"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
+                    <td className="p-4 text-center text-white bg-[#141414]/90"><Check className="w-5 h-5 mx-auto text-primary" /></td>
+                    <td className="p-4 text-center text-white bg-[#141414]/90"><Check className="w-5 h-5 mx-auto text-primary" /></td>
+                  </tr>
+                  <tr className="hover:bg-white/5 transition-colors">
+                    <td className="p-4 pl-6 text-gray-300 font-medium">Landing Page Dédiée</td>
+                    <td className="p-4 text-center text-gray-600 bg-[#141414]/90"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
+                    <td className="p-4 text-center text-gray-600 bg-[#141414]/90"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
+                    <td className="p-4 text-center text-white bg-[#141414]/90"><Check className="w-5 h-5 mx-auto text-primary" /> <span className="text-[12px] text-gray-400">Maintenue</span></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div className="bg-[#0A0A0A] p-5 text-center border-t border-white/5 relative z-10">
+                <p className="text-[12px] text-gray-500 italic">Note : Nous garantissons par écrit la livraison parfaite de leads qualifiés et d'optimisations publicitaires. Les budgets d'acquisition (hors Tier 3) sont ajustés directement selon vos enjeux.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile version of the table */}
+          <div className="mt-16 lg:hidden max-w-lg mx-auto">
+            <div className="text-center mb-8 flex flex-col items-center">
+              <div className="inline-flex self-center bg-transparent border border-white/20 text-gray-text px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[16px]">
+                Transparence
+              </div>
+              <h3 className="font-heading uppercase tracking-[1.5px] text-[24px] text-white">Comparaison</h3>
+            </div>
+            
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              <AccordionItem value="item-1" className="border-white/10 bg-[#121212] rounded-[8px] overflow-hidden px-4">
+                <AccordionTrigger className="text-white hover:no-underline hover:text-primary py-4 font-bold text-[14px]">Temps de Réponse WhatsApp</AccordionTrigger>
+                <AccordionContent className="text-gray-400 pb-4 flex flex-col gap-3">
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Tier 1</span> <span className="text-white">&lt; 60 sec</span></div>
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide text-primary">Tier 2</span> <span className="text-primary font-bold">&lt; 30 sec</span></div>
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Tier 3</span> <span className="text-white">&lt; 15 sec</span></div>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-2" className="border-white/10 bg-[#121212] rounded-[8px] overflow-hidden px-4">
+                <AccordionTrigger className="text-white hover:no-underline hover:text-primary py-4 font-bold text-[14px]">Création de Contenus / Mois</AccordionTrigger>
+                <AccordionContent className="text-gray-400 pb-4 flex flex-col gap-3">
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Tier 1</span> <span className="text-white text-right">12 visuels<br/>4 vidéos</span></div>
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide text-primary">Tier 2</span> <span className="text-primary font-bold text-right">20 visuels<br/>8 vidéos TV</span></div>
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Tier 3</span> <span className="text-white font-bold text-right">40+ visuels<br/>15 vidéos TV</span></div>
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-3" className="border-white/10 bg-[#121212] rounded-[8px] overflow-hidden px-4">
+                <AccordionTrigger className="text-white hover:no-underline hover:text-primary py-4 font-bold text-[14px]">Gestion Publicitaire</AccordionTrigger>
+                <AccordionContent className="text-gray-400 pb-4 flex flex-col gap-3">
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Tier 1</span> <span><Minus className="w-4 h-4 opacity-50" /></span></div>
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide text-primary">Tier 2</span> <span className="text-white flex items-center gap-2">Automatisée <Check className="w-4 h-4 text-primary" /></span></div>
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Tier 3</span> <span className="text-white flex items-center gap-2">Budget Inclus <Check className="w-4 h-4 text-primary" /></span></div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+
+          <div className="text-center mt-12 md:mt-16 flex flex-col items-center justify-center">
+            <div className="inline-flex flex-col sm:flex-row items-center gap-[8px] sm:gap-[12px] bg-dark-accent border border-white/10 px-[24px] py-[16px] text-[13px] text-gray-text rounded-[4px] shadow-lg text-center">
+              <ShieldCheck className="w-5 h-5 text-primary" /> <span>Sans engagement. Évolutif ou résiliable à tout moment.</span>
+            </div>
+          </div>
         </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center max-w-3xl mx-auto mb-10 md:mb-16 flex flex-col items-center">
-            <div className="inline-flex self-center bg-primary/10 border border-primary text-primary px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[24px]">
-              Tarifs
-            </div>
-            <h2 className="text-[28px] sm:text-[40px] lg:text-[48px] font-heading font-normal mb-[24px] uppercase tracking-[1px] px-4">Des offres claires. <br/>Pas de surprise.</h2>
-            
-            {/* INTERACTIVE BILLING TOGGLE */}
-            <div className="flex bg-dark-accent p-1 rounded-[4px] border border-white/10 mt-[12px] w-[90%] sm:w-full max-w-md mx-auto">
-              <button 
-                onClick={() => setBillingCycle('mensuel')} 
-                className={`flex-1 px-[8px] sm:px-[32px] py-[12px] text-[11px] sm:text-[13px] font-bold uppercase tracking-[1px] transition-colors rounded-[2px] ${billingCycle === 'mensuel' ? 'bg-primary text-black-deep' : 'text-gray-text hover:text-white'}`}
-              >
-                Mensuel
-              </button>
-              <button 
-                onClick={() => setBillingCycle('trimestriel')} 
-                className={`flex-1 flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 px-[8px] sm:px-[32px] py-[12px] text-[11px] sm:text-[13px] font-bold uppercase tracking-[1px] transition-colors rounded-[2px] ${billingCycle === 'trimestriel' ? 'bg-primary text-black-deep' : 'text-gray-text hover:text-white'}`}
-              >
-                <span>Trimestriel</span> <span className="bg-[#25D366]/20 text-[#25D366] px-[4px] sm:px-[6px] py-[2px] rounded-[2px] font-bold text-[9px] sm:text-[10px] leading-none">-15%</span>
-              </button>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-[24px] max-w-6xl mx-auto items-center">
-            
-            {/* STARTER */}
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="h-full">
-              <Card className="bg-dark-accent border border-white/10 rounded-[8px] p-[32px] relative transition-all hover:-translate-y-2 hover:border-white/30 hover:shadow-[0_0_40px_rgba(255,255,255,0.05)] h-full flex flex-col justify-between">
-                <CardContent className="p-0">
-                  <div className="mb-[24px]">
-                    <div className="font-heading text-[20px] uppercase tracking-[1px] text-gray-400 mb-[8px]">Starter</div>
-                    <div className="text-[12px] text-gray-text mb-[12px] h-[36px]">Pour les établissements qui veulent commencer à construire leur image</div>
-                    <div className="text-[36px] font-bold text-white flex items-end gap-2">
-                      {billingCycle === 'mensuel' ? '175 000' : '148 750'} 
-                      <span className="text-[14px] font-normal text-gray-text mb-[8px]">FCFA/mo</span>
-                    </div>
-                  </div>
-                  
-                  <div className="h-px bg-white/10 my-[24px]"></div>
-                  
-                  <ul className="list-none text-[14px] text-gray-text flex flex-col gap-[16px] mb-[32px]">
-                    {['Vidéos / mois : 20', 'Durée max : 8 sec', 'Révisions : 1 round', 'Calendrier éditorial : -', 'Manager dédié : -'].map((item, i) => {
-                      const isFeature = item.includes('-');
-                      return (
-                      <li key={i} className={`flex items-start gap-3 ${isFeature ? 'opacity-50' : 'text-white'}`}>
-                        <span className="text-primary mt-[2px] shrink-0">{isFeature ? '—' : '✓'}</span> <span>{item}</span>
-                      </li>
-                      )
-                    })}
-                  </ul>
-                </CardContent>
-                <Button onClick={() => window.location.href = '/contact?offer=starter'} className="block w-full py-[16px] h-auto text-center text-[13px] uppercase font-bold tracking-[1px] border border-white/20 text-white rounded-[4px] bg-transparent hover:bg-white hover:text-black-deep transition-all">
-                  → Commencer
-                </Button>
-              </Card>
-            </motion.div>
-
-            {/* PRO */}
-            <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="relative z-10 lg:-mx-[10px] h-[105%]">
-              <Card className="bg-gradient-to-br from-[#1A1A1A] to-[#0D0D0D] border border-primary rounded-[8px] p-[40px] relative transition-transform hover:-translate-y-2 h-full flex flex-col justify-between shadow-[0_0_40px_rgba(212,175,55,0.15)] overflow-hidden">
-                <div className="absolute top-[20px] right-[20px] bg-primary text-black-deep text-[11px] font-bold py-[4px] px-[12px] uppercase tracking-[1px] rounded-full">
-                  ⭐ Le plus choisi
-                </div>
-                {/* Glow effect */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[60%] bg-primary/5 blur-[50px] pointer-events-none"></div>
-
-                <CardContent className="p-0 relative z-10">
-                  <div className="mb-[24px]">
-                    <div className="font-heading text-[24px] uppercase tracking-[1px] text-primary mb-[8px]">Pro</div>
-                    <div className="text-[12px] text-gray-text mb-[12px] h-[36px]">Pour les marques qui veulent devenir la référence de leur secteur à Ouaga</div>
-                    <div className="text-[48px] font-bold text-white flex items-end gap-2">
-                      {billingCycle === 'mensuel' ? '300 000' : '255 000'} 
-                      <span className="text-[14px] font-normal text-primary/70 mb-[12px]">FCFA/mo</span>
-                    </div>
-                  </div>
-                  
-                  <div className="h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent my-[24px]"></div>
-                  
-                  <ul className="list-none text-[15px] text-gray-200 flex flex-col gap-[16px] mb-[40px]">
-                    {['Vidéos / mois : 28', 'Durée max : 15 sec', 'Révisions : 2 rounds', 'Calendrier éditorial : -', 'Manager dédié : -'].map((item, i) => {
-                      const isFeature = item.includes('-');
-                      return (
-                      <li key={i} className={`flex items-start gap-3 ${isFeature ? 'opacity-50 text-gray-text' : 'text-white font-bold'}`}>
-                        <span className="text-primary mt-[2px] shrink-0">{isFeature ? '—' : '✓'}</span> <span>{item}</span>
-                      </li>
-                      )
-                    })}
-                  </ul>
-                </CardContent>
-                <Button onClick={() => window.location.href = '/contact?offer=pro'} className="block w-full py-[16px] mt-auto h-auto text-center text-[13px] uppercase font-bold tracking-[1px] bg-primary text-black-deep rounded-[4px] hover:bg-gold-accent hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] transition-all relative z-10">
-                  → Choisir Pro
-                </Button>
-              </Card>
-            </motion.div>
-
-            {/* BUSINESS */}
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="h-full">
-              <Card className="bg-dark-accent border border-white/10 rounded-[8px] p-[32px] relative transition-all hover:-translate-y-2 hover:border-white/30 hover:shadow-[0_0_40px_rgba(255,255,255,0.05)] h-full flex flex-col justify-between">
-                <CardContent className="p-0">
-                  <div className="mb-[24px]">
-                    <div className="font-heading text-[20px] uppercase tracking-[1px] text-gray-400 mb-[8px]">Business</div>
-                    <div className="text-[12px] text-gray-text mb-[12px] h-[36px]">Pour les établissements qui veulent dominer leur marché — pas juste y participer</div>
-                    <div className="text-[36px] font-bold text-white flex items-end gap-2">
-                      {billingCycle === 'mensuel' ? '750 000' : '637 500'} 
-                      <span className="text-[14px] font-normal text-gray-text mb-[8px]">FCFA/mo</span>
-                    </div>
-                  </div>
-                  
-                  <div className="h-px bg-white/10 my-[24px]"></div>
-                  
-                  <ul className="list-none text-[14px] text-gray-text flex flex-col gap-[16px] mb-[32px]">
-                    {['Vidéos / mois : 84', 'Durée max : 15 sec +', 'Révisions : Illimitées', 'Calendrier éditorial : ✓', 'Manager dédié : ✓'].map((item, i) => (
-                      <li key={i} className="flex items-start gap-3 text-white">
-                        <span className="text-primary mt-[2px] shrink-0">✓</span> <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-                <Button onClick={() => window.location.href = '/contact?offer=business'} className="block w-full py-[16px] h-auto text-center text-[13px] uppercase font-bold tracking-[1px] border border-white/20 text-white rounded-[4px] bg-transparent hover:bg-white hover:text-black-deep transition-all">
-                  → Devenir la référence
-                </Button>
-              </Card>
-            </motion.div>
-
-          </div>
-
-          <div className="text-center mt-10 md:mt-12 flex flex-col items-center justify-center">
-            <div className="inline-flex flex-col sm:flex-row items-center gap-[8px] sm:gap-[12px] bg-dark-accent border border-white/10 px-[16px] sm:px-[24px] py-[12px] text-[12px] sm:text-[13px] text-gray-text rounded-[2px] shadow-sm text-center">
-              <ShieldCheck className="w-5 h-5 text-primary" /> <span>Sans engagement. Résiliable à tout moment.</span>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -443,24 +490,24 @@ export function Home() {
           <Accordion type="single" collapsible className="w-full">
             {[
               {
-                q: "C'est vraiment de la qualité professionnelle ?",
-                a: "Oui. Pas de mauvais éclairage, pas de bruit de fond. Standards internationaux, identité visuelle intégrée."
+                q: "Comment fonctionne l'employé virtuel au quotidien ?",
+                a: "Une fois configuré avec votre catalogue, vos prix et vos règles, il répond en temps réel à vos prospects sur WhatsApp. Parallèlement, il planifie de façon autonome vos publications sur Facebook, Instagram et TikTok."
               },
               {
-                q: "Quelle différence avec mon community manager actuel ?",
-                a: "Il gère votre présence. Nous construisons votre image. Les deux se complètent."
+                q: "N'y a-t-il pas un risque de réponse bizarre ou d'erreur ?",
+                a: "Afin d'éviter toute déviation, notre assistant suit des règles strictes définies par vous. Il ne peut inventer aucune information qui ne figure pas dans sa base de connaissances approuvée. Si un client pose une question hors périmètre, l'assistant passe le relais à un humain."
               },
               {
-                q: "Je peux tester avant de signer ?",
-                a: "Oui. On produit une vidéo de votre marque en direct devant vous en 20 minutes. Gratuit. Sans engagement."
+                q: "Puis-je essayer et arrêter n'importe quand ?",
+                a: "Absolument. Nos offres sont sans engagement de durée. Mieux encore, nous proposons un mois d'essai à moitié prix (25 000 FCFA pour l'offre de base), satisfait ou entièrement remboursé si le produit ne répond pas à vos attentes."
               },
               {
-                 q: "Comment je paie ?",
-                 a: "Orange Money, Moov Money ou virement. Mensuel, en avance."
+                q: "Comment garantissez-vous la qualité et la sécurité ?",
+                a: "Nous utilisons le système officiel et sécurisé de WhatsApp pour protéger votre compte. Pour la création, notre technologie de pointe génère des visuels et vidéos d'un réalisme absolu, dignes des plus grands studios."
               },
               {
-                 q: "Vous travaillez hors de Ouaga ?",
-                 a: "Oui. 100% digital. Burkina entier + Afrique de l'Ouest."
+                q: "Comment démarrer ma première semaine de contenu ?",
+                a: "Il vous suffit de remplir notre brief stratégique en 2 minutes en cliquant sur l'un de nos boutons d'action. Nous vous contactons sur WhatsApp dans l'heure pour finaliser la mise en route !"
               }
             ].map((faq, i) => (
               <AccordionItem key={i} value={`item-${i}`} className="border-b border-white/10">
@@ -484,14 +531,14 @@ export function Home() {
         
         <div className="container relative mx-auto px-4 text-center z-10 flex flex-col items-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <h2 className="text-[28px] sm:text-[40px] md:text-[48px] lg:text-[64px] font-heading font-normal text-white mb-[16px] md:mb-[24px] uppercase tracking-[1px] max-w-4xl mx-auto leading-tight">Dans 20 minutes, vous pouvez voir votre marque transformée.</h2>
+            <h2 className="text-[28px] sm:text-[40px] md:text-[48px] lg:text-[64px] font-heading font-normal text-white mb-[16px] md:mb-[24px] uppercase tracking-[1px] max-w-4xl mx-auto leading-tight">Pour 50 000 FCFA/mois, mettez votre acquisition clients en pilotage automatique.</h2>
             <p className="text-[16px] md:text-[18px] text-gray-text max-w-3xl mx-auto mb-[48px] leading-[1.6]">
-              On produit une vidéo de votre établissement en direct. <strong className="text-white">Gratuit. Sans engagement.</strong>
+              Configurez votre employé virtuel maintenant. <strong className="text-white">Démo gratuite en direct sous 20 minutes.</strong>
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-[15px]">
               <Button onClick={() => window.location.href = '/contact'} className="w-full sm:w-auto px-[32px] py-[16px] h-auto text-[14px] uppercase font-bold tracking-[1px] bg-primary text-black-deep rounded-[2px] hover:bg-gold-accent transition-colors relative overflow-hidden group shadow-[0_0_30px_rgba(212,175,55,0.4)]">
-                <span className="relative z-10">→ Réserver une démo gratuite</span>
+                <span className="relative z-10">→ Remplir mon brief &amp; Tester l'agent</span>
               </Button>
               <Button onClick={() => window.location.href = '/contact'} className="w-full sm:w-auto px-[32px] py-[16px] h-auto text-[14px] uppercase font-bold tracking-[1px] border border-white text-white bg-transparent rounded-[2px] hover:bg-white hover:text-black-deep transition-colors">
                 → Parler à un conseiller
@@ -506,6 +553,6 @@ export function Home() {
           </motion.div>
         </div>
       </section>
-    </div>
+    </PageTransition>
   );
 }
