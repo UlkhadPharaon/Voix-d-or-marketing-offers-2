@@ -242,7 +242,7 @@ Pas de surprise.
                     <span className={cn("font-heading text-[16px] uppercase tracking-[1px] mb-2 block", plan.popular ? "text-primary" : "text-gray-400")}>{plan.tier}</span>
                     <h3 className="text-[20px] md:text-[24px] uppercase tracking-[1px] text-white font-heading leading-tight">{plan.name}</h3>
                   </div>
-                  <p className="text-[13px] text-gray-text h-[48px] mt-2 leading-relaxed">{plan.description}</p>
+                  <p className="text-[13px] text-gray-text min-h-[48px] mt-2 leading-relaxed">{plan.description}</p>
                   
                   <div className="flex items-end gap-2 mt-6">
                     <span className="text-[36px] md:text-[44px] font-bold text-white flex items-end leading-none">

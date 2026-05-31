@@ -154,11 +154,93 @@ export default function RadialOrbitalTimeline({
 
   return (
     <div
-      className="w-full min-h-[600px] md:min-h-[800px] flex flex-col items-center justify-center bg-transparent overflow-hidden object-contain"
+      className="w-full relative flex flex-col items-center justify-center bg-transparent overflow-hidden object-contain"
       ref={containerRef}
       onClick={handleContainerClick}
     >
-      <div className="relative w-full max-w-4xl h-[600px] md:h-[800px] flex items-center justify-center scale-75 md:scale-100">
+      {/* Mobile View - Vertical Timeline */}
+      <div className="w-full max-w-md mx-auto flex flex-col md:hidden px-4 py-8 relative">
+        <div className="absolute left-[39px] sm:left-[47px] top-10 bottom-10 w-[2px] bg-gradient-to-b from-transparent via-[#D4AF37]/30 to-transparent z-0"></div>
+        
+        <div className="flex flex-col space-y-8 relative z-10 w-full">
+          {timelineData.map((item, index) => {
+            const Icon = item.icon;
+            const isExpanded = expandedItems[item.id];
+            
+            return (
+              <div key={item.id} className="relative flex flex-col">
+                <div 
+                  className="flex items-start gap-4 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleItem(item.id);
+                  }}
+                >
+                  <div className="shrink-0 relative">
+                    <div
+                      className={`
+                      w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center z-10 relative
+                      ${isExpanded ? "bg-[#D4AF37] text-black-deep" : "bg-[#1A1A1A] text-white"}
+                      border-2 ${isExpanded ? "border-white shadow-[0_0_20px_rgba(212,175,55,0.4)]" : "border-white/20"}
+                      transition-all duration-300
+                    `}
+                    >
+                      <Icon size={20} className={isExpanded ? "scale-110" : ""} />
+                    </div>
+                  </div>
+                  
+                  <div className="pt-2 sm:pt-4 flex-1">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-0 mb-1">
+                      <span className="text-[12px] font-bold tracking-[1px] uppercase text-[#D4AF37]">
+                        {item.date}
+                      </span>
+                      <Badge
+                        variant="outline"
+                        className={`w-fit px-2 py-0 h-5 text-[10px] uppercase font-bold tracking-wider rounded-sm ${getStatusStyles(item.status)}`}
+                      >
+                        {item.status === "completed" ? "TERMINÉ" : item.status === "in-progress" ? "EN COURS" : "À VENIR"}
+                      </Badge>
+                    </div>
+                    <h3 className={`text-[16px] sm:text-[18px] font-heading font-normal uppercase tracking-wide transition-colors ${isExpanded ? "text-white" : "text-gray-300"}`}>
+                      {item.title}
+                    </h3>
+                  </div>
+                </div>
+
+                {/* Mobile Expanded Content */}
+                <div 
+                  className={`ml-[32px] sm:ml-[40px] pl-[32px] sm:pl-[40px] overflow-hidden transition-all duration-500 ease-in-out ${isExpanded ? "max-h-[500px] opacity-100 mt-4" : "max-h-0 opacity-0"}`}
+                >
+                  <Card className="bg-[#1A1A1A]/95 border border-[#D4AF37]/20 shadow-lg relative">
+                    <CardContent className="p-4 sm:p-5 text-[13px] sm:text-[14px] text-gray-300">
+                      <p className="leading-relaxed mb-4">{item.content}</p>
+                      
+                      <div className="pt-3 border-t border-white/10">
+                        <div className="flex justify-between items-center text-[10px] sm:text-[11px] text-gray-400 font-bold uppercase tracking-wider mb-2">
+                          <span className="flex items-center gap-1">
+                            <Zap size={12} className="text-[#D4AF37]" />
+                            Intensité
+                          </span>
+                          <span>{item.energy}%</span>
+                        </div>
+                        <div className="w-full h-1.5 bg-black/50 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-gradient-to-r from-[#C8860A] to-[#D4AF37]"
+                            style={{ width: `${item.energy}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Desktop View - Radial Orbital */}
+      <div className="hidden md:flex relative w-full max-w-4xl h-[800px] items-center justify-center scale-100 min-h-[800px]">
         <div
           className="absolute w-full h-full flex items-center justify-center"
           ref={orbitRef}

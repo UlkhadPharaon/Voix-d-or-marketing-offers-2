@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { ArrowDown, Play, Clock, Smartphone, Wallet, TrendingUp, Send, ShieldCheck, Calendar, FileText, User as UserIcon, MessagesSquare, Lightbulb, PenTool, PhoneCall, Check, Minus } from 'lucide-react';
+import { ArrowDown, Play, Clock, Smartphone, Wallet, TrendingUp, Send, ShieldCheck, Calendar, FileText, User as UserIcon, MessagesSquare, Lightbulb, PenTool, PhoneCall, Check, Minus, Zap, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { SEO } from '@/components/SEO';
 import { PageTransition } from '@/components/PageTransition';
@@ -11,6 +11,7 @@ import { SplineScene } from "@/components/ui/splite";
 import { Spotlight } from "@/components/ui/spotlight";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import PricingSection4 from "@/components/ui/pricing-section-4";
+import { EcosystemRadar } from "@/components/ui/ecosystem-radar";
 
 const timelineData = [
   {
@@ -61,6 +62,35 @@ const timelineData = [
 
 export function Home() {
   const [billingCycle, setBillingCycle] = useState<'mensuel' | 'trimestriel'>('mensuel');
+  const [faqSearchQuery, setFaqSearchQuery] = useState('');
+
+  const faqs = [
+    {
+      q: "Comment fonctionne l'employé virtuel au quotidien ?",
+      a: "Une fois configuré avec votre catalogue, vos prix et vos règles, il répond en temps réel à vos prospects sur WhatsApp. Parallèlement, il planifie de façon autonome vos publications sur Facebook, Instagram et TikTok."
+    },
+    {
+      q: "N'y a-t-il pas un risque de réponse bizarre ou d'erreur ?",
+      a: "Afin d'éviter toute déviation, notre assistant suit des règles strictes définies par vous. Il ne peut inventer aucune information qui ne figure pas dans sa base de connaissances approuvée. Si un client pose une question hors périmètre, l'assistant passe le relais à un humain."
+    },
+    {
+      q: "Puis-je essayer et arrêter n'importe quand ?",
+      a: "Absolument. Nos offres sont sans engagement de durée. Mieux encore, nous proposons un mois d'essai à moitié prix (25 000 FCFA pour l'offre de base), satisfait ou entièrement remboursé si le produit ne répond pas à vos attentes."
+    },
+    {
+      q: "Comment garantissez-vous la qualité et la sécurité ?",
+      a: "Nous utilisons le système officiel et sécurisé de WhatsApp pour protéger votre compte. Pour la création, notre technologie de pointe génère des visuels et vidéos d'un réalisme absolu, dignes des plus grands studios."
+    },
+    {
+      q: "Comment démarrer ma première semaine de contenu ?",
+      a: "Il vous suffit de remplir notre brief stratégique en 2 minutes en cliquant sur l'un de nos boutons d'action. Nous vous contactons sur WhatsApp dans l'heure pour finaliser la mise en route !"
+    }
+  ];
+
+  const filteredFaqs = faqs.filter(faq => 
+    faq.q.toLowerCase().includes(faqSearchQuery.toLowerCase()) || 
+    faq.a.toLowerCase().includes(faqSearchQuery.toLowerCase())
+  );
 
   useEffect(() => {
     if (window.location.hash) {
@@ -96,7 +126,7 @@ export function Home() {
         ]}
       />
       {/* SECTION 1: HERO */}
-      <section className="relative min-h-screen flex items-center justify-start bg-black-deep overflow-hidden pt-32 pb-6 px-6 md:px-[40px]">
+      <section className="relative min-h-screen flex items-center justify-start bg-black-deep overflow-hidden pt-32 pb-[140px] px-6 md:px-[40px]">
         {/* Spotlight Effect */}
         <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="#D4AF37" />
 
@@ -178,61 +208,113 @@ export function Home() {
       <InfiniteMarquee />
 
       {/* SECTION 2: VOTRE SITUATION AUJOURD'HUI */}
-      <section className="py-[60px] md:py-[120px] bg-black-deep text-white relative border-t border-white/10">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-10 md:mb-16 flex flex-col items-center">
-            <div className="inline-flex self-center bg-transparent border border-white/20 text-gray-text px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[24px]">
-              Le Problème Réel du Commerce Local
+      <section className="py-[60px] md:py-[120px] bg-black-deep text-white relative border-t border-white/5 overflow-hidden">
+        {/* Background glow */}
+        <div className="absolute top-1/4 -left-[20%] w-[50%] h-[50%] rounded-full bg-red-900/10 blur-[120px] pointer-events-none"></div>
+        <div className="absolute bottom-1/4 -right-[20%] w-[50%] h-[50%] rounded-full bg-primary/5 blur-[120px] pointer-events-none"></div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 max-w-7xl mx-auto">
+            {/* Left Column: Context */}
+            <div className="lg:col-span-5 flex flex-col justify-center">
+              <div className="sticky top-32">
+                <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 text-red-400 px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[24px] rounded-full">
+                  <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                  Le Constat
+                </div>
+                <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-heading font-normal mb-[24px] uppercase tracking-[1px] leading-[1.1]">
+                  Pourquoi vos concurrents stagnent ?
+                </h2>
+                <p className="text-gray-400 text-[15px] sm:text-[16px] leading-[1.8] mb-[32px] max-w-md">
+                  Le commerce local est en pleine mutation. Vos clients sont plus exigeants, votre temps est limité et les standards de communication ont explosé. Rester inactif face à ces trois menaces est dangereux.
+                </p>
+                <div className="hidden lg:block w-full h-[1px] bg-gradient-to-r from-red-500/20 to-transparent"></div>
+              </div>
             </div>
-            <h2 className="text-[28px] sm:text-[40px] md:text-[48px] font-heading font-normal mb-[16px] uppercase tracking-[1px] text-center max-w-4xl">
-              Pourquoi vos concurrents stagnent et comment vous allez dominer
-            </h2>
+
+            {/* Right Column: Problem Cards */}
+            <div className="lg:col-span-7 flex flex-col gap-6">
+              <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.6 }}>
+                <Card className="group bg-black/40 backdrop-blur-xl border border-white/5 rounded-[12px] shadow-[0_8px_32px_rgba(0,0,0,0.5)] hover:border-red-500/30 hover:bg-[#0a0000] hover:shadow-[0_0_40px_rgba(239,68,68,0.05)] transition-all overflow-hidden relative p-[32px] md:p-[40px]">
+                  <div className="absolute inset-0 bg-gradient-to-br from-red-500/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute top-0 left-0 w-[4px] h-0 bg-red-500 group-hover:h-full transition-all duration-500 ease-out"></div>
+                  <CardContent className="p-0 relative z-10 flex flex-col sm:flex-row gap-6">
+                    <div className="shrink-0">
+                      <div className="w-14 h-14 rounded-full border border-red-500/20 bg-red-500/10 flex items-center justify-center text-red-500 font-heading text-[20px] shadow-[inset_0_0_20px_rgba(239,68,68,0.2)]">
+                        01
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="font-heading uppercase tracking-[1px] text-[20px] mb-[12px] text-white">
+                        Clients Disparus
+                      </h3>
+                      <p className="text-gray-400 text-[14px] leading-[1.7]">
+                        Un client demande "Combien ça coûte ?" à 21h. Vous dormez. Le lendemain matin, vous répondez mais il a déjà commandé chez une boutique concurrente. Notre système répond en <strong className="text-white font-normal">30 secondes</strong> et boucle la vente, même la nuit.
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.6, delay: 0.1 }}>
+                <Card className="group bg-black/40 backdrop-blur-xl border border-white/5 rounded-[12px] shadow-[0_8px_32px_rgba(0,0,0,0.5)] hover:border-red-500/30 hover:bg-[#0a0000] hover:shadow-[0_0_40px_rgba(239,68,68,0.05)] transition-all overflow-hidden relative p-[32px] md:p-[40px]">
+                  <div className="absolute inset-0 bg-gradient-to-br from-red-500/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute top-0 left-0 w-[4px] h-0 bg-red-500 group-hover:h-full transition-all duration-500 ease-out"></div>
+                  <CardContent className="p-0 relative z-10 flex flex-col sm:flex-row gap-6">
+                    <div className="shrink-0">
+                      <div className="w-14 h-14 rounded-full border border-red-500/20 bg-red-500/10 flex items-center justify-center text-red-500 font-heading text-[20px] shadow-[inset_0_0_20px_rgba(239,68,68,0.2)]">
+                        02
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="font-heading uppercase tracking-[1px] text-[20px] mb-[12px] text-white">
+                        Contenu Amateur
+                      </h3>
+                      <p className="text-gray-400 text-[14px] leading-[1.7]">
+                        Photos floues faites à la va-vite, visuels encombrés et pleins de coquilles. Cela détruit votre positionnement de marque haut de gamme. Notre technologie génère des <strong className="text-white font-normal">visuels photo-réalistes cinématiques</strong> qui captent l'attention.
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.6, delay: 0.2 }}>
+                <Card className="group bg-black/40 backdrop-blur-xl border border-white/5 rounded-[12px] shadow-[0_8px_32px_rgba(0,0,0,0.5)] hover:border-red-500/30 hover:bg-[#0a0000] hover:shadow-[0_0_40px_rgba(239,68,68,0.05)] transition-all overflow-hidden relative p-[32px] md:p-[40px]">
+                  <div className="absolute inset-0 bg-gradient-to-br from-red-500/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute top-0 left-0 w-[4px] h-0 bg-red-500 group-hover:h-full transition-all duration-500 ease-out"></div>
+                  <CardContent className="p-0 relative z-10 flex flex-col sm:flex-row gap-6">
+                    <div className="shrink-0">
+                      <div className="w-14 h-14 rounded-full border border-red-500/20 bg-red-500/10 flex items-center justify-center text-red-500 font-heading text-[20px] shadow-[inset_0_0_20px_rgba(239,68,68,0.2)]">
+                        03
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="font-heading uppercase tracking-[1px] text-[20px] mb-[12px] text-white">
+                        Gérant Surchargé
+                      </h3>
+                      <p className="text-gray-400 text-[14px] leading-[1.7]">
+                        Vous gérez la boutique, vos fournisseurs, vos équipes... Trouver du temps pour imaginer, créer et poster des publications régulièrement sur les réseaux est infaisable. Notre collaborateur virtuel <strong className="text-white font-normal">gère cette charge à 100%</strong>.
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-              <Card className="h-full bg-dark-accent border border-white/10 rounded-[4px] shadow-none hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-2 transition-all">
-                <CardContent className="p-[32px]">
-                  <h3 className="font-heading uppercase tracking-[1px] text-[18px] mb-[12px] text-white flex items-center gap-3">
-                    <span className="text-red-500 font-bold">🔴</span> WhatsApp : Des Clients Qui Disparaissent
-                  </h3>
-                  <p className="text-gray-text text-[15px] leading-relaxed">
-                    Un client envoie "combien ça coûte ?" à 21h. Vous dormez. Le lendemain matin, vous répondez mais il a déjà commandé chez une boutique plus réactive. Notre système répond en 30 secondes et boucle la vente.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}>
-              <Card className="h-full bg-dark-accent border border-white/10 rounded-[4px] shadow-none hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-2 transition-all">
-                <CardContent className="p-[32px]">
-                  <h3 className="font-heading uppercase tracking-[1px] text-[18px] mb-[12px] text-white flex items-center gap-3">
-                    <span className="text-red-500 font-bold">🔴</span> Le Fléau du Contenu Amateur
-                  </h3>
-                  <p className="text-gray-text text-[15px] leading-relaxed">
-                    Photos floues faites à la va-vite, visuels encombrés et pleins de coquilles. Cela détruit votre positionnement de marque haut de gamme. Notre technologie génère des visuels photo-réalistes cinématiques d'excellence.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }}>
-              <Card className="h-full bg-dark-accent border border-white/10 rounded-[4px] shadow-none hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:-translate-y-2 transition-all">
-                <CardContent className="p-[32px]">
-                  <h3 className="font-heading uppercase tracking-[1px] text-[18px] mb-[12px] text-white flex items-center gap-3">
-                    <span className="text-red-500 font-bold">🔴</span> Gérant Complètement Surchargé
-                  </h3>
-                  <p className="text-gray-text text-[15px] leading-relaxed">
-                    Vous gérez la boutique, vos fournisseurs, vos équipes... Trouver du temps pour imaginer, créer et poster des publications régulièrement sur les réseaux est infaisable. Notre collaborateur virtuel gère cette charge à 100%.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </div>
+          <div className="mt-24 flex flex-col items-center justify-center text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8">
+              <Zap className="w-4 h-4 text-primary" />
+              <span className="text-[12px] font-bold uppercase tracking-[1px] text-primary">La Solution Intelligente</span>
+            </div>
+            <p className="font-heading uppercase tracking-[1px] text-[24px] text-white mb-4 max-w-2xl">L'Employé Virtuel transforme ces problèmes en opportunités de croissance.</p>
+            
+            <EcosystemRadar />
 
-          <div className="mt-20 flex flex-col items-center justify-center text-center">
-            <p className="font-heading uppercase tracking-[1px] text-[18px] text-primary mb-8 max-w-2xl">L'Employé Virtuel est la solution ultime à ces problèmes.</p>
             <motion.div 
               animate={{ y: [0, 10, 0] }} 
               transition={{ repeat: Infinity, duration: 2 }}
+              className="mt-12"
             >
               <ArrowDown className="text-primary w-8 h-8 opacity-50" />
             </motion.div>
@@ -254,7 +336,7 @@ export function Home() {
           </div>
         </div>
         
-        <div className="-my-[150px] relative z-10 w-full">
+        <div className="md:-my-[100px] xl:-my-[150px] relative z-10 w-full">
           {/* We import the new orbital timeline component here */}
           <RadialOrbitalTimeline timelineData={timelineData} />
         </div>
@@ -326,67 +408,67 @@ export function Home() {
               <p className="text-gray-text text-[14px] mt-3 max-w-2xl text-center">Détails des capacités, garanties contractuelles et fonctionnalités de votre Employé Virtuel selon le niveau d'offres.</p>
             </div>
             
-            <div className="bg-[#0f0f0f] border border-white/10 rounded-[8px] overflow-hidden shadow-2xl relative">
-              <div className="absolute top-0 right-1/4 w-1/4 h-full bg-primary/[0.03] pointer-events-none"></div>
+            <div className="bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-[12px] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.5)] relative ring-1 ring-white/5">
+              <div className="absolute top-0 right-1/4 w-1/4 h-full bg-primary/[0.04] pointer-events-none shadow-[inset_0_0_40px_rgba(212,175,55,0.05)]"></div>
               <table className="w-full text-left border-collapse relative z-10">
                 <thead>
                   <tr>
-                    <th className="p-6 text-[13px] text-gray-400 uppercase tracking-[1px] font-bold border-b border-white/10 w-1/4 align-bottom">Garantie & Fonctionnalité</th>
-                    <th className="p-6 text-[13px] text-white uppercase tracking-[1px] font-bold border-b border-white/10 text-center w-1/4 bg-[#141414] align-bottom">Tier 1 <span className="block text-[10px] text-gray-500 font-normal mt-1 normal-case tracking-normal">L'Employé de Base</span></th>
-                    <th className="p-6 text-[13px] text-primary uppercase tracking-[1px] font-bold border-b border-primary/20 text-center relative w-1/4 bg-[#141414] align-bottom">
-                      <div className="absolute top-0 left-0 w-full h-[2px] bg-primary"></div>
+                    <th className="p-6 text-[13px] text-gray-400 uppercase tracking-[1px] font-bold border-b border-white/10 w-1/4 align-bottom bg-transparent">Garantie & Fonctionnalité</th>
+                    <th className="p-6 text-[13px] text-white uppercase tracking-[1px] font-bold border-b border-white/10 text-center w-1/4 bg-white/[0.02] align-bottom">Tier 1 <span className="block text-[10px] text-gray-500 font-normal mt-1 normal-case tracking-normal">L'Employé de Base</span></th>
+                    <th className="p-6 text-[13px] text-primary uppercase tracking-[1px] font-bold border-b border-primary/30 text-center relative w-1/4 bg-primary/[0.05] align-bottom shadow-[0_-20px_40px_-20px_rgba(212,175,55,0.1)_inset]">
+                      <div className="absolute top-0 left-0 w-full h-[2px] bg-primary shadow-[0_0_10px_rgba(212,175,55,0.8)]"></div>
                       Tier 2 <span className="block text-[10px] text-primary/70 font-normal mt-1 normal-case tracking-normal">L'Employé Commercial</span>
                     </th>
-                    <th className="p-6 text-[13px] text-white uppercase tracking-[1px] font-bold border-b border-white/10 text-center w-1/4 bg-[#141414] align-bottom">Tier 3 <span className="block text-[10px] text-gray-500 font-normal mt-1 normal-case tracking-normal">Le Département</span></th>
+                    <th className="p-6 text-[13px] text-white uppercase tracking-[1px] font-bold border-b border-white/10 text-center w-1/4 bg-white/[0.02] align-bottom">Tier 3 <span className="block text-[10px] text-gray-500 font-normal mt-1 normal-case tracking-normal">Le Département</span></th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5 text-[14px]">
-                  <tr className="hover:bg-white/5 transition-colors">
-                    <td className="p-4 pl-6 text-gray-300 font-medium">Temps de Réponse WhatsApp</td>
-                    <td className="p-4 text-center text-white bg-[#141414]/90">&lt; 60 sec</td>
-                    <td className="p-4 text-center text-primary font-bold bg-[#141414]/90">&lt; 30 sec</td>
-                    <td className="p-4 text-center text-white bg-[#141414]/90">&lt; 15 sec</td>
+                  <tr className="hover:bg-white/[0.04] transition-colors duration-300 group">
+                    <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-white transition-colors">Temps de Réponse WhatsApp</td>
+                    <td className="p-4 text-center text-white bg-white/[0.01]">&lt; 60 sec</td>
+                    <td className="p-4 text-center text-primary font-bold bg-primary/[0.02]">&lt; 30 sec</td>
+                    <td className="p-4 text-center text-white bg-white/[0.01]">&lt; 15 sec</td>
                   </tr>
-                  <tr className="hover:bg-white/5 transition-colors">
-                    <td className="p-4 pl-6 text-gray-300 font-medium">Création de Contenus / Mois</td>
-                    <td className="p-4 text-center text-white bg-[#141414]/90">12 visuels + 4 vidéos</td>
-                    <td className="p-4 text-center text-primary font-bold bg-[#141414]/90">20 visuels + 8 vidéos TV</td>
-                    <td className="p-4 text-center text-white font-bold bg-[#141414]/90">40+ visuels + 15 vidéos TV</td>
+                  <tr className="hover:bg-white/[0.04] transition-colors duration-300 group">
+                    <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-white transition-colors">Création de Contenus / Mois</td>
+                    <td className="p-4 text-center text-white bg-white/[0.01]">12 visuels + 4 vidéos</td>
+                    <td className="p-4 text-center text-primary font-bold bg-primary/[0.02]">20 visuels + 8 vidéos TV</td>
+                    <td className="p-4 text-center text-white font-bold bg-white/[0.01]">40+ visuels + 15 vidéos TV</td>
                   </tr>
-                  <tr className="hover:bg-white/5 transition-colors">
-                    <td className="p-4 pl-6 text-gray-300 font-medium">Fréquence des Analyses</td>
-                    <td className="p-4 text-center text-gray-400 bg-[#141414]/90">Mensuelle</td>
-                    <td className="p-4 text-center text-white bg-[#141414]/90">Bimensuelle</td>
-                    <td className="p-4 text-center text-white bg-[#141414]/90">Hebdomadaire + Visio</td>
+                  <tr className="hover:bg-white/[0.04] transition-colors duration-300 group">
+                    <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-white transition-colors">Fréquence des Analyses</td>
+                    <td className="p-4 text-center text-gray-400 bg-white/[0.01]">Mensuelle</td>
+                    <td className="p-4 text-center text-white bg-white/[0.01]">Bimensuelle</td>
+                    <td className="p-4 text-center text-white bg-white/[0.01]">Hebdomadaire + Visio</td>
                   </tr>
-                  <tr className="hover:bg-white/5 transition-colors">
-                    <td className="p-4 pl-6 text-gray-300 font-medium">Base de Données Clients</td>
-                    <td className="p-4 text-center text-gray-400 bg-[#141414]/90">Simple (Capture)</td>
-                    <td className="p-4 text-center text-white bg-[#141414]/90">Segmentée & Enrichie</td>
-                    <td className="p-4 text-center text-primary font-bold bg-[#141414]/90">Exploitation par Campagne</td>
+                  <tr className="hover:bg-white/[0.04] transition-colors duration-300 group">
+                    <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-white transition-colors">Base de Données Clients</td>
+                    <td className="p-4 text-center text-gray-400 bg-white/[0.01]">Simple (Capture)</td>
+                    <td className="p-4 text-center text-white bg-white/[0.01]">Segmentée & Enrichie</td>
+                    <td className="p-4 text-center text-primary font-bold bg-primary/[0.02]">Exploitation par Campagne</td>
                   </tr>
-                  <tr className="hover:bg-white/5 transition-colors">
-                    <td className="p-4 pl-6 text-gray-300 font-medium">Gestion Publicitaire (Ads)</td>
-                    <td className="p-4 text-center text-gray-600 bg-[#141414]/90"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
-                    <td className="p-4 text-center text-white bg-[#141414]/90"><Check className="w-5 h-5 mx-auto text-primary" /> <span className="text-[12px] text-gray-400">Automatisée</span></td>
-                    <td className="p-4 text-center text-white bg-[#141414]/90"><Check className="w-5 h-5 mx-auto text-primary" /> <span className="text-[12px] text-gray-400">Budget 50K Inclus</span></td>
+                  <tr className="hover:bg-white/[0.04] transition-colors duration-300 group">
+                    <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-white transition-colors">Gestion Publicitaire (Ads)</td>
+                    <td className="p-4 text-center text-gray-600 bg-white/[0.01]"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
+                    <td className="p-4 text-center text-white bg-primary/[0.02]"><Check className="w-5 h-5 mx-auto text-primary" /> <span className="text-[12px] text-gray-400">Automatisée</span></td>
+                    <td className="p-4 text-center text-white bg-white/[0.01]"><Check className="w-5 h-5 mx-auto text-primary" /> <span className="text-[12px] text-gray-400">Budget 50K Inclus</span></td>
                   </tr>
-                  <tr className="hover:bg-white/5 transition-colors">
-                    <td className="p-4 pl-6 text-gray-300 font-medium">Séquences de Relances Froids</td>
-                    <td className="p-4 text-center text-gray-600 bg-[#141414]/90"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
-                    <td className="p-4 text-center text-white bg-[#141414]/90"><Check className="w-5 h-5 mx-auto text-primary" /></td>
-                    <td className="p-4 text-center text-white bg-[#141414]/90"><Check className="w-5 h-5 mx-auto text-primary" /></td>
+                  <tr className="hover:bg-white/[0.04] transition-colors duration-300 group">
+                    <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-white transition-colors">Séquences de Relances Froids</td>
+                    <td className="p-4 text-center text-gray-600 bg-white/[0.01]"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
+                    <td className="p-4 text-center text-white bg-primary/[0.02]"><Check className="w-5 h-5 mx-auto text-primary" /></td>
+                    <td className="p-4 text-center text-white bg-white/[0.01]"><Check className="w-5 h-5 mx-auto text-primary" /></td>
                   </tr>
-                  <tr className="hover:bg-white/5 transition-colors">
-                    <td className="p-4 pl-6 text-gray-300 font-medium">Landing Page Dédiée</td>
-                    <td className="p-4 text-center text-gray-600 bg-[#141414]/90"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
-                    <td className="p-4 text-center text-gray-600 bg-[#141414]/90"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
-                    <td className="p-4 text-center text-white bg-[#141414]/90"><Check className="w-5 h-5 mx-auto text-primary" /> <span className="text-[12px] text-gray-400">Maintenue</span></td>
+                  <tr className="hover:bg-white/[0.04] transition-colors duration-300 group">
+                    <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-white transition-colors">Landing Page Dédiée</td>
+                    <td className="p-4 text-center text-gray-600 bg-white/[0.01]"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
+                    <td className="p-4 text-center text-gray-600 bg-primary/[0.02]"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
+                    <td className="p-4 text-center text-white bg-white/[0.01]"><Check className="w-5 h-5 mx-auto text-primary" /> <span className="text-[12px] text-gray-400">Maintenue</span></td>
                   </tr>
                 </tbody>
               </table>
-              <div className="bg-[#0A0A0A] p-5 text-center border-t border-white/5 relative z-10">
-                <p className="text-[12px] text-gray-500 italic">Note : Nous garantissons par écrit la livraison parfaite de leads qualifiés et d'optimisations publicitaires. Les budgets d'acquisition (hors Tier 3) sont ajustés directement selon vos enjeux.</p>
+              <div className="bg-black/40 backdrop-blur-md p-5 text-center border-t border-white/5 relative z-10">
+                <p className="text-[12px] text-gray-400 italic">Note : Nous garantissons par écrit la livraison parfaite de leads qualifiés et d'optimisations publicitaires. Les budgets d'acquisition (hors Tier 3) sont ajustés directement selon vos enjeux.</p>
               </div>
             </div>
           </div>
@@ -481,44 +563,40 @@ export function Home() {
       {/* SECTION 7: FAQ */}
       <section id="faq" className="py-[60px] md:py-[120px] bg-black-deep text-white border-t border-white/10 relative">
         <div className="container mx-auto px-4 max-w-4xl relative z-10">
-          <div className="text-center mb-[40px] md:mb-[80px] flex flex-col items-center">
+          <div className="text-center mb-[40px] md:mb-[60px] flex flex-col items-center">
             <div className="inline-flex self-center bg-primary/10 border border-primary text-primary px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[24px]">
               FAQ
+            </div>
+            
+            <div className="w-full max-w-md relative mt-4">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+              <input 
+                type="text" 
+                placeholder="Rechercher une question..."
+                value={faqSearchQuery}
+                onChange={(e) => setFaqSearchQuery(e.target.value)}
+                className="w-full bg-[#111] border border-white/20 rounded-[8px] pl-12 pr-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)]"
+              />
             </div>
           </div>
 
           <Accordion type="single" collapsible className="w-full">
-            {[
-              {
-                q: "Comment fonctionne l'employé virtuel au quotidien ?",
-                a: "Une fois configuré avec votre catalogue, vos prix et vos règles, il répond en temps réel à vos prospects sur WhatsApp. Parallèlement, il planifie de façon autonome vos publications sur Facebook, Instagram et TikTok."
-              },
-              {
-                q: "N'y a-t-il pas un risque de réponse bizarre ou d'erreur ?",
-                a: "Afin d'éviter toute déviation, notre assistant suit des règles strictes définies par vous. Il ne peut inventer aucune information qui ne figure pas dans sa base de connaissances approuvée. Si un client pose une question hors périmètre, l'assistant passe le relais à un humain."
-              },
-              {
-                q: "Puis-je essayer et arrêter n'importe quand ?",
-                a: "Absolument. Nos offres sont sans engagement de durée. Mieux encore, nous proposons un mois d'essai à moitié prix (25 000 FCFA pour l'offre de base), satisfait ou entièrement remboursé si le produit ne répond pas à vos attentes."
-              },
-              {
-                q: "Comment garantissez-vous la qualité et la sécurité ?",
-                a: "Nous utilisons le système officiel et sécurisé de WhatsApp pour protéger votre compte. Pour la création, notre technologie de pointe génère des visuels et vidéos d'un réalisme absolu, dignes des plus grands studios."
-              },
-              {
-                q: "Comment démarrer ma première semaine de contenu ?",
-                a: "Il vous suffit de remplir notre brief stratégique en 2 minutes en cliquant sur l'un de nos boutons d'action. Nous vous contactons sur WhatsApp dans l'heure pour finaliser la mise en route !"
-              }
-            ].map((faq, i) => (
-              <AccordionItem key={i} value={`item-${i}`} className="border-b border-white/10">
-                <AccordionTrigger className="text-left font-bold text-[14px] uppercase tracking-[1px] py-[24px] hover:text-primary transition-colors hover:no-underline text-white">
-                  {faq.q}
-                </AccordionTrigger>
-                <AccordionContent className="text-gray-text text-[14px] leading-relaxed pb-[24px]">
-                  {faq.a}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
+            {filteredFaqs.length > 0 ? (
+              filteredFaqs.map((faq, i) => (
+                <AccordionItem key={i} value={`item-${i}`} className="border-b border-white/10">
+                  <AccordionTrigger className="text-left font-bold text-[14px] uppercase tracking-[1px] py-[24px] hover:text-primary transition-colors hover:no-underline text-white">
+                    {faq.q}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-gray-text text-[14px] leading-relaxed pb-[24px]">
+                    {faq.a}
+                  </AccordionContent>
+                </AccordionItem>
+              ))
+            ) : (
+              <div className="text-center py-12 text-gray-500">
+                Aucune réponse trouvée pour "{faqSearchQuery}". N'hésitez pas à nous contacter directement.
+              </div>
+            )}
           </Accordion>
         </div>
       </section>
@@ -530,25 +608,25 @@ export function Home() {
         </div>
         
         <div className="container relative mx-auto px-4 text-center z-10 flex flex-col items-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <h2 className="text-[28px] sm:text-[40px] md:text-[48px] lg:text-[64px] font-heading font-normal text-white mb-[16px] md:mb-[24px] uppercase tracking-[1px] max-w-4xl mx-auto leading-tight">Pour 50 000 FCFA/mois, mettez votre acquisition clients en pilotage automatique.</h2>
-            <p className="text-[16px] md:text-[18px] text-gray-text max-w-3xl mx-auto mb-[48px] leading-[1.6]">
-              Configurez votre employé virtuel maintenant. <strong className="text-white">Démo gratuite en direct sous 20 minutes.</strong>
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="w-full">
+            <h2 className="text-[24px] sm:text-[40px] md:text-[48px] lg:text-[56px] font-heading font-normal text-white mb-[16px] md:mb-[24px] uppercase tracking-[1px] max-w-4xl mx-auto leading-tight break-words">Pour 50 000 FCFA/mois, mettez votre acquisition clients en pilotage automatique.</h2>
+            <p className="text-[15px] sm:text-[16px] md:text-[18px] text-gray-text max-w-3xl mx-auto mb-[40px] md:mb-[48px] leading-[1.6]">
+              Configurez votre employé virtuel maintenant. <strong className="text-white block sm:inline mt-2 sm:mt-0">Démo gratuite en direct sous 20 minutes.</strong>
             </p>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-[15px]">
-              <Button onClick={() => window.location.href = '/contact'} className="w-full sm:w-auto px-[32px] py-[16px] h-auto text-[14px] uppercase font-bold tracking-[1px] bg-primary text-black-deep rounded-[2px] hover:bg-gold-accent transition-colors relative overflow-hidden group shadow-[0_0_30px_rgba(212,175,55,0.4)]">
-                <span className="relative z-10">→ Remplir mon brief &amp; Tester l'agent</span>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-[15px] w-full max-w-sm sm:max-w-none mx-auto">
+              <Button onClick={() => window.location.href = '/contact'} className="w-full sm:w-auto px-[24px] sm:px-[32px] py-[16px] h-auto text-[13px] sm:text-[14px] uppercase font-bold tracking-[1px] bg-primary text-black-deep rounded-[2px] hover:bg-gold-accent transition-colors relative overflow-hidden group shadow-[0_0_30px_rgba(212,175,55,0.4)] whitespace-normal min-h-[56px]">
+                <span className="relative z-10 text-center">→ Remplir mon brief</span>
               </Button>
-              <Button onClick={() => window.location.href = '/contact'} className="w-full sm:w-auto px-[32px] py-[16px] h-auto text-[14px] uppercase font-bold tracking-[1px] border border-white text-white bg-transparent rounded-[2px] hover:bg-white hover:text-black-deep transition-colors">
+              <Button onClick={() => window.location.href = '/contact'} className="w-full sm:w-auto px-[24px] sm:px-[32px] py-[16px] h-auto text-[13px] sm:text-[14px] uppercase font-bold tracking-[1px] border border-white text-white bg-transparent rounded-[2px] hover:bg-white hover:text-black-deep transition-colors whitespace-normal min-h-[56px]">
                 → Parler à un conseiller
               </Button>
             </div>
             
-            <div className="mt-[48px] inline-flex items-center justify-center gap-[12px] text-white border border-white/10 bg-dark-accent px-[24px] py-[12px] rounded-[2px]">
-              <span className="text-[#25D366]">📱</span>
-              <span className="font-mono font-bold text-[14px]">+226 44 90 66 29</span>
-              <span className="text-gray-text text-[12px] italic ml-[8px] uppercase tracking-[1px]">- Réponse en moins d'1 heure.</span>
+            <div className="mt-[48px] flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-[12px] text-white border border-white/10 bg-dark-accent p-4 sm:px-[24px] sm:py-[12px] rounded-[2px] w-full max-w-sm sm:max-w-max mx-auto">
+              <span className="text-[#25D366] text-xl mb-1 sm:mb-0">📱</span>
+              <span className="font-mono font-bold text-[14px] sm:text-[15px]">+226 44 90 66 29</span>
+              <span className="text-gray-text text-[11px] sm:text-[12px] italic sm:ml-[8px] uppercase tracking-[1px] text-center mt-1 sm:mt-0">- Réponse en moins d'1 heure.</span>
             </div>
           </motion.div>
         </div>
