@@ -105,7 +105,7 @@ export function Home() {
   }, []);
 
   return (
-    <PageTransition className="w-full">
+    <PageTransition className="w-full relative">
       <SEO 
         title="L'Employé Virtuel Permanent à 50 000 FCFA/mois | Studio Voix d'Or"
         description="Studio Voix d'Or déploie votre premier collaborateur virtuel 24h/24, 7j/7. Réponses aux clients sur WhatsApp en moins de 30s, création de visuels et vidéos de prestige, et génération automatique de prospects."
@@ -125,8 +125,11 @@ export function Home() {
           }
         ]}
       />
+
+      {/* Background moved to Layout */}
+
       {/* SECTION 1: HERO */}
-      <section className="relative min-h-screen flex items-center justify-start bg-black-deep overflow-hidden pt-32 pb-[140px] px-6 md:px-[40px]">
+      <section className="relative min-h-screen flex items-center justify-start bg-transparent overflow-hidden pt-32 pb-[140px] px-6 md:px-[40px]">
         {/* Spotlight Effect */}
         <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="#D4AF37" />
 
@@ -205,18 +208,32 @@ export function Home() {
       </section>
 
       {/* Infinite Marquee Section */}
-      <InfiniteMarquee />
+      <div className="relative z-10 pointer-events-auto">
+        <InfiniteMarquee />
+      </div>
 
       {/* SECTION 2: VOTRE SITUATION AUJOURD'HUI */}
-      <section className="py-[60px] md:py-[120px] bg-black-deep text-white relative border-t border-white/5 overflow-hidden">
+      <section className="py-[60px] md:py-[120px] bg-white/[0.02] backdrop-blur-xl text-white relative border-t border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col justify-center min-h-[80vh]">
+        {/* Cyber Mannequin Background */}
+        <div className="absolute md:top-0 md:right-0 inset-0 md:inset-auto md:w-[60vw] md:h-full z-0 opacity-40 md:opacity-50 flex items-end md:items-center justify-center md:justify-end translate-y-32 md:-translate-y-10 scale-125 md:scale-100">
+          <SplineScene 
+            scene="/cyber_mannequin.splinecode"
+            className="w-full h-full"
+          />
+          {/* Gradient to blend with background seamlessly */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black-deep via-transparent to-black-deep pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black-deep via-transparent to-transparent pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-black-deep via-transparent to-transparent hidden md:block pointer-events-none"></div>
+        </div>
+
         {/* Background glow */}
         <div className="absolute top-1/4 -left-[20%] w-[50%] h-[50%] rounded-full bg-red-900/10 blur-[120px] pointer-events-none"></div>
         <div className="absolute bottom-1/4 -right-[20%] w-[50%] h-[50%] rounded-full bg-primary/5 blur-[120px] pointer-events-none"></div>
 
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto px-4 relative z-10 pointer-events-none">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 max-w-7xl mx-auto">
             {/* Left Column: Context */}
-            <div className="lg:col-span-5 flex flex-col justify-center">
+            <div className="lg:col-span-5 flex flex-col justify-center pointer-events-auto">
               <div className="sticky top-32">
                 <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 text-red-400 px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[24px] rounded-full">
                   <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
@@ -233,7 +250,7 @@ export function Home() {
             </div>
 
             {/* Right Column: Problem Cards */}
-            <div className="lg:col-span-7 flex flex-col gap-6">
+            <div className="lg:col-span-7 flex flex-col gap-6 pointer-events-auto">
               <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.6 }}>
                 <Card className="group bg-black/40 backdrop-blur-xl border border-white/5 rounded-[12px] shadow-[0_8px_32px_rgba(0,0,0,0.5)] hover:border-red-500/30 hover:bg-[#0a0000] hover:shadow-[0_0_40px_rgba(239,68,68,0.05)] transition-all overflow-hidden relative p-[32px] md:p-[40px]">
                   <div className="absolute inset-0 bg-gradient-to-br from-red-500/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -302,7 +319,7 @@ export function Home() {
             </div>
           </div>
 
-          <div className="mt-24 flex flex-col items-center justify-center text-center">
+          <div className="mt-24 flex flex-col items-center justify-center text-center pointer-events-auto">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8">
               <Zap className="w-4 h-4 text-primary" />
               <span className="text-[12px] font-bold uppercase tracking-[1px] text-primary">La Solution Intelligente</span>
@@ -323,9 +340,20 @@ export function Home() {
       </section>
 
       {/* SECTION 3: CALENDRIER OPERATOIRE DE L'ASSISTANT */}
-      <section className="py-[60px] md:py-[120px] bg-[#0a0a0a] text-white relative border-t border-white/5 overflow-hidden">
-        <div className="container mx-auto px-4 max-w-5xl relative z-20">
-          <div className="text-center mb-10 md:mb-16 flex flex-col items-center">
+      <section className="py-[60px] md:py-[120px] bg-black/20 backdrop-blur-3xl text-white relative border-t border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden">
+        {/* Robot Background */}
+        <div className="absolute inset-0 z-0 h-full w-full opacity-30 md:opacity-50 flex items-center justify-center">
+          <SplineScene 
+            scene="/genkub_greeting_robot.splinecode"
+            className="w-full h-full"
+          />
+          {/* Gradients pour fondre le robot dans le fond */}
+          <div className="absolute inset-0 bg-transparent bg-gradient-to-t from-[#0a0a0a] via-transparent to-[#0a0a0a] pointer-events-none"></div>
+          <div className="absolute inset-0 bg-[#0a0a0a]/40 pointer-events-none"></div>
+        </div>
+
+        <div className="container mx-auto px-4 max-w-5xl relative z-20 pointer-events-none">
+          <div className="text-center mb-10 md:mb-16 flex flex-col items-center pointer-events-auto">
             <div className="inline-flex self-center bg-transparent border border-white/20 text-gray-text px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[24px]">
               Efficacité Systématique
             </div>
@@ -336,13 +364,13 @@ export function Home() {
           </div>
         </div>
         
-        <div className="md:-my-[100px] xl:-my-[150px] relative z-10 w-full">
+        <div className="md:-my-[100px] xl:-my-[150px] relative z-10 w-full pointer-events-auto">
           {/* We import the new orbital timeline component here */}
           <RadialOrbitalTimeline timelineData={timelineData} />
         </div>
 
-        <div className="container mx-auto px-4 max-w-5xl relative z-20">
-          <div className="mt-12 text-center border border-primary/30 bg-primary/5 p-8 rounded-[4px]">
+        <div className="container mx-auto px-4 max-w-5xl relative z-20 pointer-events-none">
+          <div className="mt-12 text-center border border-primary/30 bg-primary/10 backdrop-blur-xl shadow-[0_8px_32px_rgba(212,175,55,0.1)] p-8 rounded-[8px] pointer-events-auto">
             <p className="text-[18px] md:text-[20px] font-heading uppercase tracking-[1px] text-primary mb-2">LA SÉCURITÉ CONTRACTUELLE :</p>
             <p className="text-white text-[15px] md:text-[17px] max-w-3xl mx-auto leading-relaxed">
               Pour garantir votre sérénité, nous verrouillons par écrit : des temps de réponse WhatsApp inférieurs à l'offre choisie, notre disponibilité absolue 24h/24 et la constitution complète de votre base de données cibles.
@@ -352,9 +380,17 @@ export function Home() {
       </section>
 
       {/* SECTION 4: COMMENT ÇA MARCHE / NOTRE DÉMO LIVE */}
-      <section className="py-[60px] md:py-[120px] bg-black-deep text-white relative border-t border-white/10">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <div className="mb-10 text-center flex flex-col items-center">
+      <section className="py-[60px] md:py-[120px] bg-white/[0.02] backdrop-blur-xl text-white relative border-t border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden">
+        {/* Futuristic Rays Background (Optimized) */}
+        <div className="absolute inset-0 z-0 h-full w-full pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[100px] mix-blend-screen"></div>
+          {/* Gradients to fade blending with the section */}
+          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black-deep to-transparent"></div>
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black-deep to-transparent"></div>
+        </div>
+
+        <div className="container mx-auto px-4 max-w-5xl relative z-20 pointer-events-none">
+          <div className="mb-10 text-center flex flex-col items-center pointer-events-auto">
             <div className="inline-flex bg-transparent border border-white/20 text-gray-text px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[24px]">
               La Méthodologie Imbattable
             </div>
@@ -366,7 +402,7 @@ export function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-[40px]">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-[40px] pointer-events-auto">
             {[
               { num: 'I', title: 'Le Constat', desc: 'Combien de messages WhatsApp perdez-vous en soirée ? Près de 80% des entreprises perdent leurs prospects après la fermeture.' },
               { num: 'II', title: 'Démo Instantanée', desc: 'Vous nous donnez votre numéro. Notre collaborateur virtuel vous écrit et gère une conversation simulée de vente de manière parfaite.' },
@@ -379,7 +415,7 @@ export function Home() {
                 whileInView={{ opacity: 1, y: 0 }} 
                 viewport={{ once: true }} 
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="flex flex-col items-start border border-white/10 bg-dark-accent p-6 rounded-[4px] hover:border-primary/50 transition-colors"
+                className="flex flex-col items-start border border-white/10 bg-white/[0.03] backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.2)] p-6 rounded-[8px] hover:border-primary/50 transition-colors"
               >
                 <div className="font-heading text-[24px] text-primary mb-[16px]">
                   {step.num}
@@ -393,10 +429,15 @@ export function Home() {
       </section>
 
       {/* SECTION 4: PRICING */}
-      <section id="offres" className="bg-black-deep border-t border-primary/20 relative">
+      <section id="offres" className="bg-black/20 backdrop-blur-3xl border-t border-primary/20 relative pointer-events-auto shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
         <PricingSection4 />
 
-        <div className="bg-black-deep relative pb-24 border-t border-white/5 pt-16">
+        <div className="bg-transparent relative pb-24 border-t border-white/5 pt-16">
+          {/* Transparence Background (Optimized) */}
+          <div className="absolute inset-0 z-0 h-full w-full pointer-events-none opacity-50">
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-black-deep to-black-deep"></div>
+            <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black-deep to-transparent"></div>
+          </div>
           <div className="container mx-auto px-4 relative z-10">
           {/* Table of guarantees */}
           <div className="mt-20 max-w-[1000px] mx-auto hidden lg:block">
@@ -483,7 +524,7 @@ export function Home() {
             </div>
             
             <Accordion type="single" collapsible className="w-full space-y-4">
-              <AccordionItem value="item-1" className="border-white/10 bg-[#121212] rounded-[8px] overflow-hidden px-4">
+              <AccordionItem value="item-1" className="border-white/10 bg-white/[0.03] backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.2)] rounded-[8px] overflow-hidden px-4">
                 <AccordionTrigger className="text-white hover:no-underline hover:text-primary py-4 font-bold text-[14px]">Temps de Réponse WhatsApp</AccordionTrigger>
                 <AccordionContent className="text-gray-400 pb-4 flex flex-col gap-3">
                   <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Tier 1</span> <span className="text-white">&lt; 60 sec</span></div>
@@ -491,7 +532,7 @@ export function Home() {
                   <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Tier 3</span> <span className="text-white">&lt; 15 sec</span></div>
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="item-2" className="border-white/10 bg-[#121212] rounded-[8px] overflow-hidden px-4">
+              <AccordionItem value="item-2" className="border-white/10 bg-white/[0.03] backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.2)] rounded-[8px] overflow-hidden px-4">
                 <AccordionTrigger className="text-white hover:no-underline hover:text-primary py-4 font-bold text-[14px]">Création de Contenus / Mois</AccordionTrigger>
                 <AccordionContent className="text-gray-400 pb-4 flex flex-col gap-3">
                   <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Tier 1</span> <span className="text-white text-right">12 visuels<br/>4 vidéos</span></div>
@@ -499,7 +540,7 @@ export function Home() {
                   <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Tier 3</span> <span className="text-white font-bold text-right">40+ visuels<br/>15 vidéos TV</span></div>
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="item-3" className="border-white/10 bg-[#121212] rounded-[8px] overflow-hidden px-4">
+              <AccordionItem value="item-3" className="border-white/10 bg-white/[0.03] backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.2)] rounded-[8px] overflow-hidden px-4">
                 <AccordionTrigger className="text-white hover:no-underline hover:text-primary py-4 font-bold text-[14px]">Gestion Publicitaire</AccordionTrigger>
                 <AccordionContent className="text-gray-400 pb-4 flex flex-col gap-3">
                   <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Tier 1</span> <span><Minus className="w-4 h-4 opacity-50" /></span></div>
@@ -511,7 +552,7 @@ export function Home() {
           </div>
 
           <div className="text-center mt-12 md:mt-16 flex flex-col items-center justify-center">
-            <div className="inline-flex flex-col sm:flex-row items-center gap-[8px] sm:gap-[12px] bg-dark-accent border border-white/10 px-[24px] py-[16px] text-[13px] text-gray-text rounded-[4px] shadow-lg text-center">
+            <div className="inline-flex flex-col sm:flex-row items-center gap-[8px] sm:gap-[12px] bg-white/[0.05] backdrop-blur-2xl border border-white/10 px-[24px] py-[16px] text-[13px] text-gray-text rounded-[8px] shadow-[0_8px_32px_rgba(212,175,55,0.05)] text-center">
               <ShieldCheck className="w-5 h-5 text-primary" /> <span>Sans engagement. Évolutif ou résiliable à tout moment.</span>
             </div>
           </div>
@@ -520,12 +561,12 @@ export function Home() {
       </section>
 
       {/* SECTION 6: LEAD MAGNET */}
-      <section className="py-[60px] md:py-[120px] bg-[#111] text-white border-t border-white/10 relative overflow-hidden">
+      <section className="py-[60px] md:py-[120px] bg-white/[0.03] backdrop-blur-xl text-white border-t border-white/10 relative overflow-hidden pointer-events-none shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
         {/* Glow effect */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-primary/10 blur-[80px] md:blur-[120px] pointer-events-none rounded-full"></div>
         
-        <div className="container mx-auto px-4 max-w-4xl relative z-10">
-          <Card className="bg-black-deep border border-primary/30 rounded-[8px] p-6 sm:p-8 md:p-[60px] text-center shadow-[0_0_50px_rgba(212,175,55,0.15)] relative overflow-hidden">
+        <div className="container mx-auto px-4 max-w-4xl relative z-10 pointer-events-auto">
+          <Card className="bg-white/[0.05] backdrop-blur-3xl border border-primary/30 rounded-[8px] p-6 sm:p-8 md:p-[60px] text-center shadow-[0_8px_32px_rgba(212,175,55,0.15)] relative overflow-hidden">
             {/* Inner accent line */}
             <div className="absolute top-0 left-0 w-full h-[4px] bg-gradient-to-r from-transparent via-primary to-transparent"></div>
             
@@ -561,8 +602,8 @@ export function Home() {
       </section>
 
       {/* SECTION 7: FAQ */}
-      <section id="faq" className="py-[60px] md:py-[120px] bg-black-deep text-white border-t border-white/10 relative">
-        <div className="container mx-auto px-4 max-w-4xl relative z-10">
+      <section id="faq" className="py-[60px] md:py-[120px] bg-black/20 backdrop-blur-3xl text-white border-t border-white/10 relative pointer-events-none shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+        <div className="container mx-auto px-4 max-w-4xl relative z-10 pointer-events-auto">
           <div className="text-center mb-[40px] md:mb-[60px] flex flex-col items-center">
             <div className="inline-flex self-center bg-primary/10 border border-primary text-primary px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[24px]">
               FAQ
@@ -575,7 +616,7 @@ export function Home() {
                 placeholder="Rechercher une question..."
                 value={faqSearchQuery}
                 onChange={(e) => setFaqSearchQuery(e.target.value)}
-                className="w-full bg-[#111] border border-white/20 rounded-[8px] pl-12 pr-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)]"
+                className="w-full bg-white/[0.05] backdrop-blur-md border border-white/20 rounded-[8px] pl-12 pr-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)]"
               />
             </div>
           </div>
@@ -602,12 +643,12 @@ export function Home() {
       </section>
 
       {/* SECTION 8: CTA TOTAL */}
-      <section className="py-[60px] md:py-[120px] relative overflow-hidden bg-black-deep border-t border-primary/20">
+      <section className="py-[60px] md:py-[120px] relative overflow-hidden bg-white/[0.02] backdrop-blur-xl border-t border-primary/20 pointer-events-none shadow-[0_-8px_32px_rgba(0,0,0,0.5)]">
         <div className="absolute inset-0 pointer-events-none z-0 opacity-10" 
              style={{ backgroundImage: 'repeating-linear-gradient(90deg, #d4af37 0px, #d4af37 1px, transparent 1px, transparent 40px), repeating-linear-gradient(0deg, #d4af37 0px, #d4af37 1px, transparent 1px, transparent 40px)' }}>
         </div>
         
-        <div className="container relative mx-auto px-4 text-center z-10 flex flex-col items-center">
+        <div className="container relative mx-auto px-4 text-center z-10 flex flex-col items-center pointer-events-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="w-full">
             <h2 className="text-[24px] sm:text-[40px] md:text-[48px] lg:text-[56px] font-heading font-normal text-white mb-[16px] md:mb-[24px] uppercase tracking-[1px] max-w-4xl mx-auto leading-tight break-words">Pour 50 000 FCFA/mois, mettez votre acquisition clients en pilotage automatique.</h2>
             <p className="text-[15px] sm:text-[16px] md:text-[18px] text-gray-text max-w-3xl mx-auto mb-[40px] md:mb-[48px] leading-[1.6]">

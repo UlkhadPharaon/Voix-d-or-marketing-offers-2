@@ -4,6 +4,7 @@ import { Layout } from '@/components/Layout';
 import { Home } from '@/pages/Home';
 import { Contact } from '@/pages/Contact';
 import { Portfolio } from '@/pages/Portfolio';
+import { NotFound } from '@/pages/NotFound';
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -16,6 +17,7 @@ function AnimatedRoutes() {
           <Route index element={<Home />} />
           <Route path="contact" element={<Contact />} />
           <Route path="portfolio" element={<Portfolio />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </AnimatePresence>

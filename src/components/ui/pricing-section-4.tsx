@@ -83,7 +83,7 @@ const PricingSwitch = ({ onSwitch }: { onSwitch: (value: string) => void }) => {
 
   return (
     <div className="flex justify-center mt-6">
-      <div className="relative z-10 mx-auto flex w-fit rounded-[4px] bg-[#1A1A1A] border border-white/10 p-1">
+      <div className="relative z-10 mx-auto flex w-fit rounded-[4px] bg-black/40 backdrop-blur-md border border-white/10 p-1">
         <button
           onClick={() => handleSwitch("0")}
           className={cn(
@@ -150,14 +150,14 @@ export default function PricingSection4() {
 
   return (
     <div
-      className="w-full relative bg-black-deep overflow-hidden pb-20"
+      className="w-full relative bg-transparent overflow-hidden pb-20"
       ref={pricingRef}
     >
       <TimelineContent
         animationNum={4}
         timelineRef={pricingRef}
         customVariants={revealVariants}
-        className="absolute top-0 h-96 w-full overflow-hidden"
+        className="absolute top-0 h-full w-full overflow-hidden opacity-20 pointer-events-none"
         style={{ WebkitMaskImage: 'radial-gradient(100% 100% at 50% 0%, white, transparent)' }}
       >
         <div className="absolute inset-x-0 top-0 h-full bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:40px_40px]"></div>
@@ -224,8 +224,8 @@ Pas de surprise.
               <Card
                 className={cn("w-full border rounded-[8px] flex flex-col justify-between transition-all duration-300", 
                   plan.popular 
-                  ? "bg-gradient-to-b from-[#1A1A1A] to-[#0D0D0D] border-primary shadow-[0_0_50px_rgba(212,175,55,0.15)] overflow-hidden" 
-                  : "bg-[#121212] border-white/10 hover:border-white/20"
+                  ? "bg-white/[0.05] backdrop-blur-2xl border-primary shadow-[0_0_50px_rgba(212,175,55,0.15)] overflow-hidden" 
+                  : "bg-white/[0.02] backdrop-blur-xl border-white/10 hover:border-white/20"
                 )}
               >
                 {plan.popular && (

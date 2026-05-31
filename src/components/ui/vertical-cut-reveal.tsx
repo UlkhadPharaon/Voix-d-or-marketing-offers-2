@@ -9,7 +9,7 @@ import React, {
   useRef,
   useState,
 } from "react"
-import { motion, AnimationProps } from "framer-motion"
+import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
 
 interface TextProps {
@@ -139,7 +139,7 @@ const VerticalCutReveal = forwardRef<VerticalCutRevealRef, TextProps>(
         y: 0,
         transition: {
           ...transition,
-          delay: (transition?.delay ? Number(transition.delay) : 0) + getStaggerDelay(i),
+          delay: ((transition as any)?.delay ? Number((transition as any).delay) : 0) + getStaggerDelay(i),
         },
       }),
     }

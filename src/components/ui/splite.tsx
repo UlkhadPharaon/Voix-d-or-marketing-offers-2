@@ -1,6 +1,8 @@
 'use client'
 
-import { Suspense, lazy } from 'react'
+import { Suspense, lazy, useRef, useState } from 'react'
+import { useInView } from 'motion/react'
+import { ErrorBoundary } from '../ErrorBoundary'
 const Spline = lazy(() => import('@splinetool/react-spline'))
 
 interface SplineSceneProps {
@@ -9,30 +11,31 @@ interface SplineSceneProps {
 }
 
 export function SplineScene({ scene, className }: SplineSceneProps) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [hasMounted, setHasMounted] = useState(false)
+  const isInView = useInView(ref, { once: false, margin: "100px" })
+
+  // We keep it mounted if it has ever been in view, or we can just strictly unmount it.
+  // Actually, keeping 6 webgl contexts alive is the problem. We must strictly unmount.
+
   return (
-    <Suspense 
-      fallback={
-        <div className="w-full h-full flex items-center justify-center">
-          <div className="loader-wrapper">
-            <div className="loader"></div>
-            <div className="loader-letter">L</div>
-            <div className="loader-letter">o</div>
-            <div className="loader-letter">a</div>
-            <div className="loader-letter">d</div>
-            <div className="loader-letter">i</div>
-            <div className="loader-letter">n</div>
-            <div className="loader-letter">g</div>
-            <div className="loader-letter">.</div>
-            <div className="loader-letter">.</div>
-            <div className="loader-letter">.</div>
-          </div>
-        </div>
-      }
-    >
-      <Spline
-        scene={scene}
-        className={className}
-      />
-    </Suspense>
+    <div ref={ref} className={className} style={{ width: '100%', height: '100%', display: 'flex' }}>
+      {isInView && (
+        <ErrorBoundary fallback={<div className="w-full h-full flex items-center justify-center opacity-10 bg-black-deep min-h-[300px]"></div>}>
+          <Suspense 
+            fallback={
+              <div className="w-full h-full flex items-center justify-center min-h-[300px]">
+                <div className="text-primary font-mono text-[12px] uppercase tracking-[2px] animate-pulse">Chargement 3D...</div>
+              </div>
+            }
+          >
+            <Spline
+              scene={scene}
+              className="w-full h-full"
+            />
+          </Suspense>
+        </ErrorBoundary>
+      )}
+    </div>
   )
 }

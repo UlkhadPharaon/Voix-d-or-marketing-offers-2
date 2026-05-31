@@ -73,7 +73,7 @@ Merci !`;
 
   if (isSubmitted) {
     return (
-      <PageTransition className="min-h-screen bg-black-deep flex items-center justify-center pt-24 px-4 pb-12">
+      <PageTransition className="min-h-screen bg-transparent flex items-center justify-center pt-24 px-4 pb-12">
         <SEO title="Demande Envoyée" description="Votre demande a été envoyée avec succès." />
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
@@ -97,7 +97,7 @@ Merci !`;
   }
 
   return (
-    <PageTransition className="min-h-screen bg-black-deep text-white pt-[100px] md:pt-[120px] pb-12 md:pb-24 border-t border-primary/20">
+    <PageTransition className="min-h-screen bg-transparent text-white pt-[100px] md:pt-[120px] pb-12 md:pb-24 border-t border-primary/20">
       <SEO 
         title="Démarrer votre projet | Studio Voix d'Or"
         description="Remplissez notre brief stratégique pour commencer à transformer l'image de votre marque sur les réseaux sociaux. Production en 48h."
@@ -123,7 +123,7 @@ Merci !`;
           </div>
         </div>
 
-        <Card className="bg-dark-accent border border-white/10 rounded-[4px] overflow-hidden">
+        <Card className="bg-black/40 backdrop-blur-2xl border border-white/10 rounded-[8px] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
           <CardContent className="p-0">
             <form onSubmit={handleSubmit}>
               <AnimatePresence mode="wait">
@@ -140,17 +140,17 @@ Merci !`;
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-3">
                         <Label className="uppercase text-[11px] text-gray-text tracking-[1px]">Nom de l'établissement *</Label>
-                        <Input required placeholder="Ex: Faso Restaurant" className="bg-black-deep border-white/10 text-white rounded-[2px]" value={formData.company} onChange={e => setFormData({...formData, company: e.target.value})} />
+                        <Input required placeholder="Ex: Faso Restaurant" className="bg-white/[0.05] border-white/10 text-white rounded-[2px]" value={formData.company} onChange={e => setFormData({...formData, company: e.target.value})} />
                       </div>
                       <div className="space-y-3">
                         <Label className="uppercase text-[11px] text-gray-text tracking-[1px]">Votre prénom (le décideur) *</Label>
-                        <Input required placeholder="Ex: Oumar Koné" className="bg-black-deep border-white/10 text-white rounded-[2px]" value={formData.decisionMaker} onChange={e => setFormData({...formData, decisionMaker: e.target.value})} />
+                        <Input required placeholder="Ex: Oumar Koné" className="bg-white/[0.05] border-white/10 text-white rounded-[2px]" value={formData.decisionMaker} onChange={e => setFormData({...formData, decisionMaker: e.target.value})} />
                       </div>
                     </div>
                     
                     <div className="space-y-3">
                       <Label className="uppercase text-[11px] text-gray-text tracking-[1px]">Numéro WhatsApp *</Label>
-                      <Input required placeholder="+226 XX XX XX XX" type="tel" className="bg-black-deep border-white/10 text-white rounded-[2px]" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
+                      <Input required placeholder="+226 XX XX XX XX" type="tel" className="bg-white/[0.05] border-white/10 text-white rounded-[2px]" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
                     </div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -186,7 +186,7 @@ Merci !`;
 
                     <div className="space-y-3">
                       <Label className="uppercase text-[11px] text-gray-text tracking-[1px]">Lien de votre page Instagram ou Facebook (Optionnel)</Label>
-                      <Input placeholder="https://instagram.com/votre_page" className="bg-black-deep border-white/10 text-white rounded-[2px]" value={formData.socialLink} onChange={e => setFormData({...formData, socialLink: e.target.value})} />
+                      <Input placeholder="https://instagram.com/votre_page" className="bg-white/[0.05] border-white/10 text-white rounded-[2px] transition-colors focus:border-primary" value={formData.socialLink} onChange={e => setFormData({...formData, socialLink: e.target.value})} />
                     </div>
 
                     <div className="pt-6 flex justify-end">
@@ -226,25 +226,25 @@ Merci !`;
                       <RadioGroup required value={formData.offer} onValueChange={val => setFormData({...formData, offer: val})} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <RadioGroupItem value="Starter" id="pkg-starter" className="peer sr-only" />
-                          <Label htmlFor="pkg-starter" className="flex flex-col items-center justify-between rounded-[2px] border border-white/10 bg-black-deep p-4 hover:border-primary/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center">
+                          <Label htmlFor="pkg-starter" className="flex flex-col items-center justify-between rounded-[2px] border border-white/10 bg-white/[0.03] backdrop-blur-md p-4 hover:border-primary/50 hover:bg-white/[0.08] peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center transition-all">
                             <span className="font-heading uppercase tracking-[1px] mb-1">Starter</span>
                           </Label>
                         </div>
                         <div>
                           <RadioGroupItem value="Pro" id="pkg-pro" className="peer sr-only" />
-                          <Label htmlFor="pkg-pro" className="flex flex-col items-center justify-between rounded-[2px] border border-white/10 bg-black-deep p-4 hover:border-primary/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center relative overflow-hidden">
+                          <Label htmlFor="pkg-pro" className="flex flex-col items-center justify-between rounded-[2px] border border-white/10 bg-white/[0.03] backdrop-blur-md p-4 hover:border-primary/50 hover:bg-white/[0.08] peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center relative overflow-hidden transition-all">
                             <span className="font-heading uppercase tracking-[1px] mb-1 text-primary">Pro</span>
                           </Label>
                         </div>
                         <div>
                           <RadioGroupItem value="Business" id="pkg-biz" className="peer sr-only" />
-                          <Label htmlFor="pkg-biz" className="flex flex-col items-center justify-between rounded-[2px] border border-white/10 bg-black-deep p-4 hover:border-primary/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center">
+                          <Label htmlFor="pkg-biz" className="flex flex-col items-center justify-between rounded-[2px] border border-white/10 bg-white/[0.03] backdrop-blur-md p-4 hover:border-primary/50 hover:bg-white/[0.08] peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center transition-all">
                             <span className="font-heading uppercase tracking-[1px] mb-1">Business</span>
                           </Label>
                         </div>
                         <div>
                           <RadioGroupItem value="Je ne sais pas encore" id="pkg-not-sure" className="peer sr-only" />
-                          <Label htmlFor="pkg-not-sure" className="flex flex-col items-center justify-between rounded-[2px] border border-white/10 bg-black-deep p-4 hover:border-primary/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center">
+                          <Label htmlFor="pkg-not-sure" className="flex flex-col items-center justify-between rounded-[2px] border border-white/10 bg-white/[0.03] backdrop-blur-md p-4 hover:border-primary/50 hover:bg-white/[0.08] peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center transition-all">
                             <span className="font-heading uppercase tracking-[1px] mb-1">Je ne sais pas encore</span>
                           </Label>
                         </div>

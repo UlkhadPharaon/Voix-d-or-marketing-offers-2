@@ -5,7 +5,7 @@ import { PageTransition } from '@/components/PageTransition';
 
 export function Portfolio() {
   return (
-    <PageTransition className="min-h-screen bg-black-deep text-white pt-[100px] md:pt-[120px] pb-12 md:pb-24 border-t border-primary/20">
+    <PageTransition className="min-h-screen bg-transparent text-white pt-[100px] md:pt-[120px] pb-12 md:pb-24 border-t border-primary/20">
       <SEO 
         title="Portfolio & Exemples | Studio Voix d'Or"
         description="Découvrez nos réalisations vidéos conçues et gérées par nos employés virtuels pour différentes marques : gastronomie, supermarché, retail, parfumerie. La qualité d'une agence internationale, ici au Burkina."
