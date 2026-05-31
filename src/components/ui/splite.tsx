@@ -21,7 +21,7 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
   return (
     <div ref={ref} className={className} style={{ width: '100%', height: '100%', display: 'flex' }}>
       {isInView && (
-        <ErrorBoundary fallback={<div className="w-full h-full flex items-center justify-center opacity-10 bg-black-deep min-h-[300px]"></div>}>
+        <ErrorBoundary fallback={<div className="w-full h-full flex items-center justify-center opacity-10 bg-background min-h-[300px]"></div>}>
           <Suspense 
             fallback={
               <div className="w-full h-full flex items-center justify-center min-h-[300px]">

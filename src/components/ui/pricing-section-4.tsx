@@ -83,12 +83,12 @@ const PricingSwitch = ({ onSwitch }: { onSwitch: (value: string) => void }) => {
 
   return (
     <div className="flex justify-center mt-6">
-      <div className="relative z-10 mx-auto flex w-fit rounded-[4px] bg-black/40 backdrop-blur-md border border-white/10 p-1">
+      <div className="relative z-10 mx-auto flex w-fit rounded-[4px] bg-card/90 dark:bg-foreground/10 backdrop-blur-md border border-foreground/10 p-1">
         <button
           onClick={() => handleSwitch("0")}
           className={cn(
             "relative z-10 w-fit h-10 rounded-[2px] sm:px-6 px-3 sm:py-2 py-1 uppercase tracking-[1px] text-[12px] font-bold transition-colors",
-            selected === "0" ? "text-black-deep" : "text-gray-400 hover:text-white"
+            selected === "0" ? "text-black-deep" : "text-gray-400 hover:text-foreground"
           )}
         >
           {selected === "0" && (
@@ -105,7 +105,7 @@ const PricingSwitch = ({ onSwitch }: { onSwitch: (value: string) => void }) => {
           onClick={() => handleSwitch("1")}
           className={cn(
             "relative z-10 w-fit h-10 flex-shrink-0 rounded-[2px] sm:px-6 px-3 sm:py-2 py-1 uppercase tracking-[1px] text-[12px] font-bold transition-colors",
-            selected === "1" ? "text-black-deep" : "text-gray-400 hover:text-white"
+            selected === "1" ? "text-black-deep" : "text-gray-400 hover:text-foreground"
           )}
         >
           {selected === "1" && (
@@ -150,7 +150,7 @@ export default function PricingSection4() {
 
   return (
     <div
-      className="w-full relative bg-transparent overflow-hidden pb-20"
+      className="w-full relative bg-background/0 overflow-hidden pb-20"
       ref={pricingRef}
     >
       <TimelineContent
@@ -173,7 +173,7 @@ export default function PricingSection4() {
 
       <div className="relative z-50 container mx-auto px-4 max-w-[1200px]">
         <article className="text-center mb-16 pt-24 max-w-3xl mx-auto space-y-4">
-          <h2 className="text-[28px] sm:text-[40px] lg:text-[48px] font-heading font-normal uppercase tracking-[1px] text-white leading-tight">
+          <h2 className="text-[28px] sm:text-[40px] lg:text-[48px] font-heading font-normal uppercase tracking-[1px] text-foreground leading-tight">
             <VerticalCutReveal
               splitBy="words"
               staggerDuration={0.1}
@@ -196,7 +196,7 @@ Pas de surprise.
             animationNum={0}
             timelineRef={pricingRef}
             customVariants={revealVariants}
-            className="text-gray-text text-[15px]"
+            className="text-muted-foreground text-[15px]"
           >
             Que vous vouliez déléguer juste les bases ou confier toute votre stratégie, il y a un employé parfait pour vous.
           </TimelineContent>
@@ -224,8 +224,8 @@ Pas de surprise.
               <Card
                 className={cn("w-full border rounded-[8px] flex flex-col justify-between transition-all duration-300", 
                   plan.popular 
-                  ? "bg-white/[0.05] backdrop-blur-2xl border-primary shadow-[0_0_50px_rgba(212,175,55,0.15)] overflow-hidden" 
-                  : "bg-white/[0.02] backdrop-blur-xl border-white/10 hover:border-white/20"
+                  ? "bg-foreground/[0.05] backdrop-blur-2xl border-primary shadow-[0_0_50px_rgba(212,175,55,0.15)] overflow-hidden" 
+                  : "bg-foreground/[0.02] backdrop-blur-xl border-foreground/10 hover:border-foreground/20"
                 )}
               >
                 {plan.popular && (
@@ -240,12 +240,12 @@ Pas de surprise.
                 <CardHeader className="text-left p-[32px] md:p-[40px] relative z-10">
                   <div className="mb-2">
                     <span className={cn("font-heading text-[16px] uppercase tracking-[1px] mb-2 block", plan.popular ? "text-primary" : "text-gray-400")}>{plan.tier}</span>
-                    <h3 className="text-[20px] md:text-[24px] uppercase tracking-[1px] text-white font-heading leading-tight">{plan.name}</h3>
+                    <h3 className="text-[20px] md:text-[24px] uppercase tracking-[1px] text-foreground font-heading leading-tight">{plan.name}</h3>
                   </div>
-                  <p className="text-[13px] text-gray-text min-h-[48px] mt-2 leading-relaxed">{plan.description}</p>
+                  <p className="text-[13px] text-muted-foreground min-h-[48px] mt-2 leading-relaxed">{plan.description}</p>
                   
                   <div className="flex items-end gap-2 mt-6">
-                    <span className="text-[36px] md:text-[44px] font-bold text-white flex items-end leading-none">
+                    <span className="text-[36px] md:text-[44px] font-bold text-foreground flex items-end leading-none">
                       <NumberFlow
                         format={{ useGrouping: true }}
                         value={isYearly ? plan.yearlyPrice : plan.price}
@@ -259,7 +259,7 @@ Pas de surprise.
                 </CardHeader>
 
                 <CardContent className="p-[32px] md:p-[40px] pt-0 relative z-10 flex flex-col flex-grow">
-                  <div className={cn("h-px my-6", plan.popular ? "bg-gradient-to-r from-transparent via-primary/30 to-transparent" : "bg-white/10")}></div>
+                  <div className={cn("h-px my-6", plan.popular ? "bg-gradient-to-r from-transparent via-primary/30 to-transparent" : "bg-foreground/10")}></div>
 
                   <div className="space-y-4 flex-grow">
                     <ul className="space-y-3">
@@ -269,7 +269,7 @@ Pas de surprise.
                           className="flex items-start gap-3"
                         >
                           <span className="text-primary mt-[2px] shrink-0">✓</span>
-                          <span className={cn("text-[13px]", plan.popular ? "text-white font-bold" : "text-gray-300")}>{feature}</span>
+                          <span className={cn("text-[13px]", plan.popular ? "text-foreground font-bold" : "text-gray-300")}>{feature}</span>
                         </li>
                       ))}
                     </ul>
@@ -282,7 +282,7 @@ Pas de surprise.
                       className={cn("w-full py-[16px] text-center text-[13px] uppercase font-bold tracking-[1px] rounded-[4px] transition-all duration-300",
                         plan.buttonVariant === "default"
                           ? "bg-primary text-black-deep hover:bg-gold-accent hover:shadow-[0_0_20px_rgba(212,175,55,0.4)]"
-                          : "border border-white/20 text-white hover:bg-white hover:text-black-deep bg-transparent"
+                          : "border border-foreground/20 text-foreground hover:bg-white hover:text-black-deep bg-background/0"
                       )}
                     >
                       → {plan.buttonText}

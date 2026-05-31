@@ -39,7 +39,7 @@ export const Radar = ({ className }: { className?: string }) => {
       {/* Rotating sweep line */}
       <div
         style={{ transformOrigin: "right center" }}
-        className="animate-radar-spin absolute right-1/2 top-1/2 z-40 flex h-[5px] w-[150px] sm:w-[250px] md:w-[400px] items-end justify-center overflow-hidden bg-transparent"
+        className="animate-radar-spin absolute right-1/2 top-1/2 z-40 flex h-[5px] w-[150px] sm:w-[250px] md:w-[400px] items-end justify-center overflow-hidden bg-background/0"
       >
         <div className="relative z-40 h-[1px] w-full bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent" />
       </div>
@@ -75,7 +75,7 @@ export const IconContainer = ({
       transition={{ duration: 0.2, delay: delay ?? 0 }}
       className="relative z-50 flex flex-col items-center justify-center space-y-2"
     >
-      <div className="shrink-0 flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.05] backdrop-blur-md shadow-[inset_0_0_20px_rgba(212,175,55,0.05)]">
+      <div className="shrink-0 flex h-14 w-14 items-center justify-center rounded-2xl border border-foreground/10 bg-foreground/[0.05] backdrop-blur-md shadow-[inset_0_0_20px_rgba(212,175,55,0.05)]">
         {icon || (
           <svg className="h-8 w-8 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />

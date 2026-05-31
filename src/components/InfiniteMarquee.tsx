@@ -13,8 +13,8 @@ const marqueeItems = [
 export function InfiniteMarquee() {
   return (
     <div className="relative flex overflow-x-hidden bg-primary/10 border-y border-primary/20 py-4 h-[60px] whitespace-nowrap items-center w-full">
-      <div className="absolute left-0 top-0 w-24 h-full bg-gradient-to-r from-black-deep to-transparent z-10 pointer-events-none"></div>
-      <div className="absolute right-0 top-0 w-24 h-full bg-gradient-to-l from-black-deep to-transparent z-10 pointer-events-none"></div>
+      <div className="absolute left-0 top-0 w-24 h-full bg-gradient-to-r from-background to-transparent z-10 pointer-events-none"></div>
+      <div className="absolute right-0 top-0 w-24 h-full bg-gradient-to-l from-background to-transparent z-10 pointer-events-none"></div>
       <motion.div
         className="flex space-x-12 shrink-0 px-6 items-center"
         animate={{
@@ -31,7 +31,7 @@ export function InfiniteMarquee() {
           return (
             <div key={index} className="flex items-center space-x-3">
               <Icon className="w-5 h-5 text-primary" />
-              <span className="text-[14px] uppercase tracking-[2px] font-bold text-white">{item.text}</span>
+              <span className="text-[14px] uppercase tracking-[2px] font-bold text-foreground">{item.text}</span>
             </div>
           );
         })}
@@ -52,7 +52,7 @@ export function InfiniteMarquee() {
           return (
             <div key={index} className="flex items-center space-x-3">
               <Icon className="w-5 h-5 text-primary" />
-              <span className="text-[14px] uppercase tracking-[2px] font-bold text-white">{item.text}</span>
+              <span className="text-[14px] uppercase tracking-[2px] font-bold text-foreground">{item.text}</span>
             </div>
           );
         })}

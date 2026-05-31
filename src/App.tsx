@@ -5,13 +5,14 @@ import { Home } from '@/pages/Home';
 import { Contact } from '@/pages/Contact';
 import { Portfolio } from '@/pages/Portfolio';
 import { NotFound } from '@/pages/NotFound';
+import { ThemeProvider } from '@/components/ThemeProvider';
+import { OpeningAnimation } from '@/components/OpeningAnimation';
 
 function AnimatedRoutes() {
   const location = useLocation();
 
   return (
     <AnimatePresence mode="wait">
-      {/* @ts-expect-error React key is not explicitly typed in RoutesProps */}
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
@@ -26,9 +27,12 @@ function AnimatedRoutes() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AnimatedRoutes />
-    </BrowserRouter>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <BrowserRouter>
+        <OpeningAnimation />
+        <AnimatedRoutes />
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

@@ -19,7 +19,7 @@ export function NotFound() {
           scene="/404_3_d.spline"
           className="w-full h-full"
         />
-        <div className="absolute inset-0 bg-black-deep/40 pointer-events-none"></div>
+        <div className="absolute inset-0 bg-background/40 pointer-events-none"></div>
       </div>
 
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 text-center pointer-events-auto">
@@ -27,13 +27,13 @@ export function NotFound() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="bg-black/60 backdrop-blur-xl border border-white/10 p-8 md:p-12 rounded-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.5)] max-w-lg w-full"
+          className="bg-foreground/60 backdrop-blur-xl border border-foreground/10 p-8 md:p-12 rounded-[16px] shadow-xl dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] max-w-lg w-full"
         >
           <div className="inline-flex bg-primary/10 border border-primary/30 text-primary px-[16px] py-[6px] font-bold text-[12px] tracking-[3px] uppercase mb-[24px] rounded-full">
             Erreur 404
           </div>
           
-          <h1 className="text-[40px] md:text-[56px] font-heading font-normal text-white mb-[16px] uppercase tracking-[1px] leading-tight">
+          <h1 className="text-[40px] md:text-[56px] font-heading font-normal text-foreground mb-[16px] uppercase tracking-[1px] leading-tight">
             Signal Perdu
           </h1>
           
