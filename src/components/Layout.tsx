@@ -48,6 +48,7 @@ export function Layout() {
     { label: 'Offres', href: '/#offres' },
     { label: 'Exemples', href: '/portfolio' },
     { label: 'FAQ', href: '/#faq' },
+    { label: 'Sécurité', href: '/securite' },
     { label: 'Contact', href: '/contact' },
   ];
 
@@ -161,6 +162,7 @@ export function Layout() {
                 <li><Link to="/#offres" className="text-muted-foreground hover:text-primary transition-colors text-[14px] uppercase tracking-[1px]">Offres</Link></li>
                 <li><Link to="/portfolio" className="text-muted-foreground hover:text-primary transition-colors text-[14px] uppercase tracking-[1px]">Exemples</Link></li>
                 <li><Link to="/#faq" className="text-muted-foreground hover:text-primary transition-colors text-[14px] uppercase tracking-[1px]">FAQ</Link></li>
+                <li><Link to="/securite" className="text-muted-foreground hover:text-primary transition-colors text-[14px] uppercase tracking-[1px]">Sécurité</Link></li>
                 <li><Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors text-[14px] uppercase tracking-[1px]">Démarrer</Link></li>
               </ul>
             </div>

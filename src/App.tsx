@@ -4,6 +4,7 @@ import { Layout } from '@/components/Layout';
 import { Home } from '@/pages/Home';
 import { Contact } from '@/pages/Contact';
 import { Portfolio } from '@/pages/Portfolio';
+import { Securite } from '@/pages/Securite';
 import { NotFound } from '@/pages/NotFound';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { OpeningAnimation } from '@/components/OpeningAnimation';
@@ -18,6 +19,7 @@ function AnimatedRoutes() {
           <Route index element={<Home />} />
           <Route path="contact" element={<Contact />} />
           <Route path="portfolio" element={<Portfolio />} />
+          <Route path="securite" element={<Securite />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
