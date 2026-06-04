@@ -1,8 +1,9 @@
 {
-  "name": "Studio Voix d\u0027Or",
-  "description": "Studio Voix d\u0027Or : La Voix Dorée de la Création Africaine. Le premier studio de production audiovisuelle IA d\u0027Afrique de l\u0027Ouest.",
+  "name": "Studio Voix d'Or",
+  "description": "Studio Voix d'Or : La Voix Dorée de la Création Africaine. Le premier studio de production audiovisuelle IA d'Afrique de l'Ouest.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
-  ]
+  ],
+  "id": "3717e368-c540-4ef1-84b8-4d96c1595c54"
 }
