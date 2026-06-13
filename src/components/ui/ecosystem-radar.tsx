@@ -7,7 +7,7 @@ export function EcosystemRadar() {
   return (
     <div className="relative flex min-h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-[8px] bg-foreground/[0.03] backdrop-blur-md border border-foreground/10 shadow-[0_8px_32px_rgba(212,175,55,0.05)] mt-12 mb-20 py-10">
       <div className="z-50 text-center px-4 mb-4 md:mb-8">
-        <h3 className="text-[18px] sm:text-[22px] font-heading uppercase tracking-[1px] text-foreground">Le Radar de L'Employé Virtuel</h3>
+        <h3 className="text-[18px] sm:text-[22px] font-heading uppercase tracking-[1px] text-foreground">Le Radar de L'assistant IA</h3>
         <p className="text-[14px] text-muted-foreground mt-2 max-w-2xl mx-auto">Une surveillance continue à 360° de votre écosystème commercial.</p>
       </div>
 

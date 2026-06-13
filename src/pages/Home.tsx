@@ -66,7 +66,7 @@ export function Home() {
 
   const faqs = [
     {
-      q: "Comment fonctionne l'employé virtuel au quotidien ?",
+      q: "Comment fonctionne l'assistant IA au quotidien ?",
       a: "Une fois configuré avec votre catalogue, vos prix et vos règles, il répond en temps réel à vos prospects sur WhatsApp. Parallèlement, il planifie de façon autonome vos publications sur Facebook, Instagram et TikTok."
     },
     {
@@ -75,7 +75,7 @@ export function Home() {
     },
     {
       q: "Puis-je essayer et arrêter n'importe quand ?",
-      a: "Absolument. Nos offres sont sans engagement de durée. Mieux encore, nous proposons un mois d'essai à moitié prix (25 000 FCFA pour l'offre de base), satisfait ou entièrement remboursé si le produit ne répond pas à vos attentes."
+      a: "Absolument. Nos offres sont sans engagement de durée. Vous pouvez faire évoluer votre offre ou la résilier à tout moment selon vos besoins."
     },
     {
       q: "Comment garantissez-vous la qualité et la sécurité ?",
@@ -107,21 +107,21 @@ export function Home() {
   return (
     <PageTransition className="w-full relative">
       <SEO 
-        title="L'Employé Virtuel Permanent à 50 000 FCFA/mois | Studio Voix d'Or"
-        description="Studio Voix d'Or déploie votre premier collaborateur virtuel 24h/24, 7j/7. Réponses aux clients sur WhatsApp en moins de 30s, création de visuels et vidéos de prestige, et génération automatique de prospects."
+        title="Votre Assistant IA Permanent à 50 000 FCFA/mois | Studio Voix d'Or"
+        description="Studio Voix d'Or déploie votre outil automatisé IA 24h/24, 7j/7. Réponses aux clients sur WhatsApp en moins de 30s, création de visuels et vidéos de prestige, et génération automatique de prospects."
         schemas={[
           {
             "@context": "https://schema.org",
             "@type": "ProfessionalService",
             "name": "Studio Voix d'Or",
             "image": "https://images.unsplash.com/photo-1601506521937-0121a7fc2b6b?q=80&w=2071&auto=format&fit=crop",
-            "description": "L'Employé Virtuel Permanent à 50 000 FCFA/mo. Réponses WhatsApp < 30 sec et production marketing de prestige.",
+            "description": "Assistant IA Permanent à 50 000 FCFA/mo. Réponses WhatsApp < 30 sec et production marketing de prestige.",
             "address": {
               "@type": "PostalAddress",
               "addressLocality": "Ouagadougou",
               "addressCountry": "Burkina Faso"
             },
-            "telephone": "+22644906629"
+            "telephone": "+22656265915"
           }
         ]}
       />
@@ -154,7 +154,7 @@ export function Home() {
               transition={{ duration: 0.8 }}
               className="font-heading text-[36px] sm:text-[46px] md:text-[52px] lg:text-[60px] font-normal leading-[1.1] mb-[28px] text-foreground shadow-black-deep drop-shadow-2xl"
             >
-              Recrutez un <span className="text-primary italic font-serif">Employé Virtuel Permanent</span> <br className="hidden lg:block"/> pour seulement 50 000 FCFA/mois.
+              Adoptez un <span className="text-primary italic font-serif">assistant IA Permanent</span> <br className="hidden lg:block"/> pour seulement 50 000 FCFA/mois.
             </motion.h1>
 
             <motion.p 
@@ -164,7 +164,7 @@ export function Home() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-[15px] sm:text-[16px] md:text-[18px] text-muted-foreground max-w-[650px] leading-[1.6] mb-[40px] drop-shadow-md text-left"
             >
-              Moins cher qu'un stagiaire. Il travaille 24h/24, répond à vos clients sur WhatsApp en moins de 30 secondes, génère vos contenus visuels de prestige et vous apporte des prospects qualifiés pendant que vous dormez.
+              Un outil indispensable pour augmenter votre productivité. Il fonctionne 24h/24, répond à vos clients sur WhatsApp en moins de 30 secondes, génère vos contenus visuels de prestige et vous apporte des prospects qualifiés pendant que vous dormez.
             </motion.p>
 
             <motion.div 
@@ -201,7 +201,7 @@ export function Home() {
               <span className="text-[12px] md:text-[14px] uppercase text-muted-foreground tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> Réponse WhatsApp &lt; 30s</span>
               <span className="text-[12px] md:text-[14px] uppercase text-muted-foreground tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> Disponible 24h / 24 &amp; 7j / 7</span>
               <span className="text-[12px] md:text-[14px] uppercase text-muted-foreground tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> Métier de Marque &amp; Contenus Premium</span>
-              <span className="text-[12px] md:text-[14px] uppercase text-muted-foreground tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> Moins cher qu'un stagiaire</span>
+              <span className="text-[12px] md:text-[14px] uppercase text-muted-foreground tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> Optimisez la productivité de votre équipe</span>
             </div>
           </div>
         </motion.div>
@@ -310,7 +310,7 @@ export function Home() {
                         Gérant Surchargé
                       </h3>
                       <p className="text-gray-400 text-[14px] leading-[1.7]">
-                        Vous gérez la boutique, vos fournisseurs, vos équipes... Trouver du temps pour imaginer, créer et poster des publications régulièrement sur les réseaux est infaisable. Notre collaborateur virtuel <strong className="text-foreground font-normal">gère cette charge à 100%</strong>.
+                        Vous gérez la boutique, vos fournisseurs, vos équipes... Trouver du temps pour imaginer, créer et poster des publications régulièrement sur les réseaux est infaisable. Notre assistant IA <strong className="text-foreground font-normal">gère cette charge à 100%</strong>.
                       </p>
                     </div>
                   </CardContent>
@@ -324,7 +324,7 @@ export function Home() {
               <Zap className="w-4 h-4 text-primary" />
               <span className="text-[12px] font-bold uppercase tracking-[1px] text-primary">La Solution Intelligente</span>
             </div>
-            <p className="font-heading uppercase tracking-[1px] text-[24px] text-foreground mb-4 max-w-2xl">L'Employé Virtuel transforme ces problèmes en opportunités de croissance.</p>
+            <p className="font-heading uppercase tracking-[1px] text-[24px] text-foreground mb-4 max-w-2xl">L'assistant IA transforme ces problèmes en opportunités de croissance.</p>
             
             <EcosystemRadar />
 
@@ -357,7 +357,7 @@ export function Home() {
             <div className="inline-flex self-center bg-background/0 border border-foreground/20 text-muted-foreground px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[24px]">
               Efficacité Systématique
             </div>
-            <h2 className="text-[28px] sm:text-[40px] md:text-[48px] font-heading font-normal mb-[16px] uppercase tracking-[1px]">Le Planning de votre Employé Virtuel</h2>
+            <h2 className="text-[28px] sm:text-[40px] md:text-[48px] font-heading font-normal mb-[16px] uppercase tracking-[1px]">Le Planning de votre assistant IA</h2>
             <p className="text-muted-foreground text-[15px] max-w-2xl mx-auto">
               Chaque semaine, l'assistant exécute de manière infatigable un cycle complet de suivi commercial et créations visuelles. Cliquez sur un axe pour l'explorer.
             </p>
@@ -402,12 +402,11 @@ export function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-[40px] pointer-events-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-[40px] pointer-events-auto">
             {[
               { num: 'I', title: 'Le Constat', desc: 'Combien de messages WhatsApp perdez-vous en soirée ? Près de 80% des entreprises perdent leurs prospects après la fermeture.' },
-              { num: 'II', title: 'Démo Instantanée', desc: 'Vous nous donnez votre numéro. Notre collaborateur virtuel vous écrit et gère une conversation simulée de vente de manière parfaite.' },
-              { num: 'III', title: 'Comparatif Direct', desc: 'Un employé classique au Burkina coûte 50 000 à 75 000 FCFA/mois — et il dort. Notre employé virtuel ne dort jamais et ne fait pas d\'erreur.' },
-              { num: 'IV', title: 'Essai Garanti', desc: 'Lancez un mois complet d\'essai à moitié prix (25 000 FCFA). Si vous n\'êtes pas absolument conquis, vous êtes remboursé intégralement.' },
+              { num: 'II', title: 'Démo Instantanée', desc: 'Vous nous donnez votre numéro. Notre assistant IA vous écrit et gère une conversation simulée de vente de manière parfaite.' },
+              { num: 'III', title: 'Votre Avantage', desc: "Une gestion manuelle est source de retards et pénalise votre Chiffre d'Affaires. Notre outil automatisé ne ferme jamais, allège votre charge et ne fait pas d'erreur." },
             ].map((step, i) => (
               <motion.div 
                 key={i} 
@@ -445,8 +444,8 @@ export function Home() {
               <div className="inline-flex self-center bg-background/0 border border-foreground/20 text-muted-foreground px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[16px]">
                 Transparence
               </div>
-              <h3 className="font-heading uppercase tracking-[1.5px] text-[28px] text-foreground">Comparaison Détaillée</h3>
-              <p className="text-muted-foreground text-[14px] mt-3 max-w-2xl text-center">Détails des capacités, garanties contractuelles et fonctionnalités de votre Employé Virtuel selon le niveau d'offres.</p>
+              <h3 className="font-heading uppercase tracking-[1.5px] text-[28px] text-foreground">Détail de nos Offres</h3>
+              <p className="text-muted-foreground text-[14px] mt-3 max-w-2xl text-center">Détails des capacités, garanties contractuelles et fonctionnalités de votre assistant IA selon le niveau d'offres.</p>
             </div>
             
             <div className="bg-foreground/[0.02] backdrop-blur-xl border border-foreground/10 rounded-[12px] overflow-hidden shadow-xl dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] relative ring-1 ring-white/5">
@@ -455,10 +454,10 @@ export function Home() {
                 <thead>
                   <tr>
                     <th className="p-6 text-[13px] text-gray-400 uppercase tracking-[1px] font-bold border-b border-foreground/10 w-1/4 align-bottom bg-background/0">Garantie & Fonctionnalité</th>
-                    <th className="p-6 text-[13px] text-foreground uppercase tracking-[1px] font-bold border-b border-foreground/10 text-center w-1/4 bg-foreground/[0.02] align-bottom">Tier 1 <span className="block text-[10px] text-gray-500 font-normal mt-1 normal-case tracking-normal">L'Employé de Base</span></th>
+                    <th className="p-6 text-[13px] text-foreground uppercase tracking-[1px] font-bold border-b border-foreground/10 text-center w-1/4 bg-foreground/[0.02] align-bottom">Tier 1 <span className="block text-[10px] text-gray-500 font-normal mt-1 normal-case tracking-normal">L'Assistant Standard</span></th>
                     <th className="p-6 text-[13px] text-primary uppercase tracking-[1px] font-bold border-b border-primary/30 text-center relative w-1/4 bg-primary/[0.05] align-bottom shadow-[0_-20px_40px_-20px_rgba(212,175,55,0.1)_inset]">
                       <div className="absolute top-0 left-0 w-full h-[2px] bg-primary shadow-[0_0_10px_rgba(212,175,55,0.8)]"></div>
-                      Tier 2 <span className="block text-[10px] text-primary/70 font-normal mt-1 normal-case tracking-normal">L'Employé Commercial</span>
+                      Tier 2 <span className="block text-[10px] text-primary/70 font-normal mt-1 normal-case tracking-normal">L'Assistant Commercial</span>
                     </th>
                     <th className="p-6 text-[13px] text-foreground uppercase tracking-[1px] font-bold border-b border-foreground/10 text-center w-1/4 bg-foreground/[0.02] align-bottom">Tier 3 <span className="block text-[10px] text-gray-500 font-normal mt-1 normal-case tracking-normal">Le Département</span></th>
                   </tr>
@@ -520,7 +519,7 @@ export function Home() {
               <div className="inline-flex self-center bg-background/0 border border-foreground/20 text-muted-foreground px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[16px]">
                 Transparence
               </div>
-              <h3 className="font-heading uppercase tracking-[1.5px] text-[24px] text-foreground">Comparaison</h3>
+              <h3 className="font-heading uppercase tracking-[1.5px] text-[24px] text-foreground">Détail des Offres</h3>
             </div>
             
             <Accordion className="w-full space-y-4">
@@ -579,7 +578,7 @@ export function Home() {
               const formData = new FormData(e.currentTarget);
               const phone = formData.get('whatsapp');
               if (phone) {
-                window.location.href = `https://wa.me/22644906629?text=Bonjour,%20je%20souhaite%20recevoir%20l'analyse%20des%205%20erreurs%20visuelles.%20Mon%20numéro%20:%20${phone}`;
+                window.location.href = `https://wa.me/22656265915?text=Bonjour,%20je%20souhaite%20recevoir%20l'analyse%20des%205%20erreurs%20visuelles.%20Mon%20numéro%20:%20${phone}`;
               }
             }}>
               <input 
@@ -652,7 +651,7 @@ export function Home() {
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="w-full">
             <h2 className="text-[24px] sm:text-[40px] md:text-[48px] lg:text-[56px] font-heading font-normal text-foreground mb-[16px] md:mb-[24px] uppercase tracking-[1px] max-w-4xl mx-auto leading-tight break-words">Pour 50 000 FCFA/mois, mettez votre acquisition clients en pilotage automatique.</h2>
             <p className="text-[15px] sm:text-[16px] md:text-[18px] text-muted-foreground max-w-3xl mx-auto mb-[40px] md:mb-[48px] leading-[1.6]">
-              Configurez votre employé virtuel maintenant. <strong className="text-foreground block sm:inline mt-2 sm:mt-0">Démo gratuite en direct sous 20 minutes.</strong>
+              Configurez votre assistant IA maintenant. <strong className="text-foreground block sm:inline mt-2 sm:mt-0">Démo gratuite en direct sous 20 minutes.</strong>
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-[15px] w-full max-w-sm sm:max-w-none mx-auto">
@@ -666,7 +665,7 @@ export function Home() {
             
             <div className="mt-[48px] flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-[12px] text-foreground border border-foreground/10 bg-card p-4 sm:px-[24px] sm:py-[12px] rounded-[2px] w-full max-w-sm sm:max-w-max mx-auto">
               <span className="text-[#25D366] text-xl mb-1 sm:mb-0">📱</span>
-              <span className="font-mono font-bold text-[14px] sm:text-[15px]">+226 44 90 66 29</span>
+              <span className="font-mono font-bold text-[14px] sm:text-[15px]">+226 56 26 59 15</span>
               <span className="text-muted-foreground text-[11px] sm:text-[12px] italic sm:ml-[8px] uppercase tracking-[1px] text-center mt-1 sm:mt-0">- Réponse en moins d'1 heure.</span>
             </div>
           </motion.div>

@@ -35,7 +35,7 @@ export function Securite() {
               </div>
               <h2 className="text-xl font-heading uppercase tracking-wide mb-4">Une intelligence artificielle de confiance</h2>
               <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                Pour faire fonctionner votre Employé Virtuel, nous utilisons les cerveaux numériques les plus avancés et les plus respectueux de la vie privée (comme ceux développés par les créateurs de ChatGPT ou Google). 
+                Pour faire fonctionner votre assistant IA, nous utilisons les cerveaux numériques les plus avancés et les plus respectueux de la vie privée (comme ceux développés par les créateurs de ChatGPT ou Google). 
               </p>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">

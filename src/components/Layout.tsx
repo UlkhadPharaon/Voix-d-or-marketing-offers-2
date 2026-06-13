@@ -184,7 +184,7 @@ export function Layout() {
                   <span className="text-primary mt-0.5">📍</span> Ouagadougou, Burkina Faso
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-primary mt-0.5">📱</span> WhatsApp : +226 44 90 66 29
+                  <span className="text-primary mt-0.5">📱</span> WhatsApp : +226 56 26 59 15
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-0.5">✉️</span> contact@voixdor.studio
@@ -205,7 +205,7 @@ export function Layout() {
 
       {/* WhatsApp Floating Button */}
       <a 
-        href="https://wa.me/22644906629" 
+        href="https://wa.me/22656265915" 
         target="_blank" 
         rel="noopener noreferrer"
         className="fixed bottom-[20px] right-[20px] md:bottom-[30px] md:right-[40px] z-50 bg-[#25D366] text-foreground p-[14px] md:px-[24px] md:py-[12px] rounded-full md:rounded-[30px] flex items-center justify-center gap-0 md:gap-[10px] font-bold text-[14px] shadow-[0_10px_20px_rgba(0,0,0,0.3)] hover:scale-105 transition-transform group"

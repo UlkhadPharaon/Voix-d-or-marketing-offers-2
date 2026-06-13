@@ -10,12 +10,12 @@ import { useRef, useState } from "react";
 
 const plans = [
   {
-    name: "L'Employé de Base",
+    name: "L'Assistant Standard",
     tier: "Tier 1",
     description: "Gère votre WhatsApp et vos réseaux Facebook principaux pendant que vous travaillez.",
     price: 50000,
     yearlyPrice: 42500,
-    buttonText: "Choisir l'Employé de Base",
+    buttonText: "Choisir l'Assistant Standard",
     buttonVariant: "outline" as const,
     idealFor: "Idéal : Couturiers, Restaurants, Boutiques",
     includes: [
@@ -31,12 +31,12 @@ const plans = [
     ],
   },
   {
-    name: "L'Employé Commercial",
+    name: "L'Assistant Commercial",
     tier: "Tier 2",
     description: "Un département commercial complet gérant WhatsApp, FB, Instagram, TikTok et de la publicité.",
     price: 150000,
     yearlyPrice: 127500,
-    buttonText: "Choisir l'Employé Commercial",
+    buttonText: "Choisir l'Assistant Commercial",
     buttonVariant: "default" as const,
     popular: true,
     idealFor: "Idéal : Cliniques, Écoles, Immo, Grossistes",
@@ -198,7 +198,7 @@ Pas de surprise.
             customVariants={revealVariants}
             className="text-muted-foreground text-[15px]"
           >
-            Que vous vouliez déléguer juste les bases ou confier toute votre stratégie, il y a un employé parfait pour vous.
+            Que vous vouliez déléguer juste les bases ou confier toute votre stratégie, il y a un assistant conçu pour vous.
           </TimelineContent>
 
           <TimelineContent
