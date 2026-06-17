@@ -121,7 +121,7 @@ export function Home() {
               "addressLocality": "Ouagadougou",
               "addressCountry": "Burkina Faso"
             },
-            "telephone": "+22656265915"
+            "telephone": "+22657265915"
           }
         ]}
       />
@@ -464,10 +464,10 @@ export function Home() {
                 </thead>
                 <tbody className="divide-y divide-white/5 text-[14px]">
                   <tr className="hover:bg-foreground/[0.04] transition-colors duration-300 group">
-                    <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-foreground transition-colors">Temps de Réponse WhatsApp</td>
-                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]">&lt; 60 sec</td>
-                    <td className="p-4 text-center text-primary font-bold bg-primary/[0.02]">&lt; 30 sec</td>
-                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]">&lt; 15 sec</td>
+                    <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-foreground transition-colors">Stratégie de Relance Client</td>
+                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]">Une (1) relance simple</td>
+                    <td className="p-4 text-center text-primary font-bold bg-primary/[0.02]">Séquence de relances (3)</td>
+                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]">Relance multicanale + Appel</td>
                   </tr>
                   <tr className="hover:bg-foreground/[0.04] transition-colors duration-300 group">
                     <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-foreground transition-colors">Création de Contenus / Mois</td>
@@ -524,11 +524,11 @@ export function Home() {
             
             <Accordion className="w-full space-y-4">
               <AccordionItem value="item-1" className="border-foreground/10 bg-foreground/[0.03] backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.2)] rounded-[8px] overflow-hidden px-4">
-                <AccordionTrigger className="text-foreground hover:no-underline hover:text-primary py-4 font-bold text-[14px]">Temps de Réponse WhatsApp</AccordionTrigger>
+                <AccordionTrigger className="text-foreground hover:no-underline hover:text-primary py-4 font-bold text-[14px]">Stratégie de Relance</AccordionTrigger>
                 <AccordionContent className="text-gray-400 pb-4 flex flex-col gap-3">
-                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Tier 1</span> <span className="text-foreground">&lt; 60 sec</span></div>
-                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide text-primary">Tier 2</span> <span className="text-primary font-bold">&lt; 30 sec</span></div>
-                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Tier 3</span> <span className="text-foreground">&lt; 15 sec</span></div>
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Tier 1</span> <span className="text-foreground">1 relance simple</span></div>
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide text-primary">Tier 2</span> <span className="text-primary font-bold">Séquence (3x)</span></div>
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Tier 3</span> <span className="text-foreground">Multicanal + Appel</span></div>
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-2" className="border-foreground/10 bg-foreground/[0.03] backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.2)] rounded-[8px] overflow-hidden px-4">
@@ -578,7 +578,7 @@ export function Home() {
               const formData = new FormData(e.currentTarget);
               const phone = formData.get('whatsapp');
               if (phone) {
-                window.location.href = `https://wa.me/22656265915?text=Bonjour,%20je%20souhaite%20recevoir%20l'analyse%20des%205%20erreurs%20visuelles.%20Mon%20numéro%20:%20${phone}`;
+                window.location.href = `https://wa.me/22657265915?text=Bonjour,%20je%20souhaite%20recevoir%20l'analyse%20des%205%20erreurs%20visuelles.%20Mon%20numéro%20:%20${phone}`;
               }
             }}>
               <input 
@@ -665,7 +665,7 @@ export function Home() {
             
             <div className="mt-[48px] flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-[12px] text-foreground border border-foreground/10 bg-card p-4 sm:px-[24px] sm:py-[12px] rounded-[2px] w-full max-w-sm sm:max-w-max mx-auto">
               <span className="text-[#25D366] text-xl mb-1 sm:mb-0">📱</span>
-              <span className="font-mono font-bold text-[14px] sm:text-[15px]">+226 56 26 59 15</span>
+              <span className="font-mono font-bold text-[14px] sm:text-[15px]">+226 57 26 59 15</span>
               <span className="text-muted-foreground text-[11px] sm:text-[12px] italic sm:ml-[8px] uppercase tracking-[1px] text-center mt-1 sm:mt-0">- Réponse en moins d'1 heure.</span>
             </div>
           </motion.div>

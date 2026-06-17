@@ -13,8 +13,9 @@ const plans = [
     name: "L'Assistant Standard",
     tier: "Tier 1",
     description: "Gère votre WhatsApp et vos réseaux Facebook principaux pendant que vous travaillez.",
-    price: 50000,
-    yearlyPrice: 42500,
+    price: 100000,
+    promoPrice: 50000,
+    yearlyPrice: 85000,
     buttonText: "Choisir l'Assistant Standard",
     buttonVariant: "outline" as const,
     idealFor: "Idéal : Couturiers, Restaurants, Boutiques",
@@ -34,8 +35,9 @@ const plans = [
     name: "L'Assistant Commercial",
     tier: "Tier 2",
     description: "Un département commercial complet gérant WhatsApp, FB, Instagram, TikTok et de la publicité.",
-    price: 150000,
-    yearlyPrice: 127500,
+    price: 200000,
+    promoPrice: 150000,
+    yearlyPrice: 170000,
     buttonText: "Choisir l'Assistant Commercial",
     buttonVariant: "default" as const,
     popular: true,
@@ -55,8 +57,9 @@ const plans = [
     name: "Le Département Complet",
     tier: "Tier 3",
     description: "Un directeur, un commercial et un créatif digitaux pour propulser votre croissance.",
-    price: 400000,
-    yearlyPrice: 340000,
+    price: 500000,
+    promoPrice: 400000,
+    yearlyPrice: 425000,
     buttonText: "Choisir le Département Complet",
     buttonVariant: "outline" as const,
     idealFor: "Idéal : Promoteurs, Hôtels, Cliniques d'élite",
@@ -231,7 +234,7 @@ Pas de surprise.
                 {plan.popular && (
                   <>
                     <div className="absolute top-[20px] right-[20px] bg-primary text-black-deep text-[11px] font-bold py-[4px] px-[12px] uppercase tracking-[1px] rounded-full z-20">
-                      ⭐ Recommandé
+                      ⭐ Le Plus Populaire
                     </div>
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[200%] h-[200px] bg-primary/10 blur-[80px] pointer-events-none rounded-t-full"></div>
                   </>
@@ -244,17 +247,32 @@ Pas de surprise.
                   </div>
                   <p className="text-[13px] text-muted-foreground min-h-[48px] mt-2 leading-relaxed">{plan.description}</p>
                   
-                  <div className="flex items-end gap-2 mt-6">
-                    <span className="text-[36px] md:text-[44px] font-bold text-foreground flex items-end leading-none">
-                      <NumberFlow
-                        format={{ useGrouping: true }}
-                        value={isYearly ? plan.yearlyPrice : plan.price}
-                        className="text-[36px] md:text-[44px] font-bold leading-none"
-                      />
-                    </span>
-                    <span className="text-[13px] font-normal text-gray-500 mb-2 uppercase tracking-wide">
-                      FCFA/mo
-                    </span>
+                  <div className="flex flex-col items-start mt-6 min-h-[80px]">
+                    {!isYearly && plan.promoPrice && (
+                      <span className="text-gray-500 line-through text-[16px] font-medium mb-1">
+                        {plan.price.toLocaleString('fr-FR')} FCFA
+                      </span>
+                    )}
+                    <div className="flex items-end gap-2">
+                      <span className={cn(
+                        "text-[36px] md:text-[44px] font-bold flex items-end leading-none transition-colors",
+                        !isYearly && plan.promoPrice ? "text-primary" : "text-foreground"
+                      )}>
+                        <NumberFlow
+                          format={{ useGrouping: true }}
+                          value={isYearly ? plan.yearlyPrice : (plan.promoPrice || plan.price)}
+                          className="text-[36px] md:text-[44px] font-bold leading-none"
+                        />
+                      </span>
+                      <span className="text-[13px] font-normal text-gray-500 mb-2 uppercase tracking-wide">
+                        FCFA/mo
+                      </span>
+                    </div>
+                    {!isYearly && plan.promoPrice && (
+                      <span className="bg-primary border border-primary/80 text-background px-3 py-1.5 rounded-[4px] text-[11px] uppercase font-bold tracking-wider mt-3 shadow-sm inline-block">
+                        Prix de lancement
+                      </span>
+                    )}
                   </div>
                 </CardHeader>
 

@@ -68,7 +68,7 @@ export function Layout() {
         />
         <div className="hidden dark:block absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-background/80 pointer-events-none"></div>
         {/* Simple animated noise or stars could go here, but a gradient is very fast */}
-        <div className="hidden dark:block absolute inset-0 opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none"></div>
+        <div className="hidden dark:block absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E\")" }}></div>
       </div>
       {/* Navbar fixed */}
       <header
@@ -184,7 +184,7 @@ export function Layout() {
                   <span className="text-primary mt-0.5">📍</span> Ouagadougou, Burkina Faso
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-primary mt-0.5">📱</span> WhatsApp : +226 56 26 59 15
+                  <span className="text-primary mt-0.5">📱</span> WhatsApp : +226 57 26 59 15
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-0.5">✉️</span> contact@voixdor.studio
@@ -205,7 +205,7 @@ export function Layout() {
 
       {/* WhatsApp Floating Button */}
       <a 
-        href="https://wa.me/22656265915" 
+        href="https://wa.me/22657265915" 
         target="_blank" 
         rel="noopener noreferrer"
         className="fixed bottom-[20px] right-[20px] md:bottom-[30px] md:right-[40px] z-50 bg-[#25D366] text-foreground p-[14px] md:px-[24px] md:py-[12px] rounded-full md:rounded-[30px] flex items-center justify-center gap-0 md:gap-[10px] font-bold text-[14px] shadow-[0_10px_20px_rgba(0,0,0,0.3)] hover:scale-105 transition-transform group"

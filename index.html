@@ -7,6 +7,20 @@
     <link rel="icon" href="./logo/logo studio voix d'or.png" type="image/png">
   </head>
   <body>
+    <script>
+      window.addEventListener('error', function(e) {
+        if (e.message && e.message.includes('Missing property')) {
+          e.stopImmediatePropagation();
+          e.preventDefault();
+        }
+      }, true);
+      window.addEventListener('unhandledrejection', function(e) {
+        if (e.reason && e.reason.message && e.reason.message.includes('Missing property')) {
+          e.stopImmediatePropagation();
+          e.preventDefault();
+        }
+      }, true);
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

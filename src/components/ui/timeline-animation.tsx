@@ -22,6 +22,7 @@ export const TimelineContent = ({
   customVariants,
   className,
   as = "div",
+  style,
 }: TimelineContentProps) => {
   const localRef = useRef<HTMLDivElement>(null);
   const ref = timelineRef || localRef;
@@ -37,6 +38,7 @@ export const TimelineContent = ({
       custom={animationNum}
       variants={customVariants}
       className={className}
+      style={style}
     >
       {children}
     </MotionComponent>
