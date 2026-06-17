@@ -19,6 +19,10 @@ export class ErrorBoundary extends React.Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    if (error.message && error.message.includes('Missing property')) {
+      // Suppress this specific React Spline error from littering the console
+      return;
+    }
     console.error("Uncaught error:", error, errorInfo);
   }
 

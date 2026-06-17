@@ -569,16 +569,24 @@ export function Home() {
             {/* Inner accent line */}
             <div className="absolute top-0 left-0 w-full h-[4px] bg-gradient-to-r from-transparent via-primary to-transparent"></div>
             
-            <h2 className="text-[24px] sm:text-[32px] md:text-[40px] font-heading font-normal mb-[20px] md:mb-[24px] uppercase tracking-[1px] leading-tight text-foreground drop-shadow-md">
-              Recevez gratuitement notre analyse : <br/><span className="text-primary italic font-serif">"5 erreurs visuelles qui freinent les marques burkinabè"</span>
+            <h2 className="text-[20px] sm:text-[24px] md:text-[30px] font-heading font-normal mb-[20px] md:mb-[24px] uppercase tracking-[1px] leading-tight text-foreground drop-shadow-md">
+              Recevez gratuitement nos guides : <br/>
+              <span className="text-primary italic font-serif leading-snug block mt-4 mb-2">"5 Visuels Qui Font Fuir Vos Clients (Et Comment Les Remplacer en 24h)"</span>
+              <span className="text-sm sm:text-base font-sans tracking-widest opacity-80 block my-2">&</span>
+              <span className="text-primary italic font-serif leading-snug block mt-2">"Pourquoi 70% de Vos Clients Disparaissent Après 1 Message (Et Comment Les Rattraper Avec 1 Réponse Parfaite)"</span>
             </h2>
+
+            <div className="bg-primary/10 border border-primary/20 rounded-[8px] p-4 my-6 inline-block">
+              <span className="text-primary font-bold uppercase tracking-[1px] text-[13px] block mb-1">🎁 Bonus Inclus</span>
+              <span className="text-foreground text-[14px]">Un document surprise exclusif pour booster vos résultats !</span>
+            </div>
             
-            <form className="flex flex-col sm:flex-row gap-[16px] max-w-lg mx-auto w-full mb-6 mt-8" onSubmit={(e) => {
+            <form className="flex flex-col sm:flex-row gap-[16px] max-w-lg mx-auto w-full mb-6 mt-4" onSubmit={(e) => {
               e.preventDefault();
               const formData = new FormData(e.currentTarget);
               const phone = formData.get('whatsapp');
               if (phone) {
-                window.location.href = `https://wa.me/22657265915?text=Bonjour,%20je%20souhaite%20recevoir%20l'analyse%20des%205%20erreurs%20visuelles.%20Mon%20numéro%20:%20${phone}`;
+                window.location.href = `https://wa.me/22657265915?text=Bonjour,%20je%20souhaite%20recevoir%20vos%20guides%20gratuits%20et%20le%20bonus.%20Mon%20numéro%20:%20${phone}`;
               }
             }}>
               <input 
