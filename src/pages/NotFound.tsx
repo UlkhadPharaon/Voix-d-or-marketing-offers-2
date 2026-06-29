@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, Home } from 'lucide-react';
 import { SEO } from '@/components/SEO';
 import { PageTransition } from '@/components/PageTransition';
-import { SplineScene } from '@/components/ui/splite';
 
 export function NotFound() {
   return (
@@ -13,12 +12,8 @@ export function NotFound() {
         description="La page que vous recherchez n'existe pas ou a été déplacée."
       />
       
-      {/* 404 3D Background */}
+      {/* 404 Background */}
       <div className="fixed inset-0 z-0 h-full w-full opacity-70 flex items-center justify-center">
-        <SplineScene 
-          scene="/404_3_d.spline"
-          className="w-full h-full"
-        />
         <div className="absolute inset-0 bg-background/40 pointer-events-none"></div>
       </div>
 
@@ -27,7 +22,7 @@ export function NotFound() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="bg-foreground/60 backdrop-blur-xl border border-foreground/10 p-8 md:p-12 rounded-[16px] shadow-xl dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] max-w-lg w-full"
+          className="bg-foreground/60  border border-foreground/10 p-8 md:p-12 rounded-[16px] shadow-xl dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] max-w-lg w-full"
         >
           <div className="inline-flex bg-primary/10 border border-primary/30 text-primary px-[16px] py-[6px] font-bold text-[12px] tracking-[3px] uppercase mb-[24px] rounded-full">
             Erreur 404

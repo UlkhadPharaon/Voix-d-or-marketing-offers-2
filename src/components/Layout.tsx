@@ -72,7 +72,7 @@ export function Layout() {
       </div>
       {/* Navbar fixed */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 h-[80px] flex items-center px-6 md:px-[40px] border-b ${isScrolled ? 'border-foreground/10 bg-foreground/50 backdrop-blur-3xl shadow-[0_4px_30px_rgba(0,0,0,0.1)]' : 'border-transparent bg-background/0'}`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 h-[80px] flex items-center px-6 md:px-[40px] border-b ${isScrolled ? 'border-foreground/10 bg-foreground/50  shadow-[0_4px_30px_rgba(0,0,0,0.1)]' : 'border-transparent bg-background/0'}`}
       >
         <div className="w-full flex items-center justify-between">
           <Link to="/" className="flex items-center gap-[12px] z-50 group">
@@ -116,7 +116,7 @@ export function Layout() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-foreground/80 backdrop-blur-3xl flex flex-col items-center justify-center space-y-8 pt-20 md:hidden border-b border-primary/20"
+            className="fixed inset-0 z-40 bg-foreground/80  flex flex-col items-center justify-center space-y-8 pt-20 md:hidden border-b border-primary/20"
           >
             {navLinks.map((link) => (
               <a
@@ -138,7 +138,7 @@ export function Layout() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-foreground/[0.02] backdrop-blur-xl text-foreground border-t border-foreground/10 relative overflow-hidden shadow-[0_-8px_32px_rgba(0,0,0,0.5)]">
+      <footer className="bg-foreground/[0.02]  text-foreground border-t border-foreground/10 relative overflow-hidden shadow-[0_-8px_32px_rgba(0,0,0,0.5)]">
         {/* Subtle Faso Dan Fani pattern background (using basic linear gradients to simulate) */}
         <div className="absolute inset-0 pointer-events-none z-0" 
              style={{ backgroundImage: 'repeating-linear-gradient(90deg, rgba(212, 175, 55, 0.03) 0px, rgba(212, 175, 55, 0.03) 1px, transparent 1px, transparent 20px), repeating-linear-gradient(0deg, rgba(212, 175, 55, 0.03) 0px, rgba(212, 175, 55, 0.03) 1px, transparent 1px, transparent 20px)' }}>

@@ -29,7 +29,7 @@ export function Securite() {
              animate={{ opacity: 1, x: 0 }}
              transition={{ delay: 0.1 }}
           >
-            <Card className="bg-card/90 dark:bg-foreground/5 backdrop-blur-2xl border border-foreground/10 rounded-[8px] p-8 h-full shadow-xl hover:border-primary/50 transition-colors">
+            <Card className="bg-card/90 dark:bg-foreground/5  border border-foreground/10 rounded-[8px] p-8 h-full shadow-xl hover:border-primary/50 transition-colors">
               <div className="mb-6 bg-foreground/[0.05] w-12 h-12 flex items-center justify-center rounded-full">
                 <Lock className="w-6 h-6 text-primary" />
               </div>
@@ -55,7 +55,7 @@ export function Securite() {
              animate={{ opacity: 1, x: 0 }}
              transition={{ delay: 0.2 }}
           >
-            <Card className="bg-card/90 dark:bg-foreground/5 backdrop-blur-2xl border border-foreground/10 rounded-[8px] p-8 h-full shadow-xl hover:border-primary/50 transition-colors">
+            <Card className="bg-card/90 dark:bg-foreground/5  border border-foreground/10 rounded-[8px] p-8 h-full shadow-xl hover:border-primary/50 transition-colors">
               <div className="mb-6 bg-foreground/[0.05] w-12 h-12 flex items-center justify-center rounded-full">
                 <Server className="w-6 h-6 text-primary" />
               </div>

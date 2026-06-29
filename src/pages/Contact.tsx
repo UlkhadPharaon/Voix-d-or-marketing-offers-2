@@ -123,7 +123,7 @@ Merci !`;
           </div>
         </div>
 
-        <Card className="bg-card/90 dark:bg-foreground/10 backdrop-blur-2xl border border-foreground/10 rounded-[8px] overflow-hidden shadow-xl dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+        <Card className="bg-card/90 dark:bg-foreground/10  border border-foreground/10 rounded-[8px] overflow-hidden shadow-xl dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
           <CardContent className="p-0">
             <form onSubmit={handleSubmit}>
               <AnimatePresence mode="wait">
@@ -226,25 +226,25 @@ Merci !`;
                       <RadioGroup required value={formData.offer} onValueChange={val => setFormData({...formData, offer: val})} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <RadioGroupItem value="Starter" id="pkg-starter" className="peer sr-only" />
-                          <Label htmlFor="pkg-starter" className="flex flex-col items-center justify-between rounded-[2px] border border-foreground/10 bg-foreground/[0.03] backdrop-blur-md p-4 hover:border-primary/50 hover:bg-foreground/[0.08] peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center transition-all">
+                          <Label htmlFor="pkg-starter" className="flex flex-col items-center justify-between rounded-[2px] border border-foreground/10 bg-foreground/[0.03]  p-4 hover:border-primary/50 hover:bg-foreground/[0.08] peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center transition-all">
                             <span className="font-heading uppercase tracking-[1px] mb-1">Starter</span>
                           </Label>
                         </div>
                         <div>
                           <RadioGroupItem value="Pro" id="pkg-pro" className="peer sr-only" />
-                          <Label htmlFor="pkg-pro" className="flex flex-col items-center justify-between rounded-[2px] border border-foreground/10 bg-foreground/[0.03] backdrop-blur-md p-4 hover:border-primary/50 hover:bg-foreground/[0.08] peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center relative overflow-hidden transition-all">
+                          <Label htmlFor="pkg-pro" className="flex flex-col items-center justify-between rounded-[2px] border border-foreground/10 bg-foreground/[0.03]  p-4 hover:border-primary/50 hover:bg-foreground/[0.08] peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center relative overflow-hidden transition-all">
                             <span className="font-heading uppercase tracking-[1px] mb-1 text-primary">Pro</span>
                           </Label>
                         </div>
                         <div>
                           <RadioGroupItem value="Business" id="pkg-biz" className="peer sr-only" />
-                          <Label htmlFor="pkg-biz" className="flex flex-col items-center justify-between rounded-[2px] border border-foreground/10 bg-foreground/[0.03] backdrop-blur-md p-4 hover:border-primary/50 hover:bg-foreground/[0.08] peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center transition-all">
+                          <Label htmlFor="pkg-biz" className="flex flex-col items-center justify-between rounded-[2px] border border-foreground/10 bg-foreground/[0.03]  p-4 hover:border-primary/50 hover:bg-foreground/[0.08] peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center transition-all">
                             <span className="font-heading uppercase tracking-[1px] mb-1">Business</span>
                           </Label>
                         </div>
                         <div>
                           <RadioGroupItem value="Je ne sais pas encore" id="pkg-not-sure" className="peer sr-only" />
-                          <Label htmlFor="pkg-not-sure" className="flex flex-col items-center justify-between rounded-[2px] border border-foreground/10 bg-foreground/[0.03] backdrop-blur-md p-4 hover:border-primary/50 hover:bg-foreground/[0.08] peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center transition-all">
+                          <Label htmlFor="pkg-not-sure" className="flex flex-col items-center justify-between rounded-[2px] border border-foreground/10 bg-foreground/[0.03]  p-4 hover:border-primary/50 hover:bg-foreground/[0.08] peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center transition-all">
                             <span className="font-heading uppercase tracking-[1px] mb-1">Je ne sais pas encore</span>
                           </Label>
                         </div>

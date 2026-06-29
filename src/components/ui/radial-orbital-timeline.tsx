@@ -83,20 +83,31 @@ export default function RadialOrbitalTimeline({
   };
 
   useEffect(() => {
-    let rotationTimer: NodeJS.Timeout;
+    let animationFrameId: number;
+    let lastTime = performance.now();
 
-    if (autoRotate && viewMode === "orbital") {
-      rotationTimer = setInterval(() => {
+    const animate = (time: number) => {
+      if (autoRotate && viewMode === "orbital") {
+        const deltaTime = time - lastTime;
+        // Adjust speed based on time delta to stay consistent (0.3 degrees per 50ms -> ~0.006 per ms)
+        const rotationSpeed = 0.006 * deltaTime;
+        
         setRotationAngle((prev) => {
-          const newAngle = (prev + 0.3) % 360;
+          const newAngle = (prev + rotationSpeed) % 360;
           return Number(newAngle.toFixed(3));
         });
-      }, 50);
+        lastTime = time;
+      }
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    if (autoRotate && viewMode === "orbital") {
+      animationFrameId = requestAnimationFrame(animate);
     }
 
     return () => {
-      if (rotationTimer) {
-        clearInterval(rotationTimer);
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
       }
     };
   }, [autoRotate, viewMode]);
@@ -211,7 +222,7 @@ export default function RadialOrbitalTimeline({
                 <div 
                   className={`ml-[32px] sm:ml-[40px] pl-[32px] sm:pl-[40px] overflow-hidden transition-all duration-500 ease-in-out ${isExpanded ? "max-h-[500px] opacity-100 mt-4" : "max-h-0 opacity-0"}`}
                 >
-                  <Card className="bg-foreground/60 backdrop-blur-2xl border border-[#D4AF37]/20 shadow-lg relative">
+                  <Card className="bg-foreground/60  border border-[#D4AF37]/20 shadow-lg relative">
                     <CardContent className="p-4 sm:p-5 text-[13px] sm:text-[14px] text-gray-300">
                       <p className="leading-relaxed mb-4">{item.content}</p>
                       
@@ -255,7 +266,7 @@ export default function RadialOrbitalTimeline({
               className="absolute w-24 h-24 rounded-full border border-foreground/10 animate-ping opacity-50"
               style={{ animationDelay: "0.5s" }}
             ></div>
-            <div className="w-8 h-8 rounded-full bg-foreground/80 backdrop-blur-md"></div>
+            <div className="w-8 h-8 rounded-full bg-foreground/80 "></div>
           </div>
 
           <div className="absolute w-96 h-96 rounded-full border border-[#D4AF37]/20 border-dashed"></div>
@@ -334,7 +345,7 @@ export default function RadialOrbitalTimeline({
                 </div>
 
                 {isExpanded && (
-                  <Card className="absolute top-24 left-1/2 -translate-x-1/2 w-[280px] bg-foreground/60 backdrop-blur-2xl border border-foreground/10 shadow-[0_8px_32px_rgba(212,175,55,0.2)] overflow-visible z-50">
+                  <Card className="absolute top-24 left-1/2 -translate-x-1/2 w-[280px] bg-foreground/60  border border-foreground/10 shadow-[0_8px_32px_rgba(212,175,55,0.2)] overflow-visible z-50">
                     <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-px h-4 bg-gradient-to-b from-transparent to-[#D4AF37]/50"></div>
                     <CardHeader className="pb-2 pt-4 px-4">
                       <div className="flex justify-between items-center mb-2">

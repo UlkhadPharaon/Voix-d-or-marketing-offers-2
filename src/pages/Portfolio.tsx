@@ -1,9 +1,15 @@
+import { useState } from 'react';
 import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
 import { SEO } from '@/components/SEO';
 import { PageTransition } from '@/components/PageTransition';
+import { Eye, EyeOff } from 'lucide-react';
 
 export function Portfolio() {
+  const [hideUI, setHideUI] = useState(false);
+  
+  const uiParams = hideUI ? "&controls=0&modestbranding=1&rel=0" : "&controls=1";
+
   return (
     <PageTransition className="min-h-screen bg-background/0 text-foreground pt-[100px] md:pt-[120px] pb-12 md:pb-24 border-t border-primary/20">
       <SEO 
@@ -23,6 +29,20 @@ export function Portfolio() {
           </p>
         </div>
 
+        <div className="flex justify-center mb-10">
+          <Button 
+            variant="outline" 
+            onClick={() => setHideUI(!hideUI)}
+            className="border-primary/30 hover:border-primary/80 hover:bg-primary/10 text-foreground transition-all"
+          >
+            {hideUI ? (
+              <><Eye className="w-4 h-4 mr-2" /> Réactiver l'interface vidéo</>
+            ) : (
+              <><EyeOff className="w-4 h-4 mr-2" /> Masquer l'interface vidéo (Mode fluide)</>
+            )}
+          </Button>
+        </div>
+
         {/* Video Highlight */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -37,13 +57,14 @@ export function Portfolio() {
                 <h3 className="font-heading uppercase tracking-[1px] text-[18px] text-primary">Gastronomie</h3>
                 <span className="text-[12px] uppercase tracking-[1px] text-gray-500 font-bold block mt-1">Exemple de production - Tier 2 : L'Assistant Commercial</span>
               </div>
-              <div className="relative w-full aspect-video overflow-hidden rounded-[8px] border border-foreground/10 shadow-[0_0_20px_rgba(212,175,55,0.1)] bg-card mb-4 md:mb-0">
+              <div className="relative w-full aspect-video overflow-hidden rounded-[8px] border border-foreground/10 shadow-[0_0_20px_rgba(212,175,55,0.1)] bg-card mb-4 md:mb-0 transform-gpu">
                 <iframe
                   className="absolute top-0 left-0 w-full h-full"
-                  src="https://www.youtube.com/embed/yImx6vMXneI?si=gxx-izFssIEQ05gH&vq=hd1080"
+                  src={`https://www.youtube.com/embed/yImx6vMXneI?si=gxx-izFssIEQ05gH${uiParams}`}
                   title="Exemple Gastronomie"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
+                  loading="lazy"
                 ></iframe>
               </div>
             </motion.div>
@@ -53,13 +74,14 @@ export function Portfolio() {
                 <h3 className="font-heading uppercase tracking-[1px] text-[18px] text-primary">Supermarché</h3>
                 <span className="text-[12px] uppercase tracking-[1px] text-gray-500 font-bold block mt-1">Exemple de production - Tier 1 : L'Assistant Standard</span>
               </div>
-              <div className="relative w-full aspect-video overflow-hidden rounded-[8px] border border-foreground/10 shadow-[0_0_20px_rgba(212,175,55,0.1)] bg-card mb-4 md:mb-0">
+              <div className="relative w-full aspect-video overflow-hidden rounded-[8px] border border-foreground/10 shadow-[0_0_20px_rgba(212,175,55,0.1)] bg-card mb-4 md:mb-0 transform-gpu">
                 <iframe
                   className="absolute top-0 left-0 w-full h-full"
-                  src="https://www.youtube.com/embed/j5ktRSbDMEU?si=XhSqVt8W_ospRwQH&vq=hd1080"
+                  src={`https://www.youtube.com/embed/j5ktRSbDMEU?si=XhSqVt8W_ospRwQH${uiParams}`}
                   title="Exemple Supermarché"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
+                  loading="lazy"
                 ></iframe>
               </div>
             </motion.div>
@@ -69,13 +91,14 @@ export function Portfolio() {
                 <h3 className="font-heading uppercase tracking-[1px] text-[18px] text-primary">Retail & Commerce</h3>
                 <span className="text-[12px] uppercase tracking-[1px] text-gray-500 font-bold block mt-1">Exemple de production - Tier 1 : L'Assistant Standard</span>
               </div>
-              <div className="relative w-full aspect-video overflow-hidden rounded-[8px] border border-foreground/10 shadow-[0_0_20px_rgba(212,175,55,0.1)] bg-card mb-4 md:mb-0">
+              <div className="relative w-full aspect-video overflow-hidden rounded-[8px] border border-foreground/10 shadow-[0_0_20px_rgba(212,175,55,0.1)] bg-card mb-4 md:mb-0 transform-gpu">
                 <iframe
                   className="absolute top-0 left-0 w-full h-full"
-                  src="https://www.youtube.com/embed/wLzagc6DvDE?si=V6uD7PsWi_bIsQWP&vq=hd1080"
+                  src={`https://www.youtube.com/embed/wLzagc6DvDE?si=V6uD7PsWi_bIsQWP${uiParams}`}
                   title="Exemple Retail"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
+                  loading="lazy"
                 ></iframe>
               </div>
             </motion.div>
@@ -85,13 +108,14 @@ export function Portfolio() {
                 <h3 className="font-heading uppercase tracking-[1px] text-[20px] text-primary mb-2">Parfumerie et Luxe</h3>
                 <span className="text-[12px] uppercase tracking-[1px] text-gray-500 font-bold block">La vitrine de prestige - Tier 3 : Le Département Complet</span>
               </div>
-              <div className="relative w-full aspect-video overflow-hidden rounded-[8px] border border-foreground/10 shadow-[0_0_50px_rgba(212,175,55,0.15)] bg-background">
+              <div className="relative w-full aspect-video overflow-hidden rounded-[8px] border border-foreground/10 shadow-[0_0_50px_rgba(212,175,55,0.15)] bg-background transform-gpu">
                 <iframe
                   className="absolute top-0 left-0 w-full h-full"
-                  src="https://www.youtube.com/embed/videoseries?list=PL2QtNxnnsuX-3SU1j5AotUiZldOi5pU-Q&vq=hd1080"
+                  src={`https://www.youtube.com/embed/videoseries?list=PL2QtNxnnsuX-3SU1j5AotUiZldOi5pU-Q${uiParams}`}
                   title="Studio Voix d'Or Showcase"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
+                  loading="lazy"
                 ></iframe>
               </div>
             </motion.div>

@@ -20,15 +20,14 @@ const plans = [
     buttonVariant: "outline" as const,
     idealFor: "Idéal : Couturiers, Restaurants, Boutiques",
     includes: [
-      "Inclus :",
       "Assistant WhatsApp 24h/24 réactif",
       "Capture & base de données clients",
-      "12 publications Facebook / mois",
+      "30 publications Facebook / mois",
       "4 vidéos courtes impactantes (15s)",
       "Réponses aux commentaires FB",
-      "Rapport d'activité mensuel complet",
       "Réponses ultra-rapides et intelligentes",
-      "Générations d'images haute qualité"
+      "Générations d'images haute qualité",
+      "Rapport d'activité mensuel complet"
     ],
   },
   {
@@ -43,14 +42,16 @@ const plans = [
     popular: true,
     idealFor: "Idéal : Cliniques, Écoles, Immo, Grossistes",
     includes: [
-      "Inclus : Toutes les capacités Tier 1",
-      "Gestion complète 3 réseaux (FB, IG, TikTok)",
+      "Assistant WhatsApp avec catalogue",
+      "Capture & base de données clients",
+      "60 publications par plateforme (FB, IG, TikTok)",
       "8 vidéos ultra-réalistes qualité TV",
       "Gestion automatisée de vos publicités",
       "Séquences de relances clients froides",
-      "Assistant WhatsApp avec catalogue",
-      "Rapport bimensuel de ROI chiffré",
-      "Protection avancée de votre numéro"
+      "Réponses aux commentaires (FB, IG, TikTok)",
+      "Générations d'images haute qualité",
+      "Analyse concurrentielle mensuelle",
+      "Rapport bimensuel de ROI chiffré"
     ],
   },
   {
@@ -64,14 +65,17 @@ const plans = [
     buttonVariant: "outline" as const,
     idealFor: "Idéal : Promoteurs, Hôtels, Cliniques d'élite",
     includes: [
-      "Inclus : Toutes les capacités Tier 2",
-      "40+ pièces de contenu premium / mois",
+      "Assistant WhatsApp avec catalogue",
+      "Capture & base de données clients",
+      "90 publications par plateforme (FB, IG, TikTok)",
       "15 vidéos ultra-réalistes qualité TV",
-      "Budget publicitaire 50 000 FCFA INCLUS",
+      "Gestion automatisée de vos publicités",
+      "Séquences de relances clients froides",
+      "Réponses aux commentaires (Tous réseaux)",
+      "Générations d'images haute qualité",
       "Landing page marque créée & maintenue",
       "Analyse concurrentielle mensuelle",
-      "Campagnes WhatsApp Broadcast",
-      "Rapport hebdo + Call stratégique"
+      "Rapport hebdo"
     ],
   },
 ];
@@ -86,7 +90,7 @@ const PricingSwitch = ({ onSwitch }: { onSwitch: (value: string) => void }) => {
 
   return (
     <div className="flex justify-center mt-6">
-      <div className="relative z-10 mx-auto flex w-fit rounded-[4px] bg-card/90 dark:bg-foreground/10 backdrop-blur-md border border-foreground/10 p-1">
+      <div className="relative z-10 mx-auto flex w-fit rounded-[4px] bg-card/90 dark:bg-foreground/10  border border-foreground/10 p-1">
         <button
           onClick={() => handleSwitch("0")}
           className={cn(
@@ -209,7 +213,11 @@ Pas de surprise.
             animationNum={1}
             timelineRef={pricingRef}
             customVariants={revealVariants}
+            className="flex flex-col items-center gap-4"
           >
+            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary px-4 py-2 rounded-full text-sm font-bold uppercase tracking-widest mt-4">
+              🎁 7 Jours d'Essai Gratuit Inclus
+            </div>
             <PricingSwitch onSwitch={togglePricingPeriod} />
           </TimelineContent>
         </article>
@@ -227,8 +235,8 @@ Pas de surprise.
               <Card
                 className={cn("w-full border rounded-[8px] flex flex-col justify-between transition-all duration-300", 
                   plan.popular 
-                  ? "bg-foreground/[0.05] backdrop-blur-2xl border-primary shadow-[0_0_50px_rgba(212,175,55,0.15)] overflow-hidden" 
-                  : "bg-foreground/[0.02] backdrop-blur-xl border-foreground/10 hover:border-foreground/20"
+                  ? "bg-foreground/[0.05]  border-primary shadow-[0_0_50px_rgba(212,175,55,0.15)] overflow-hidden" 
+                  : "bg-foreground/[0.02]  border-foreground/10 hover:border-foreground/20"
                 )}
               >
                 {plan.popular && (
@@ -281,7 +289,7 @@ Pas de surprise.
 
                   <div className="space-y-4 flex-grow">
                     <ul className="space-y-3">
-                      {plan.includes.slice(1).map((feature, featureIndex) => (
+                      {plan.includes.map((feature, featureIndex) => (
                         <li
                           key={featureIndex}
                           className="flex items-start gap-3"
@@ -305,6 +313,9 @@ Pas de surprise.
                     >
                       → {plan.buttonText}
                     </button>
+                    <p className="text-center text-[11px] text-primary mt-3 uppercase tracking-wider font-bold">
+                      7 Jours d'Essai Gratuit
+                    </p>
                   </div>
                 </CardContent>
               </Card>
