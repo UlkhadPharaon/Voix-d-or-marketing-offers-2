@@ -8,6 +8,7 @@ import { SEO } from '@/components/SEO';
 import { PageTransition } from '@/components/PageTransition';
 import { InfiniteMarquee } from '@/components/InfiniteMarquee';
 import { SplineScene } from "@/components/ui/splite";
+import { VantaBackground } from "@/components/VantaBackground";
 import { Spotlight } from "@/components/ui/spotlight";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import PricingSection4 from "@/components/ui/pricing-section-4";
@@ -133,16 +134,16 @@ export function Home() {
         {/* Spotlight Effect */}
         <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="#D4AF37" />
 
-        {/* splite 3D integration with proper z-index */}
-        <div className="absolute inset-0 z-0 h-full w-full opacity-60 pointer-events-none">
-          <SplineScene 
-            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-            className="w-full h-full pointer-events-none"
-          />
-          <div className="absolute inset-0 bg-background/50 pointer-events-none"></div>
+        {/* Vanta NET — agent-network backdrop in brand tokens (gold on obsidian) */}
+        <VantaBackground
+          effect="net"
+          className="absolute inset-0 z-0 h-full w-full opacity-80 pointer-events-none"
+          options={{ points: 9, maxDistance: 26, spacing: 20 }}
+        >
+          <div className="absolute inset-0 bg-background/40 pointer-events-none"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background pointer-events-none"></div>
           <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-primary/10 blur-[120px] rounded-full pointer-events-none"></div>
-        </div>
+        </VantaBackground>
 
         <div className="container relative z-10 mx-auto w-full flex flex-col md:flex-row items-center justify-between pointer-events-none">
           {/* Content */}
