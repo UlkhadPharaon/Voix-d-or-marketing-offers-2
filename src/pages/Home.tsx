@@ -8,7 +8,6 @@ import { SEO } from '@/components/SEO';
 import { PageTransition } from '@/components/PageTransition';
 import { InfiniteMarquee } from '@/components/InfiniteMarquee';
 import { SplineScene } from "@/components/ui/splite";
-import { VantaBackground } from "@/components/VantaBackground";
 import { Spotlight } from "@/components/ui/spotlight";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import PricingSection4 from "@/components/ui/pricing-section-4";
@@ -112,7 +111,7 @@ export function Home() {
               "addressLocality": "Ouagadougou",
               "addressCountry": "Burkina Faso"
             },
-            "telephone": "+22657265915"
+            "telephone": "+22605830599"
           }
         ]}
       />
@@ -124,16 +123,16 @@ export function Home() {
         {/* Spotlight Effect */}
         <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="#D4AF37" />
 
-        {/* Vanta NET — agent-network backdrop in brand tokens (gold on obsidian) */}
-        <VantaBackground
-          effect="net"
-          className="absolute inset-0 z-0 h-full w-full opacity-80 pointer-events-none"
-          options={{ points: 9, maxDistance: 26, spacing: 20 }}
-        >
-          <div className="absolute inset-0 bg-background/40 pointer-events-none"></div>
+        {/* splite 3D integration with proper z-index */}
+        <div className="absolute inset-0 z-0 h-full w-full opacity-60 pointer-events-none">
+          <SplineScene 
+            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+            className="w-full h-full pointer-events-none"
+          />
+          <div className="absolute inset-0 bg-background/50 pointer-events-none"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background pointer-events-none"></div>
           <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-primary/10 blur-[120px] rounded-full pointer-events-none"></div>
-        </VantaBackground>
+        </div>
 
         <div className="container relative z-10 mx-auto w-full flex flex-col md:flex-row items-center justify-between pointer-events-none">
           {/* Content */}
@@ -573,7 +572,7 @@ export function Home() {
               const formData = new FormData(e.currentTarget);
               const phone = formData.get('whatsapp');
               if (phone) {
-                window.location.href = `https://wa.me/22657265915?text=Bonjour,%20je%20souhaite%20recevoir%20vos%20guides%20gratuits%20et%20le%20bonus.%20Mon%20numéro%20:%20${phone}`;
+                window.location.href = `https://wa.me/22605830599?text=Bonjour,%20je%20souhaite%20recevoir%20vos%20guides%20gratuits%20et%20le%20bonus.%20Mon%20numéro%20:%20${phone}`;
               }
             }}>
               <input 
@@ -660,7 +659,7 @@ export function Home() {
             
             <div className="mt-[48px] flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-[12px] text-foreground border border-foreground/10 bg-card p-4 sm:px-[24px] sm:py-[12px] rounded-[2px] w-full max-w-sm sm:max-w-max mx-auto">
               <span className="text-[#25D366] text-xl mb-1 sm:mb-0">📱</span>
-              <span className="font-mono font-bold text-[14px] sm:text-[15px]">+226 57 26 59 15</span>
+              <span className="font-mono font-bold text-[14px] sm:text-[15px]">+226 05 83 05 99</span>
               <span className="text-muted-foreground text-[11px] sm:text-[12px] italic sm:ml-[8px] uppercase tracking-[1px] text-center mt-1 sm:mt-0">- Réponse en moins d'1 heure.</span>
             </div>
           </motion.div>

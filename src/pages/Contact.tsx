@@ -66,7 +66,7 @@ export function Contact() {
 Merci !`;
 
     const encodedMessage = encodeURIComponent(message);
-    window.location.href = `https://wa.me/22657265915?text=${encodedMessage}`;
+    window.location.href = `https://wa.me/22605830599?text=${encodedMessage}`;
     
     setIsSubmitted(true);
   };

@@ -146,7 +146,7 @@ export function Layout() {
         </div>
         
         <div className="container mx-auto px-4 md:px-[40px] py-10 md:py-16 relative z-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 md:gap-12">
             <div className="col-span-1 md:col-span-1">
               <div className="flex items-center gap-[12px] mb-6">
                 <Logo />
@@ -172,23 +172,13 @@ export function Layout() {
             </div>
             
             <div>
-              <h4 className="font-heading text-primary text-[14px] uppercase tracking-widest mb-6 font-bold">Réseaux Sociaux</h4>
-              <ul className="space-y-4">
-                <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors text-[14px]">Instagram</a></li>
-                <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors text-[14px]">Facebook</a></li>
-                <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors text-[14px]">TikTok</a></li>
-                <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors text-[14px]">LinkedIn</a></li>
-              </ul>
-            </div>
-
-            <div>
               <h4 className="font-heading text-primary text-[14px] uppercase tracking-widest mb-6 font-bold">Contact</h4>
               <ul className="space-y-4 text-[14px] text-muted-foreground">
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-0.5">📍</span> Ouagadougou, Burkina Faso
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-primary mt-0.5">📱</span> WhatsApp : +226 57 26 59 15
+                  <span className="text-primary mt-0.5">📱</span> WhatsApp : +226 05 83 05 99
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-0.5">✉️</span> contact@nefertem.africa
@@ -209,7 +199,7 @@ export function Layout() {
 
       {/* WhatsApp Floating Button */}
       <a 
-        href="https://wa.me/22657265915" 
+        href="https://wa.me/22605830599" 
         target="_blank" 
         rel="noopener noreferrer"
         className="fixed bottom-[20px] right-[20px] md:bottom-[30px] md:right-[40px] z-50 bg-[#25D366] text-foreground p-[14px] md:px-[24px] md:py-[12px] rounded-full md:rounded-[30px] flex items-center justify-center gap-0 md:gap-[10px] font-bold text-[14px] shadow-[0_10px_20px_rgba(0,0,0,0.3)] hover:scale-105 transition-transform group"
