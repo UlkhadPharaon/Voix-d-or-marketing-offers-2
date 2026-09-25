@@ -8,6 +8,7 @@ import { Securite } from '@/pages/Securite';
 import { NotFound } from '@/pages/NotFound';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { OpeningAnimation } from '@/components/OpeningAnimation';
+import { SmoothScroll, ScrollManager } from '@/components/SmoothScroll';
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -30,7 +31,9 @@ function AnimatedRoutes() {
 export default function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <SmoothScroll />
       <BrowserRouter>
+        <ScrollManager />
         <OpeningAnimation />
         <AnimatedRoutes />
       </BrowserRouter>

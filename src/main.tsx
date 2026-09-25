@@ -3,6 +3,7 @@ import {createRoot} from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import App from './App.tsx';
 import './index.css';
+import 'lenis/dist/lenis.css';
 
 // Intercept specific benign console errors
 const originalConsoleError = console.error;

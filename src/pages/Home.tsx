@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { ArrowDown, Play, Clock, Smartphone, Wallet, TrendingUp, Send, ShieldCheck, Calendar, FileText, User as UserIcon, MessagesSquare, Lightbulb, PenTool, PhoneCall, Check, Minus, Zap, Search } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SEO } from '@/components/SEO';
 import { PageTransition } from '@/components/PageTransition';
 import { InfiniteMarquee } from '@/components/InfiniteMarquee';
@@ -93,17 +93,7 @@ export function Home() {
     faq.a.toLowerCase().includes(faqSearchQuery.toLowerCase())
   );
 
-  useEffect(() => {
-    if (window.location.hash) {
-      const id = window.location.hash.substring(1);
-      setTimeout(() => {
-        const el = document.getElementById(id);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-    }
-  }, []);
+  // Hash + route scroll is handled globally by <ScrollManager /> (Lenis).
 
   return (
     <PageTransition className="w-full relative">
