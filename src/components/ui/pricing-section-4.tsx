@@ -10,72 +10,72 @@ import { useRef, useState } from "react";
 
 const plans = [
   {
-    name: "L'Assistant Standard",
-    tier: "Tier 1",
-    description: "Gère votre WhatsApp et vos réseaux Facebook principaux pendant que vous travaillez.",
-    price: 100000,
-    promoPrice: 50000,
-    yearlyPrice: 85000,
-    buttonText: "Choisir l'Assistant Standard",
+    name: "Essentials",
+    tier: "Lancement",
+    description: "Votre présence reste visible et active pendant que vous vous concentrez sur le business.",
+    price: 15000,
+    promoPrice: 15000,
+    yearlyPrice: 15000,
+    buttonText: "Choisir Essentials",
     buttonVariant: "outline" as const,
-    idealFor: "Idéal : Couturiers, Restaurants, Boutiques",
+    idealFor: "Idéal : Boutiques, Restaurants, Commerces locaux",
     includes: [
-      "Assistant WhatsApp 24h/24 réactif",
-      "Capture & base de données clients",
-      "30 publications Facebook / mois",
-      "4 vidéos courtes impactantes (15s)",
-      "Réponses aux commentaires FB",
-      "Réponses ultra-rapides et intelligentes",
-      "Générations d'images haute qualité",
-      "Rapport d'activité mensuel complet"
+      "90+ visuels commerciaux / mois",
+      "Publication & organisation selon scope",
+      "Réponses automatiques limitées",
+      "Calendrier de contenu mensuel",
+      "Rapport d'activité mensuel",
+      "Diagnostic de présence digitale",
+      "1 révision par lot de contenu",
+      "Support WhatsApp"
     ],
   },
   {
-    name: "L'Assistant Commercial",
-    tier: "Tier 2",
-    description: "Un département commercial complet gérant WhatsApp, FB, Instagram, TikTok et de la publicité.",
-    price: 200000,
-    promoPrice: 150000,
-    yearlyPrice: 170000,
-    buttonText: "Choisir l'Assistant Commercial",
+    name: "Standard",
+    tier: "Recommandé",
+    description: "Essentials + la puissance vidéo pour tester les formats qui convertissent.",
+    price: 25000,
+    promoPrice: 25000,
+    yearlyPrice: 25000,
+    buttonText: "Choisir Standard",
     buttonVariant: "default" as const,
     popular: true,
-    idealFor: "Idéal : Cliniques, Écoles, Immo, Grossistes",
+    idealFor: "Idéal : Food, Beauty & Fashion, Éducation",
     includes: [
-      "Assistant WhatsApp avec catalogue",
-      "Capture & base de données clients",
-      "60 publications par plateforme (FB, IG, TikTok)",
-      "8 vidéos ultra-réalistes qualité TV",
-      "Gestion automatisée de vos publicités",
-      "Séquences de relances clients froides",
-      "Réponses aux commentaires (FB, IG, TikTok)",
-      "Générations d'images haute qualité",
+      "Tout Essentials inclus",
+      "Jusqu'à 3 vidéos / semaine (15s max)",
+      "Distribution FB, IG, TikTok",
+      "Community management de base",
+      "Test de formats vidéo mensuel",
       "Analyse concurrentielle mensuelle",
-      "Rapport bimensuel de ROI chiffré"
+      "Rapport bimensuel chiffré",
+      "Optimisation continue",
+      "Support prioritaire",
+      "Journal des apprentissages"
     ],
   },
   {
-    name: "Le Département Complet",
-    tier: "Tier 3",
-    description: "Un directeur, un commercial et un créatif digitaux pour propulser votre croissance.",
-    price: 500000,
-    promoPrice: 400000,
-    yearlyPrice: 425000,
-    buttonText: "Choisir le Département Complet",
+    name: "Business",
+    tier: "Performance",
+    description: "Le système complet pour les entreprises prêtes à accélérer avec la publicité.",
+    price: 60000,
+    promoPrice: 60000,
+    yearlyPrice: 60000,
+    buttonText: "Choisir Business",
     buttonVariant: "outline" as const,
-    idealFor: "Idéal : Promoteurs, Hôtels, Cliniques d'élite",
+    idealFor: "Idéal : Cliniques, Écoles, Hôtels, Promoteurs",
     includes: [
-      "Assistant WhatsApp avec catalogue",
-      "Capture & base de données clients",
-      "90 publications par plateforme (FB, IG, TikTok)",
-      "15 vidéos ultra-réalistes qualité TV",
-      "Gestion automatisée de vos publicités",
-      "Séquences de relances clients froides",
-      "Réponses aux commentaires (Tous réseaux)",
-      "Générations d'images haute qualité",
-      "Landing page marque créée & maintenue",
+      "Tout Standard inclus",
+      "Jusqu'à 5 vidéos / semaine (45s max)",
+      "Gestion ads selon scope (budget média séparé)",
+      "Séquences de relance prospects",
+      "Base de données clients & qualification",
+      "Landing page maintenue",
       "Analyse concurrentielle mensuelle",
-      "Rapport hebdo"
+      "Rapport hebdo de performance",
+      "Stratégie & plan à 7 jours",
+      "Onboarding 72h garanti",
+      "Account manager dédié"
     ],
   },
 ];
@@ -172,7 +172,7 @@ export default function PricingSection4() {
           density={800}
           direction="top"
           speed={0.5}
-          color="#D4AF37"
+          color="#28C2D3"
           className="absolute inset-x-0 top-0 h-full w-full"
           style={{ WebkitMaskImage: 'radial-gradient(100% 100% at 50% 0%, white, transparent 80%)' }}
         />
@@ -205,7 +205,7 @@ Pas de surprise.
             customVariants={revealVariants}
             className="text-muted-foreground text-[15px]"
           >
-            Que vous vouliez déléguer juste les bases ou confier toute votre stratégie, il y a un assistant conçu pour vous.
+            Que vous vouliez prouver le système ou confier toute votre croissance, il y a un plan conçu pour votre étape.
           </TimelineContent>
 
           <TimelineContent
@@ -216,7 +216,7 @@ Pas de surprise.
             className="flex flex-col items-center gap-4"
           >
             <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary px-4 py-2 rounded-full text-sm font-bold uppercase tracking-widest mt-4">
-              🎁 7 Jours d'Essai Gratuit Inclus
+              🚀 Premier lot livré sous 72h
             </div>
             <PricingSwitch onSwitch={togglePricingPeriod} />
           </TimelineContent>
@@ -304,7 +304,7 @@ Pas de surprise.
                   <div className="mt-8 pt-4 w-full">
                     <span className="text-[10px] uppercase text-gray-500 font-bold block mb-4 text-center tracking-wider">{plan.idealFor}</span>
                     <button
-                      onClick={() => window.location.href = `/contact?offer=${plan.name.split(' ')[1].toLowerCase()}`}
+                      onClick={() => window.location.href = `/contact?offer=${plan.name.toLowerCase()}`}
                       className={cn("w-full py-[16px] text-center text-[13px] uppercase font-bold tracking-[1px] rounded-[4px] transition-all duration-300",
                         plan.buttonVariant === "default"
                           ? "bg-primary text-black-deep hover:bg-gold-accent hover:shadow-[0_0_20px_rgba(212,175,55,0.4)]"
@@ -314,7 +314,7 @@ Pas de surprise.
                       → {plan.buttonText}
                     </button>
                     <p className="text-center text-[11px] text-primary mt-3 uppercase tracking-wider font-bold">
-                      7 Jours d'Essai Gratuit
+                      Budget média séparé des honoraires
                     </p>
                   </div>
                 </CardContent>

@@ -9,13 +9,13 @@ interface SEOProps {
 export function SEO({ title, description, schemas }: SEOProps) {
   return (
     <Helmet>
-      <title>{title} | Studio Voix d'Or</title>
+      <title>{title} | NEFERTEM - AI Growth Systems</title>
       <meta name="description" content={description} />
-      <meta property="og:title" content={`${title} | Studio Voix d'Or`} />
+      <meta property="og:title" content={`${title} | NEFERTEM - AI Growth Systems`} />
       <meta property="og:description" content={description} />
       <meta property="og:type" content="website" />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={`${title} | Studio Voix d'Or`} />
+      <meta name="twitter:title" content={`${title} | NEFERTEM - AI Growth Systems`} />
       <meta name="twitter:description" content={description} />
 
       {schemas && schemas.length > 0 && (

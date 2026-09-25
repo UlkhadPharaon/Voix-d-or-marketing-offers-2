@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { ThemeToggle } from './ThemeToggle';
 // @ts-ignore
-import logoImg from '../../logo/logo studio voix d\'or.png';
+import logoImg from '../../logo/nefertem-mark.png';
 
 function Logo() {
   const [imgError, setImgError] = useState(false);
@@ -14,13 +14,13 @@ function Logo() {
       {!imgError ? (
         <img 
           src={logoImg} 
-          alt="Logo" 
+          alt="Logo NEFERTEM" 
           className="w-full h-full object-cover"
           onError={() => setImgError(true)}
           referrerPolicy="no-referrer"
         />
       ) : (
-        <span className="font-heading text-primary font-bold text-[24px]">V</span>
+        <span className="font-heading text-primary font-bold text-[24px]">N</span>
       )}
     </div>
   );
@@ -77,8 +77,9 @@ export function Layout() {
         <div className="w-full flex items-center justify-between">
           <Link to="/" className="flex items-center gap-[12px] z-50 group">
             <Logo />
-            <div className="flex flex-col">
-              <span className="font-heading text-[20px] tracking-[1px] uppercase text-foreground">Studio Voix d'Or</span>
+            <div className="flex flex-col leading-none">
+              <span className="font-heading text-[20px] tracking-[3px] uppercase text-foreground">NEFERTEM</span>
+              <span className="text-[10px] tracking-[4px] uppercase text-primary">AI Growth Systems</span>
             </div>
           </Link>
 
@@ -149,10 +150,13 @@ export function Layout() {
             <div className="col-span-1 md:col-span-1">
               <div className="flex items-center gap-[12px] mb-6">
                 <Logo />
-                <span className="font-heading text-[20px] tracking-[1px] uppercase">Studio Voix d'Or</span>
+                <div className="flex flex-col leading-none">
+                  <span className="font-heading text-[20px] tracking-[3px] uppercase">NEFERTEM</span>
+                  <span className="text-[10px] tracking-[4px] uppercase text-primary">AI Growth Systems</span>
+                </div>
               </div>
               <p className="text-muted-foreground text-[14px] mb-6 max-w-sm leading-relaxed">
-                Savoir rêver grand et l'accomplir.
+                La croissance devient un système. Nous construisons et opérons votre système marketing : contenu, distribution, conversations et optimisation.
               </p>
             </div>
             
@@ -187,14 +191,14 @@ export function Layout() {
                   <span className="text-primary mt-0.5">📱</span> WhatsApp : +226 57 26 59 15
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-primary mt-0.5">✉️</span> contact@voixdor.studio
+                  <span className="text-primary mt-0.5">✉️</span> contact@nefertem.africa
                 </li>
               </ul>
             </div>
           </div>
           
           <div className="mt-16 pt-8 border-t border-primary/20 text-center text-muted-foreground text-sm flex flex-col md:flex-row justify-between items-center">
-            <p>© {new Date().getFullYear()} Studio Voix d'Or - L'image de marque que votre établissement mérite.</p>
+            <p>© {new Date().getFullYear()} NEFERTEM - AI Growth Systems. La croissance devient un système.</p>
             <div className="mt-4 md:mt-0 space-x-6">
               <a href="#" className="hover:text-primary transition-colors">Mentions légales</a>
               <a href="#" className="hover:text-primary transition-colors">Politique de confidentialité</a>

@@ -1,6 +1,6 @@
 {
-  "name": "Studio Voix d'Or",
-  "description": "Studio Voix d'Or : La Voix Dorée de la Création Africaine. Le premier studio de production audiovisuelle IA d'Afrique de l'Ouest.",
+  "name": "NEFERTEM - AI Growth Systems",
+  "description": "NEFERTEM : AI Growth Systems for African Businesses. Nous construisons et opérons votre système marketing : contenu, distribution, conversations et optimisation.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

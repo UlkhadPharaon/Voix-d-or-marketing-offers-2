@@ -8,7 +8,7 @@ export function NotFound() {
   return (
     <PageTransition className="w-full relative min-h-screen">
       <SEO 
-        title="Page Non Trouvée | Studio Voix d'Or"
+        title="Page introuvable"
         description="La page que vous recherchez n'existe pas ou a été déplacée."
       />
       

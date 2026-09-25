@@ -44,7 +44,7 @@ export function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const message = `Brief stratégique - Studio Voix d'Or 🚀
+    const message = `Brief NEFERTEM 🚀
 
 *[Étape 1. L'Entreprise]*
 🏬 Établissement : ${formData.company}
@@ -99,16 +99,16 @@ Merci !`;
   return (
     <PageTransition className="min-h-screen bg-background/0 text-foreground pt-[100px] md:pt-[120px] pb-12 md:pb-24 border-t border-primary/20">
       <SEO 
-        title="Démarrer votre projet | Studio Voix d'Or"
-        description="Remplissez notre brief stratégique pour commencer à transformer l'image de votre marque sur les réseaux sociaux. Production en 48h."
+        title="Démarrer avec NEFERTEM"
+        description="Remplissez le brief NEFERTEM : intake en 24h, stratégie et plan à 7 jours, premier lot sous 72h."
       />
       <div className="container mx-auto px-4 max-w-3xl">
         <div className="text-center mb-8 md:mb-12 flex flex-col items-center">
           <div className="inline-flex self-center bg-primary/10 border border-primary text-primary px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[24px]">
             Le Filtre
           </div>
-          <h1 className="text-[28px] md:text-[48px] font-heading font-normal text-foreground mb-[16px] uppercase tracking-[1px] leading-tight">Configurez votre première semaine de contenu.</h1>
-          <p className="text-muted-foreground text-[15px] max-w-[600px]">Ne nous dites pas ce que vous voulez comme vidéo. Dites-nous ce que vous voulez comme résultat. Remplissez ce brief. On s'occupe de la traduction visuelle.</p>
+          <h1 className="text-[28px] md:text-[48px] font-heading font-normal text-foreground mb-[16px] uppercase tracking-[1px] leading-tight">Configurez votre système de croissance.</h1>
+          <p className="text-muted-foreground text-[15px] max-w-[600px]">Ne nous dites pas quel post vous voulez. Dites-nous quel résultat vous visez. Remplissez ce brief. On s'occupe de la traduction visuelle.</p>
         </div>
 
         {/* Progress Bar */}
@@ -225,21 +225,21 @@ Merci !`;
                       <Label className="uppercase text-[11px] text-muted-foreground tracking-[1px]">Quelle offre vous intéresse le plus ? *</Label>
                       <RadioGroup required value={formData.offer} onValueChange={val => setFormData({...formData, offer: val})} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <RadioGroupItem value="Starter" id="pkg-starter" className="peer sr-only" />
-                          <Label htmlFor="pkg-starter" className="flex flex-col items-center justify-between rounded-[2px] border border-foreground/10 bg-foreground/[0.03]  p-4 hover:border-primary/50 hover:bg-foreground/[0.08] peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center transition-all">
-                            <span className="font-heading uppercase tracking-[1px] mb-1">Starter</span>
+                          <RadioGroupItem value="Essentials" id="pkg-essentials" className="peer sr-only" />
+                          <Label htmlFor="pkg-essentials" className="flex flex-col items-center justify-between rounded-[2px] border border-foreground/10 bg-foreground/[0.03]  p-4 hover:border-primary/50 hover:bg-foreground/[0.08] peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center transition-all">
+                            <span className="font-heading uppercase tracking-[1px] mb-1">Essentials · 15k</span>
                           </Label>
                         </div>
                         <div>
-                          <RadioGroupItem value="Pro" id="pkg-pro" className="peer sr-only" />
-                          <Label htmlFor="pkg-pro" className="flex flex-col items-center justify-between rounded-[2px] border border-foreground/10 bg-foreground/[0.03]  p-4 hover:border-primary/50 hover:bg-foreground/[0.08] peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center relative overflow-hidden transition-all">
-                            <span className="font-heading uppercase tracking-[1px] mb-1 text-primary">Pro</span>
+                          <RadioGroupItem value="Standard" id="pkg-standard" className="peer sr-only" />
+                          <Label htmlFor="pkg-standard" className="flex flex-col items-center justify-between rounded-[2px] border border-foreground/10 bg-foreground/[0.03]  p-4 hover:border-primary/50 hover:bg-foreground/[0.08] peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center relative overflow-hidden transition-all">
+                            <span className="font-heading uppercase tracking-[1px] mb-1 text-primary">Standard · 25k</span>
                           </Label>
                         </div>
                         <div>
                           <RadioGroupItem value="Business" id="pkg-biz" className="peer sr-only" />
                           <Label htmlFor="pkg-biz" className="flex flex-col items-center justify-between rounded-[2px] border border-foreground/10 bg-foreground/[0.03]  p-4 hover:border-primary/50 hover:bg-foreground/[0.08] peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center transition-all">
-                            <span className="font-heading uppercase tracking-[1px] mb-1">Business</span>
+                            <span className="font-heading uppercase tracking-[1px] mb-1">Business · 60k</span>
                           </Label>
                         </div>
                         <div>
@@ -306,7 +306,7 @@ Merci !`;
                     </div>
                     
                     <div className="space-y-3 pt-4">
-                      <Label className="uppercase text-[11px] text-muted-foreground tracking-[1px]">Comment avez-vous connu Studio Voix d'Or ?</Label>
+                      <Label className="uppercase text-[11px] text-muted-foreground tracking-[1px]">Comment avez-vous connu NEFERTEM ?</Label>
                       <Input placeholder="Bouche à oreille, Instagram, etc." className="bg-background border-foreground/10 text-foreground rounded-[2px]" value={formData.discovery} onChange={e => setFormData({...formData, discovery: e.target.value})} />
                     </div>
 

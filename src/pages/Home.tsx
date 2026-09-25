@@ -16,9 +16,9 @@ import { EcosystemRadar } from "@/components/ui/ecosystem-radar";
 const timelineData = [
   {
     id: 1,
-    title: "Audit & Analyse",
-    date: "Lundi",
-    content: "Le système analyse automatiquement les performances de la semaine pour identifier les posts performants et ajuster les heures de publication optimales.",
+    title: "Intelligence & Stratégie",
+    date: "Lun - Mar",
+    content: "Recherche marché, audience et concurrents. Hypothèses, mix de contenu et tests définis pour la semaine.",
     category: "Analyse",
     icon: Calendar,
     relatedIds: [2],
@@ -27,33 +27,33 @@ const timelineData = [
   },
   {
     id: 2,
-    title: "Apprentissage",
-    date: "Mardi",
-    content: "Ré-entraînement et mise à jour de sa base de connaissances : nouveaux produits, promotions, affinage des réponses WhatsApp.",
-    category: "Système",
-    icon: Lightbulb,
+    title: "Production Créative",
+    date: "Mer - Jeu",
+    content: "Concepts, scripts, génération IA et édition. Images, vidéos et motions validés avec vous en quelques minutes.",
+    category: "Studio",
+    icon: PenTool,
     relatedIds: [1, 3],
     status: "completed" as const,
     energy: 80,
   },
   {
     id: 3,
-    title: "Production",
-    date: "Mercredi",
-    content: "Génération du pack de visuels premium, rédaction des publicités et préparation du plan de publication. Vous validez en 5 min.",
-    category: "Design",
-    icon: PenTool,
+    title: "Distribution & Community",
+    date: "Ven - Sam",
+    content: "Planning, publication, repurposing. Commentaires, DMs et qualification traités chaque jour.",
+    category: "Growth",
+    icon: PhoneCall,
     relatedIds: [2, 4],
     status: "in-progress" as const,
     energy: 95,
   },
   {
     id: 4,
-    title: "Relation Client",
-    date: "Jeu - Dim",
-    content: "Publication autonome, réponses FB et surveillance active sur WhatsApp. Devis, proposition d'offres et rendez-vous.",
-    category: "Ventes",
-    icon: PhoneCall,
+    title: "Performance & Learning",
+    date: "Dim",
+    content: "KPIs, diagnostics, attribution honnête. Chaque cycle alimente la mémoire : ce qui marche est amplifié.",
+    category: "Data",
+    icon: Lightbulb,
     relatedIds: [1, 3],
     status: "pending" as const,
     energy: 100,
@@ -66,24 +66,24 @@ export function Home() {
 
   const faqs = [
     {
-      q: "Comment fonctionne l'assistant IA au quotidien ?",
-      a: "Une fois configuré avec votre catalogue, vos prix et vos règles, il répond en temps réel à vos prospects sur WhatsApp. Parallèlement, il planifie de façon autonome vos publications sur Facebook, Instagram et TikTok."
+      q: "Que fait concrètement NEFERTEM chaque semaine ?",
+      a: "Nous opérons votre système marketing : recherche, stratégie, création de contenu, publication, community management et analyse. Chaque mois, nous testons, mesurons et ajustons ce qui fonctionne pour votre marché."
     },
     {
-      q: "N'y a-t-il pas un risque de réponse bizarre ou d'erreur ?",
-      a: "Afin d'éviter toute déviation, notre assistant suit des règles strictes définies par vous. Il ne peut inventer aucune information qui ne figure pas dans sa base de connaissances approuvée. Si un client pose une question hors périmètre, l'assistant passe le relais à un humain."
+      q: "En quoi êtes-vous différents d'une agence classique ?",
+      a: "Nous ne vendons pas des posts. Nous sommes le système marketing qui tourne chaque semaine pour votre entreprise. La stratégie décide, l'IA exécute, la donnée arbitre. Vous restez visible et actif pendant que vous vous concentrez sur le business."
     },
     {
-      q: "Puis-je essayer et arrêter n'importe quand ?",
-      a: "Absolument. Nos offres incluent 7 jours d'essai gratuit et sont sans engagement de durée. Vous pouvez faire évoluer votre offre ou la résilier à tout moment selon vos besoins."
+      q: "Quels sont vos prix et que comprennent-ils ?",
+      a: "Essentials à 15 000 FCFA/mois (90+ visuels, publication, réponses auto limitées), Standard à 25 000 FCFA/mois (+ jusqu'à 3 vidéos/semaine 15s), Business à 60 000 FCFA/mois (+ jusqu'à 5 vidéos/semaine 45s et gestion ads). Le budget média est toujours séparé des honoraires."
     },
     {
-      q: "Comment garantissez-vous la qualité et la sécurité ?",
-      a: "Nous utilisons le système officiel et sécurisé de WhatsApp pour protéger votre compte. Pour la création, notre technologie de pointe génère des visuels et vidéos d'un réalisme absolu, dignes des plus grands studios."
+      q: "En combien de temps je reçois mes premiers contenus ?",
+      a: "De la signature au premier livrable : 72 heures. T+0 paiement, T+24h intake business & marque, T+48h stratégie & plan à 7 jours, T+72h premier lot livré. Puis un cycle mensuel continu."
     },
     {
-      q: "Comment démarrer ma première semaine de contenu ?",
-      a: "Il vous suffit de remplir notre brief stratégique en 2 minutes en cliquant sur l'un de nos boutons d'action. Nous vous contactons sur WhatsApp dans l'heure pour finaliser la mise en route !"
+      q: "Comment démarrer ?",
+      a: "Remplissez notre brief en 2 minutes. Nous vous contactons sur WhatsApp dans l'heure pour l'intake et le lancement."
     }
   ];
 
@@ -107,15 +107,15 @@ export function Home() {
   return (
     <PageTransition className="w-full relative">
       <SEO 
-        title="Votre Assistant IA Permanent à 50 000 FCFA/mois | Studio Voix d'Or"
-        description="Studio Voix d'Or déploie votre outil automatisé IA 24h/24, 7j/7. Réponses aux clients sur WhatsApp en moins de 30s, création de visuels et vidéos de prestige, et génération automatique de prospects."
+        title="NEFERTEM - AI Growth Systems | La croissance devient un système"
+        description="NEFERTEM construit et opère votre système marketing : contenu, distribution, conversations et optimisation. 90+ visuels/mois dès 15 000 FCFA. Premier lot sous 72h. Ouagadougou, Burkina Faso."
         schemas={[
           {
             "@context": "https://schema.org",
             "@type": "ProfessionalService",
-            "name": "Studio Voix d'Or",
-            "image": "https://images.unsplash.com/photo-1601506521937-0121a7fc2b6b?q=80&w=2071&auto=format&fit=crop",
-            "description": "Assistant IA Permanent à 50 000 FCFA/mo. Réponses WhatsApp < 30 sec et production marketing de prestige.",
+            "name": "NEFERTEM - AI Growth Systems",
+            "image": "./logo/nefertem-full.png",
+            "description": "AI Growth Systems for African Businesses. Système marketing continu : contenu, distribution, conversations et optimisation.",
             "address": {
               "@type": "PostalAddress",
               "addressLocality": "Ouagadougou",
@@ -154,7 +154,7 @@ export function Home() {
               transition={{ duration: 0.8 }}
               className="font-heading text-[36px] sm:text-[46px] md:text-[52px] lg:text-[60px] font-normal leading-[1.1] mb-[28px] text-foreground shadow-black-deep drop-shadow-2xl"
             >
-              Adoptez un <span className="text-primary italic font-serif">assistant IA Permanent</span> <br className="hidden lg:block"/> pour seulement 50 000 FCFA/mois.
+              Adoptez votre <span className="text-primary italic font-serif">système marketing complet</span> <br className="hidden lg:block"/> dès 15 000 FCFA/mois.
             </motion.h1>
 
             <motion.p 
@@ -164,7 +164,7 @@ export function Home() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-[15px] sm:text-[16px] md:text-[18px] text-muted-foreground max-w-[650px] leading-[1.6] mb-[40px] drop-shadow-md text-left"
             >
-              Un outil indispensable pour augmenter votre productivité. Il fonctionne 24h/24, répond à vos clients sur WhatsApp en moins de 30 secondes, génère vos contenus visuels de prestige et vous apporte des prospects qualifiés pendant que vous dormez.
+              Votre entreprise reste visible et active pendant que vous vous concentrez sur le business. NEFERTEM combine IA, contenu, distribution, community management et analyse continue. Chaque mois, nous testons, mesurons et ajustons ce qui fonctionne pour votre marché.
             </motion.p>
 
             <motion.div 
@@ -198,10 +198,10 @@ export function Home() {
         >
           <div className="container mx-auto px-6 md:px-[40px]">
             <div className="grid grid-cols-2 lg:flex lg:flex-row items-center justify-center lg:gap-[40px] max-w-6xl mx-auto gap-4 text-center">
-              <span className="text-[12px] md:text-[14px] uppercase text-muted-foreground tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> Réponse WhatsApp &lt; 30s</span>
-              <span className="text-[12px] md:text-[14px] uppercase text-muted-foreground tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> Disponible 24h / 24 &amp; 7j / 7</span>
-              <span className="text-[12px] md:text-[14px] uppercase text-muted-foreground tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> Métier de Marque &amp; Contenus Premium</span>
-              <span className="text-[12px] md:text-[14px] uppercase text-muted-foreground tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> Optimisez la productivité de votre équipe</span>
+              <span className="text-[12px] md:text-[14px] uppercase text-muted-foreground tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> 90+ visuels / mois</span>
+              <span className="text-[12px] md:text-[14px] uppercase text-muted-foreground tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> Premier lot sous 72h</span>
+              <span className="text-[12px] md:text-[14px] uppercase text-muted-foreground tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> Contenu + Distribution + Community</span>
+              <span className="text-[12px] md:text-[14px] uppercase text-muted-foreground tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> La donnée arbitre</span>
             </div>
           </div>
         </motion.div>
@@ -236,10 +236,10 @@ export function Home() {
                   Le Constat
                 </div>
                 <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-heading font-normal mb-[24px] uppercase tracking-[1px] leading-[1.1]">
-                  Pourquoi vos concurrents stagnent ?
+                  Ce que vivent la plupart des PME
                 </h2>
                 <p className="text-gray-400 text-[15px] sm:text-[16px] leading-[1.8] mb-[32px] max-w-md">
-                  Le commerce local est en pleine mutation. Vos clients sont plus exigeants, votre temps est limité et les standards de communication ont explosé. Rester inactif face à ces trois menaces est dangereux.
+                  Ni temps, ni équipe, ni système marketing continu. Publier sans apprendre, payer sans mesurer, répondre tard aux messages : c'est ce chaos que NEFERTEM transforme en système de croissance.
                 </p>
                 <div className="hidden lg:block w-full h-[1px] bg-gradient-to-r from-red-500/20 to-transparent"></div>
               </div>
@@ -259,10 +259,10 @@ export function Home() {
                     </div>
                     <div>
                       <h3 className="font-heading uppercase tracking-[1px] text-[20px] mb-[12px] text-foreground">
-                        Clients Disparus
+                        Présence irrégulière
                       </h3>
                       <p className="text-gray-400 text-[14px] leading-[1.7]">
-                        Un client demande "Combien ça coûte ?" à 21h. Vous dormez. Le lendemain matin, vous répondez mais il a déjà commandé chez une boutique concurrente. Notre système répond en <strong className="text-foreground font-normal">30 secondes</strong> et boucle la vente, même la nuit.
+                        « Je manque de temps pour publier. » « Je ne sais pas quoi poster. » Sans calendrier ni production continue, votre marque disparaît des fils pendant que vous gérez le business.
                       </p>
                     </div>
                   </CardContent>
@@ -281,10 +281,10 @@ export function Home() {
                     </div>
                     <div>
                       <h3 className="font-heading uppercase tracking-[1px] text-[20px] mb-[12px] text-foreground">
-                        Contenu Amateur
+                        Contenu sans effet
                       </h3>
                       <p className="text-gray-400 text-[14px] leading-[1.7]">
-                        Photos floues faites à la va-vite, visuels encombrés et pleins de coquilles. Cela détruit votre positionnement de marque haut de gamme. Notre technologie génère des <strong className="text-foreground font-normal">visuels photo-réalistes cinématiques</strong> qui captent l'attention.
+                        « Je publie, mais personne ne réagit. » « Je paie des visuels sans savoir si cela apporte des clients. » Du volume sans apprentissage : chaque publication faible devrait devenir une <strong className="text-foreground font-normal">information exploitable</strong>.
                       </p>
                     </div>
                   </CardContent>
@@ -303,10 +303,10 @@ export function Home() {
                     </div>
                     <div>
                       <h3 className="font-heading uppercase tracking-[1px] text-[20px] mb-[12px] text-foreground">
-                        Gérant Surchargé
+                        Messages & pubs sans pilotage
                       </h3>
                       <p className="text-gray-400 text-[14px] leading-[1.7]">
-                        Vous gérez la boutique, vos fournisseurs, vos équipes... Trouver du temps pour imaginer, créer et poster des publications régulièrement sur les réseaux est infaisable. Notre assistant IA <strong className="text-foreground font-normal">gère cette charge à 100%</strong>.
+                        « Mon équipe répond tard aux messages. » « Je fais des pubs, mais je ne sais pas ce qui marche. » NEFERTEM <strong className="text-foreground font-normal">opère le cycle complet</strong> : contenu, distribution, conversations, analyse et apprentissage.
                       </p>
                     </div>
                   </CardContent>
@@ -320,7 +320,7 @@ export function Home() {
               <Zap className="w-4 h-4 text-primary" />
               <span className="text-[12px] font-bold uppercase tracking-[1px] text-primary">La Solution Intelligente</span>
             </div>
-            <p className="font-heading uppercase tracking-[1px] text-[24px] text-foreground mb-4 max-w-2xl">L'assistant IA transforme ces problèmes en opportunités de croissance.</p>
+            <p className="font-heading uppercase tracking-[1px] text-[24px] text-foreground mb-4 max-w-2xl">Nous ne sommes pas une usine à posts. Nous sommes le système marketing qui tourne chaque semaine pour votre entreprise.</p>
             
             <EcosystemRadar />
 
@@ -353,9 +353,9 @@ export function Home() {
             <div className="inline-flex self-center bg-background/0 border border-foreground/20 text-muted-foreground px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[24px]">
               Efficacité Systématique
             </div>
-            <h2 className="text-[28px] sm:text-[40px] md:text-[48px] font-heading font-normal mb-[16px] uppercase tracking-[1px]">Le Planning de votre assistant IA</h2>
+            <h2 className="text-[28px] sm:text-[40px] md:text-[48px] font-heading font-normal mb-[16px] uppercase tracking-[1px]">Le système NEFERTEM, chaque semaine</h2>
             <p className="text-muted-foreground text-[15px] max-w-2xl mx-auto">
-              Chaque semaine, l'assistant exécute de manière infatigable un cycle complet de suivi commercial et créations visuelles. Cliquez sur un axe pour l'explorer.
+              La stratégie décide. L'IA exécute. La donnée arbitre. Cliquez sur un axe pour explorer le cycle continu.
             </p>
           </div>
         </div>
@@ -367,9 +367,9 @@ export function Home() {
 
         <div className="container mx-auto px-4 max-w-5xl relative z-20 pointer-events-none">
           <div className="mt-12 text-center border border-primary/30 bg-primary/10  shadow-[0_8px_32px_rgba(212,175,55,0.1)] p-8 rounded-[8px] pointer-events-auto">
-            <p className="text-[18px] md:text-[20px] font-heading uppercase tracking-[1px] text-primary mb-2">LA SÉCURITÉ CONTRACTUELLE :</p>
+            <p className="text-[18px] md:text-[20px] font-heading uppercase tracking-[1px] text-primary mb-2">NOS PRINCIPES :</p>
             <p className="text-foreground text-[15px] md:text-[17px] max-w-3xl mx-auto leading-relaxed">
-              Pour garantir votre sérénité, nous verrouillons par écrit : des temps de réponse WhatsApp inférieurs à l'offre choisie, notre disponibilité absolue 24h/24 et la constitution complète de votre base de données cibles.
+              Donnée avant intuition. Une tendance est une piste, pas une stratégie. Nous ne promettons jamais la viralité et n'inventons aucune preuve : chaque expérience a un objectif et un signal mesuré.
             </p>
           </div>
         </div>
@@ -391,18 +391,18 @@ export function Home() {
               La Méthodologie Imbattable
             </div>
             <h2 className="text-[28px] sm:text-[40px] md:text-[48px] font-heading font-normal mb-[16px] leading-tight uppercase tracking-[1px]">
-              Notre Démo Live <br/> <span className="text-primary italic font-serif">Vaut 10 000 mots</span>
+              Notre Diagnostic <br/> <span className="text-primary italic font-serif">Vaut 10 000 mots</span>
             </h2>
             <p className="text-muted-foreground text-[15px] max-w-2xl mx-auto">
-              Pas de discours commerciaux. Nous basons notre relation sur des preuves directes pour éliminer toute hésitation.
+              Pas de discours commerciaux. Des systèmes visibles : calendrier, dashboards, experiments et apprentissages.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-[40px] pointer-events-auto">
             {[
-              { num: 'I', title: 'Le Constat', desc: 'Combien de messages WhatsApp perdez-vous en soirée ? Près de 80% des entreprises perdent leurs prospects après la fermeture.' },
-              { num: 'II', title: 'Démo Instantanée', desc: 'Vous nous donnez votre numéro. Notre assistant IA vous écrit et gère une conversation simulée de vente de manière parfaite.' },
-              { num: 'III', title: 'Votre Avantage', desc: "Une gestion manuelle est source de retards et pénalise votre Chiffre d'Affaires. Notre outil automatisé ne ferme jamais, allège votre charge et ne fait pas d'erreur." },
+              { num: 'I', title: 'Le Constat', desc: 'Temps manquant, présence irrégulière, contenu inefficace, messages sans suivi, pubs sans mesure. Diagnostic en 24h.' },
+              { num: 'II', title: 'Le Diagnostic', desc: 'Intake business et marque, stratégie et plan à 7 jours, puis premier lot livré sous 72h.' },
+              { num: 'III', title: 'Votre Croissance', desc: 'Presence active + apprentissage + conversations. Votre marque reste votre propriete.' },
             ].map((step, i) => (
               <motion.div 
                 key={i} 
@@ -440,8 +440,8 @@ export function Home() {
               <div className="inline-flex self-center bg-background/0 border border-foreground/20 text-muted-foreground px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[16px]">
                 Transparence
               </div>
-              <h3 className="font-heading uppercase tracking-[1.5px] text-[28px] text-foreground">Détail de nos Offres</h3>
-              <p className="text-muted-foreground text-[14px] mt-3 max-w-2xl text-center">Détails des capacités, garanties contractuelles et fonctionnalités de votre assistant IA selon le niveau d'offres.</p>
+              <h3 className="font-heading uppercase tracking-[1.5px] text-[28px] text-foreground">Détail de nos formules</h3>
+              <p className="text-muted-foreground text-[14px] mt-3 max-w-2xl text-center">Contenu, vidéos, distribution et pilotage selon chaque formule NEFERTEM.</p>
             </div>
             
             <div className="bg-foreground/[0.02]  border border-foreground/10 rounded-[12px] overflow-hidden shadow-xl dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] relative ring-1 ring-white/5">
@@ -449,54 +449,54 @@ export function Home() {
               <table className="w-full text-left border-collapse relative z-10">
                 <thead>
                   <tr>
-                    <th className="p-6 text-[13px] text-gray-400 uppercase tracking-[1px] font-bold border-b border-foreground/10 w-1/4 align-bottom bg-background/0">Garantie & Fonctionnalité</th>
-                    <th className="p-6 text-[13px] text-foreground uppercase tracking-[1px] font-bold border-b border-foreground/10 text-center w-1/4 bg-foreground/[0.02] align-bottom">Tier 1 <span className="block text-[10px] text-gray-500 font-normal mt-1 normal-case tracking-normal">L'Assistant Standard</span></th>
+                    <th className="p-6 text-[13px] text-gray-400 uppercase tracking-[1px] font-bold border-b border-foreground/10 w-1/4 align-bottom bg-background/0">Contenu & Pilotage</th>
+                    <th className="p-6 text-[13px] text-foreground uppercase tracking-[1px] font-bold border-b border-foreground/10 text-center w-1/4 bg-foreground/[0.02] align-bottom">Essentials <span className="block text-[10px] text-gray-500 font-normal mt-1 normal-case tracking-normal">Essentials</span></th>
                     <th className="p-6 text-[13px] text-primary uppercase tracking-[1px] font-bold border-b border-primary/30 text-center relative w-1/4 bg-primary/[0.05] align-bottom shadow-[0_-20px_40px_-20px_rgba(212,175,55,0.1)_inset]">
                       <div className="absolute top-0 left-0 w-full h-[2px] bg-primary shadow-[0_0_10px_rgba(212,175,55,0.8)]"></div>
-                      Tier 2 <span className="block text-[10px] text-primary/70 font-normal mt-1 normal-case tracking-normal">L'Assistant Commercial</span>
+                      Standard <span className="block text-[10px] text-primary/70 font-normal mt-1 normal-case tracking-normal">Standard</span>
                     </th>
-                    <th className="p-6 text-[13px] text-foreground uppercase tracking-[1px] font-bold border-b border-foreground/10 text-center w-1/4 bg-foreground/[0.02] align-bottom">Tier 3 <span className="block text-[10px] text-gray-500 font-normal mt-1 normal-case tracking-normal">Le Département</span></th>
+                    <th className="p-6 text-[13px] text-foreground uppercase tracking-[1px] font-bold border-b border-foreground/10 text-center w-1/4 bg-foreground/[0.02] align-bottom">Business <span className="block text-[10px] text-gray-500 font-normal mt-1 normal-case tracking-normal">Business</span></th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5 text-[14px]">
                   <tr className="hover:bg-foreground/[0.04] transition-colors duration-300 group">
-                    <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-foreground transition-colors">Stratégie de Relance Client</td>
-                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]">Une (1) relance simple</td>
-                    <td className="p-4 text-center text-primary font-bold bg-primary/[0.02]">Séquence de relances (3)</td>
-                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]">Relance multicanale + Appel</td>
+                    <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-foreground transition-colors">Relance & Conversations</td>
+                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]">Réponses auto limitées</td>
+                    <td className="p-4 text-center text-primary font-bold bg-primary/[0.02]">Séquences + qualification</td>
+                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]">Relance multicanale + ads</td>
                   </tr>
                   <tr className="hover:bg-foreground/[0.04] transition-colors duration-300 group">
-                    <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-foreground transition-colors">Création de Contenus / Mois</td>
-                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]">12 visuels + 4 vidéos</td>
-                    <td className="p-4 text-center text-primary font-bold bg-primary/[0.02]">20 visuels + 8 vidéos TV</td>
-                    <td className="p-4 text-center text-foreground font-bold bg-foreground/[0.01]">40+ visuels + 15 vidéos TV</td>
+                    <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-foreground transition-colors">Production / mois</td>
+                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]">90+ visuels</td>
+                    <td className="p-4 text-center text-primary font-bold bg-primary/[0.02]">90+ visuels + 12 vidéos 15s</td>
+                    <td className="p-4 text-center text-foreground font-bold bg-foreground/[0.01]">90+ visuels + 20 vidéos 45s</td>
                   </tr>
                   <tr className="hover:bg-foreground/[0.04] transition-colors duration-300 group">
-                    <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-foreground transition-colors">Fréquence des Analyses</td>
+                    <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-foreground transition-colors">Pilotage & reporting</td>
                     <td className="p-4 text-center text-gray-400 bg-foreground/[0.01]">Mensuelle</td>
-                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]">Bimensuelle</td>
-                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]">Hebdomadaire + Visio</td>
+                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]">Bimensuel chiffré</td>
+                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]">Hebdo + visio</td>
                   </tr>
                   <tr className="hover:bg-foreground/[0.04] transition-colors duration-300 group">
                     <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-foreground transition-colors">Base de Données Clients</td>
-                    <td className="p-4 text-center text-gray-400 bg-foreground/[0.01]">Simple (Capture)</td>
-                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]">Segmentée & Enrichie</td>
-                    <td className="p-4 text-center text-primary font-bold bg-primary/[0.02]">Exploitation par Campagne</td>
+                    <td className="p-4 text-center text-gray-400 bg-foreground/[0.01]">Capture + base clients</td>
+                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]">Segmentée & enrichie</td>
+                    <td className="p-4 text-center text-primary font-bold bg-primary/[0.02]">Exploitation par campagne</td>
                   </tr>
                   <tr className="hover:bg-foreground/[0.04] transition-colors duration-300 group">
-                    <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-foreground transition-colors">Gestion Publicitaire (Ads)</td>
+                    <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-foreground transition-colors">Gestion publicitaire</td>
                     <td className="p-4 text-center text-gray-600 bg-foreground/[0.01]"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
-                    <td className="p-4 text-center text-foreground bg-primary/[0.02]"><Check className="w-5 h-5 mx-auto text-primary" /> <span className="text-[12px] text-gray-400">Automatisée</span></td>
-                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]"><Check className="w-5 h-5 mx-auto text-primary" /> <span className="text-[12px] text-gray-400">Budget 50K Inclus</span></td>
+                    <td className="p-4 text-center text-foreground bg-primary/[0.02]"><Check className="w-5 h-5 mx-auto text-primary" /> <span className="text-[12px] text-gray-400">Selon scope</span></td>
+                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]"><Check className="w-5 h-5 mx-auto text-primary" /> <span className="text-[12px] text-gray-400">Selon scope</span></td>
                   </tr>
                   <tr className="hover:bg-foreground/[0.04] transition-colors duration-300 group">
-                    <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-foreground transition-colors">Séquences de Relances Froids</td>
+                    <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-foreground transition-colors">Experiments mensuels</td>
                     <td className="p-4 text-center text-gray-600 bg-foreground/[0.01]"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
                     <td className="p-4 text-center text-foreground bg-primary/[0.02]"><Check className="w-5 h-5 mx-auto text-primary" /></td>
                     <td className="p-4 text-center text-foreground bg-foreground/[0.01]"><Check className="w-5 h-5 mx-auto text-primary" /></td>
                   </tr>
                   <tr className="hover:bg-foreground/[0.04] transition-colors duration-300 group">
-                    <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-foreground transition-colors">Landing Page Dédiée</td>
+                    <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-foreground transition-colors">Landing page</td>
                     <td className="p-4 text-center text-gray-600 bg-foreground/[0.01]"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
                     <td className="p-4 text-center text-gray-600 bg-primary/[0.02]"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
                     <td className="p-4 text-center text-foreground bg-foreground/[0.01]"><Check className="w-5 h-5 mx-auto text-primary" /> <span className="text-[12px] text-gray-400">Maintenue</span></td>
@@ -504,7 +504,7 @@ export function Home() {
                 </tbody>
               </table>
               <div className="bg-card/90 dark:bg-foreground/10  p-5 text-center border-t border-foreground/5 relative z-10">
-                <p className="text-[12px] text-gray-400 italic">Note : Nous garantissons par écrit la livraison parfaite de leads qualifiés et d'optimisations publicitaires. Les budgets d'acquisition (hors Tier 3) sont ajustés directement selon vos enjeux.</p>
+                <p className="text-[12px] text-gray-400 italic">Note : Le budget média est séparé des honoraires. Vidéos, volumes et révisions limités par formule.</p>
               </div>
             </div>
           </div>
@@ -515,32 +515,32 @@ export function Home() {
               <div className="inline-flex self-center bg-background/0 border border-foreground/20 text-muted-foreground px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[16px]">
                 Transparence
               </div>
-              <h3 className="font-heading uppercase tracking-[1.5px] text-[24px] text-foreground">Détail des Offres</h3>
+              <h3 className="font-heading uppercase tracking-[1.5px] text-[24px] text-foreground">Détail des formules</h3>
             </div>
             
             <Accordion className="w-full space-y-4">
               <AccordionItem value="item-1" className="border-foreground/10 bg-foreground/[0.03]  shadow-[0_8px_32px_rgba(0,0,0,0.2)] rounded-[8px] overflow-hidden px-4">
                 <AccordionTrigger className="text-foreground hover:no-underline hover:text-primary py-4 font-bold text-[14px]">Stratégie de Relance</AccordionTrigger>
                 <AccordionContent className="text-gray-400 pb-4 flex flex-col gap-3">
-                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Tier 1</span> <span className="text-foreground">1 relance simple</span></div>
-                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide text-primary">Tier 2</span> <span className="text-primary font-bold">Séquence (3x)</span></div>
-                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Tier 3</span> <span className="text-foreground">Multicanal + Appel</span></div>
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Essentials</span> <span className="text-foreground">Réponses auto limitées</span></div>
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide text-primary">Standard</span> <span className="text-primary font-bold">Séquences + qualif.</span></div>
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Business</span> <span className="text-foreground">Multicanal + ads</span></div>
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-2" className="border-foreground/10 bg-foreground/[0.03]  shadow-[0_8px_32px_rgba(0,0,0,0.2)] rounded-[8px] overflow-hidden px-4">
-                <AccordionTrigger className="text-foreground hover:no-underline hover:text-primary py-4 font-bold text-[14px]">Création de Contenus / Mois</AccordionTrigger>
+                <AccordionTrigger className="text-foreground hover:no-underline hover:text-primary py-4 font-bold text-[14px]">Production / mois</AccordionTrigger>
                 <AccordionContent className="text-gray-400 pb-4 flex flex-col gap-3">
-                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Tier 1</span> <span className="text-foreground text-right">12 visuels<br/>4 vidéos</span></div>
-                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide text-primary">Tier 2</span> <span className="text-primary font-bold text-right">20 visuels<br/>8 vidéos TV</span></div>
-                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Tier 3</span> <span className="text-foreground font-bold text-right">40+ visuels<br/>15 vidéos TV</span></div>
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Essentials</span> <span className="text-foreground text-right">90+ visuels</span></div>
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide text-primary">Standard</span> <span className="text-primary font-bold text-right">90+ visuels<br/>12 vidéos</span></div>
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Business</span> <span className="text-foreground font-bold text-right">90+ visuels<br/>20 vidéos</span></div>
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-3" className="border-foreground/10 bg-foreground/[0.03]  shadow-[0_8px_32px_rgba(0,0,0,0.2)] rounded-[8px] overflow-hidden px-4">
                 <AccordionTrigger className="text-foreground hover:no-underline hover:text-primary py-4 font-bold text-[14px]">Gestion Publicitaire</AccordionTrigger>
                 <AccordionContent className="text-gray-400 pb-4 flex flex-col gap-3">
-                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Tier 1</span> <span><Minus className="w-4 h-4 opacity-50" /></span></div>
-                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide text-primary">Tier 2</span> <span className="text-foreground flex items-center gap-2">Automatisée <Check className="w-4 h-4 text-primary" /></span></div>
-                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Tier 3</span> <span className="text-foreground flex items-center gap-2">Budget Inclus <Check className="w-4 h-4 text-primary" /></span></div>
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Essentials</span> <span><Minus className="w-4 h-4 opacity-50" /></span></div>
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide text-primary">Standard</span> <span className="text-foreground flex items-center gap-2">Selon scope <Check className="w-4 h-4 text-primary" /></span></div>
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Business</span> <span className="text-foreground flex items-center gap-2">Selon scope <Check className="w-4 h-4 text-primary" /></span></div>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
@@ -548,7 +548,7 @@ export function Home() {
 
           <div className="text-center mt-12 md:mt-16 flex flex-col items-center justify-center">
             <div className="inline-flex flex-col sm:flex-row items-center gap-[8px] sm:gap-[12px] bg-foreground/[0.05]  border border-foreground/10 px-[24px] py-[16px] text-[13px] text-muted-foreground rounded-[8px] shadow-[0_8px_32px_rgba(212,175,55,0.05)] text-center">
-              <ShieldCheck className="w-5 h-5 text-primary" /> <span><strong>7 jours d'essai gratuit.</strong> Sans engagement. Évolutif ou résiliable à tout moment.</span>
+              <ShieldCheck className="w-5 h-5 text-primary" /> <span><strong>Premier lot sous 72h.</strong> Sans engagement. Évolutif ou résiliable à tout moment.</span>
             </div>
           </div>
         </div>
@@ -566,15 +566,15 @@ export function Home() {
             <div className="absolute top-0 left-0 w-full h-[4px] bg-gradient-to-r from-transparent via-primary to-transparent"></div>
             
             <h2 className="text-[20px] sm:text-[24px] md:text-[30px] font-heading font-normal mb-[20px] md:mb-[24px] uppercase tracking-[1px] leading-tight text-foreground drop-shadow-md">
-              Recevez gratuitement nos guides : <br/>
-              <span className="text-primary italic font-serif leading-snug block mt-4 mb-2">"5 Visuels Qui Font Fuir Vos Clients (Et Comment Les Remplacer en 24h)"</span>
+              Recevez notre diagnostic gratuit : <br/>
+              <span className="text-primary italic font-serif leading-snug block mt-4 mb-2">"Le Système NEFERTEM en 7 Jours : contenu, distribution, conversations"</span>
               <span className="text-sm sm:text-base font-sans tracking-widest opacity-80 block my-2">&</span>
-              <span className="text-primary italic font-serif leading-snug block mt-2">"Pourquoi 70% de Vos Clients Disparaissent Après 1 Message (Et Comment Les Rattraper Avec 1 Réponse Parfaite)"</span>
+              <span className="text-primary italic font-serif leading-snug block mt-2">"Pourquoi Votre Présence Stagne (Et Comment La Transformer En Système)"</span>
             </h2>
 
             <div className="bg-primary/10 border border-primary/20 rounded-[8px] p-4 my-6 inline-block">
               <span className="text-primary font-bold uppercase tracking-[1px] text-[13px] block mb-1">🎁 Bonus Inclus</span>
-              <span className="text-foreground text-[14px]">Un document surprise exclusif pour booster vos résultats !</span>
+              <span className="text-foreground text-[14px]">Le plan de vos 7 premiers jours + la grille Essentials / Standard / Business !</span>
             </div>
             
             <form className="flex flex-col sm:flex-row gap-[16px] max-w-lg mx-auto w-full mb-6 mt-4" onSubmit={(e) => {
@@ -653,9 +653,9 @@ export function Home() {
         
         <div className="container relative mx-auto px-4 text-center z-10 flex flex-col items-center pointer-events-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="w-full">
-            <h2 className="text-[24px] sm:text-[40px] md:text-[48px] lg:text-[56px] font-heading font-normal text-foreground mb-[16px] md:mb-[24px] uppercase tracking-[1px] max-w-4xl mx-auto leading-tight break-words">Pour 50 000 FCFA/mois, mettez votre acquisition clients en pilotage automatique.</h2>
+            <h2 className="text-[24px] sm:text-[40px] md:text-[48px] lg:text-[56px] font-heading font-normal text-foreground mb-[16px] md:mb-[24px] uppercase tracking-[1px] max-w-4xl mx-auto leading-tight break-words">Dès 15 000 FCFA/mois, votre marketing devient un système.</h2>
             <p className="text-[15px] sm:text-[16px] md:text-[18px] text-muted-foreground max-w-3xl mx-auto mb-[40px] md:mb-[48px] leading-[1.6]">
-              Configurez votre assistant IA maintenant. <strong className="text-foreground block sm:inline mt-2 sm:mt-0">Démo gratuite en direct sous 20 minutes.</strong>
+              Construisons votre système. <strong className="text-foreground block sm:inline mt-2 sm:mt-0">Diagnostic gratuit sous 24h. Premier lot sous 72h.</strong>
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-[15px] w-full max-w-sm sm:max-w-none mx-auto">

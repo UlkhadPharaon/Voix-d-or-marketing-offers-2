@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { useEffect, useState } from 'react';
 // @ts-ignore
-import logoImg from '../../logo/logo studio voix d\'or.png';
+import logoImg from '../../logo/nefertem-full.png';
 
 export function OpeningAnimation() {
   const [isVisible, setIsVisible] = useState(true);
@@ -36,17 +36,20 @@ export function OpeningAnimation() {
                 {!imgError ? (
                   <img 
                     src={logoImg} 
-                    alt="Logo Studio Voix d'Or" 
+                    alt="Logo NEFERTEM" 
                     className="w-full h-full object-cover"
                     onError={() => setImgError(true)}
                     referrerPolicy="no-referrer"
                   />
                 ) : (
-                  <span className="font-bold text-5xl text-primary font-heading">V</span>
+                  <span className="font-bold text-5xl text-primary font-heading">N</span>
                 )}
               </div>
-              <div className="font-heading text-2xl sm:text-4xl py-2 px-6 uppercase tracking-widest text-primary">
-                Studio Voix d'Or
+              <div className="font-heading text-2xl sm:text-4xl py-2 px-6 uppercase tracking-[6px] text-primary">
+                NEFERTEM
+              </div>
+              <div className="text-[11px] sm:text-xs uppercase tracking-[5px] text-muted-foreground">
+                AI Growth Systems
               </div>
             </motion.div>
             <motion.div
