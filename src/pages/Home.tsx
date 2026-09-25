@@ -127,7 +127,7 @@ export function Home() {
         <div className="absolute inset-0 z-0 h-full w-full opacity-60 pointer-events-none">
           <SplineScene 
             scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-            className="w-full h-full pointer-events-none"
+            className="w-full h-full pointer-events-auto"
           />
           <div className="absolute inset-0 bg-background/50 pointer-events-none"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background pointer-events-none"></div>
