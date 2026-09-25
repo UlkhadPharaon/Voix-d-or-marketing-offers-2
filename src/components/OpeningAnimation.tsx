@@ -32,24 +32,18 @@ export function OpeningAnimation() {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="flex flex-col items-center gap-6"
             >
-              <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full border-2 border-primary flex items-center justify-center overflow-hidden bg-background shadow-[0_0_40px_rgba(212,175,55,0.4)]">
+              <div className="w-64 sm:w-96 max-w-[80vw] flex items-center justify-center">
                 {!imgError ? (
                   <img 
                     src={logoImg} 
                     alt="Logo NEFERTEM" 
-                    className="w-full h-full object-cover"
+                    className="w-full h-auto object-contain drop-shadow-[0_0_40px_rgba(212,175,55,0.4)]"
                     onError={() => setImgError(true)}
                     referrerPolicy="no-referrer"
                   />
                 ) : (
                   <span className="font-bold text-5xl text-primary font-heading">N</span>
                 )}
-              </div>
-              <div className="font-heading text-2xl sm:text-4xl py-2 px-6 uppercase tracking-[6px] text-primary">
-                NEFERTEM
-              </div>
-              <div className="text-[11px] sm:text-xs uppercase tracking-[5px] text-muted-foreground">
-                AI Growth Systems
               </div>
             </motion.div>
             <motion.div
