@@ -227,19 +227,19 @@ Merci !`;
                         <div>
                           <RadioGroupItem value="Essentials" id="pkg-essentials" className="peer sr-only" />
                           <Label htmlFor="pkg-essentials" className="flex flex-col items-center justify-between rounded-[2px] border border-foreground/10 bg-foreground/[0.03]  p-4 hover:border-primary/50 hover:bg-foreground/[0.08] peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center transition-all">
-                            <span className="font-heading uppercase tracking-[1px] mb-1">Essentials · 15k</span>
+                            <span className="font-heading uppercase tracking-[1px] mb-1">Essentials · 30k</span>
                           </Label>
                         </div>
                         <div>
                           <RadioGroupItem value="Standard" id="pkg-standard" className="peer sr-only" />
                           <Label htmlFor="pkg-standard" className="flex flex-col items-center justify-between rounded-[2px] border border-foreground/10 bg-foreground/[0.03]  p-4 hover:border-primary/50 hover:bg-foreground/[0.08] peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center relative overflow-hidden transition-all">
-                            <span className="font-heading uppercase tracking-[1px] mb-1 text-primary">Standard · 25k</span>
+                            <span className="font-heading uppercase tracking-[1px] mb-1 text-primary">Standard · 60k</span>
                           </Label>
                         </div>
                         <div>
                           <RadioGroupItem value="Business" id="pkg-biz" className="peer sr-only" />
                           <Label htmlFor="pkg-biz" className="flex flex-col items-center justify-between rounded-[2px] border border-foreground/10 bg-foreground/[0.03]  p-4 hover:border-primary/50 hover:bg-foreground/[0.08] peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer text-center transition-all">
-                            <span className="font-heading uppercase tracking-[1px] mb-1">Business · 60k</span>
+                            <span className="font-heading uppercase tracking-[1px] mb-1">Business · 90k</span>
                           </Label>
                         </div>
                         <div>

@@ -76,7 +76,7 @@ export function Home() {
     },
     {
       q: "Quels sont vos prix et que comprennent-ils ?",
-      a: "Essentials à 15 000 FCFA/mois (90+ visuels, publication, réponses auto limitées), Standard à 25 000 FCFA/mois (+ jusqu'à 3 vidéos/semaine 15s), Business à 60 000 FCFA/mois (+ jusqu'à 5 vidéos/semaine 45s et gestion ads). Le budget média est toujours séparé des honoraires."
+      a: "Essentials à 30 000 FCFA/mois (90+ visuels, publication, réponses auto limitées), Standard à 60 000 FCFA/mois (+ jusqu'à 3 vidéos/semaine 15s), Business à 90 000 FCFA/mois (+ jusqu'à 5 vidéos/semaine 45s et gestion ads). Le budget média est toujours séparé des honoraires."
     },
     {
       q: "En combien de temps je reçois mes premiers contenus ?",
@@ -109,7 +109,7 @@ export function Home() {
     <PageTransition className="w-full relative">
       <SEO 
         title="NEFERTEM - AI Growth Systems | La croissance devient un système"
-        description="NEFERTEM construit et opère votre système marketing : contenu, distribution, conversations et optimisation. 90+ visuels/mois dès 15 000 FCFA. Premier lot sous 72h. Ouagadougou, Burkina Faso."
+        description="NEFERTEM construit et opère votre système marketing : contenu, distribution, conversations et optimisation. 90+ visuels/mois dès 30 000 FCFA. Premier lot sous 72h. Ouagadougou, Burkina Faso."
         schemas={[
           {
             "@context": "https://schema.org",
@@ -155,7 +155,7 @@ export function Home() {
               transition={{ duration: 0.8 }}
               className="font-heading text-[36px] sm:text-[46px] md:text-[52px] lg:text-[60px] font-normal leading-[1.1] mb-[28px] text-foreground shadow-black-deep drop-shadow-2xl"
             >
-              Adoptez votre <span className="text-primary italic font-serif">système marketing complet</span> <br className="hidden lg:block"/> dès 15 000 FCFA/mois.
+              Adoptez votre <span className="text-primary italic font-serif">système marketing complet</span> <br className="hidden lg:block"/> dès 30 000 FCFA/mois.
             </motion.h1>
 
             <motion.p 
@@ -654,7 +654,7 @@ export function Home() {
         
         <div className="container relative mx-auto px-4 text-center z-10 flex flex-col items-center pointer-events-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="w-full">
-            <h2 className="text-[24px] sm:text-[40px] md:text-[48px] lg:text-[56px] font-heading font-normal text-foreground mb-[16px] md:mb-[24px] uppercase tracking-[1px] max-w-4xl mx-auto leading-tight break-words">Dès 15 000 FCFA/mois, votre marketing devient un système.</h2>
+            <h2 className="text-[24px] sm:text-[40px] md:text-[48px] lg:text-[56px] font-heading font-normal text-foreground mb-[16px] md:mb-[24px] uppercase tracking-[1px] max-w-4xl mx-auto leading-tight break-words">Dès 30 000 FCFA/mois, votre marketing devient un système.</h2>
             <p className="text-[15px] sm:text-[16px] md:text-[18px] text-muted-foreground max-w-3xl mx-auto mb-[40px] md:mb-[48px] leading-[1.6]">
               Construisons votre système. <strong className="text-foreground block sm:inline mt-2 sm:mt-0">Diagnostic gratuit sous 24h. Premier lot sous 72h.</strong>
             </p>
