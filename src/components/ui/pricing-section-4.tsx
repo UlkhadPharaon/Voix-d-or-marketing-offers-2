@@ -15,26 +15,28 @@ import {
 /* =====================================================================
    PRICING — single source of truth. No hard-coded prices in markup.
    ---------------------------------------------------------------------
+   Règle prix de lancement : le tarif réduit s'applique aux 3 premiers
+   mois de chaque nouvelle entreprise cliente, puis le tarif normal
+   (50 000 / 90 000 / 120 000 FCFA) prend le relais. Cette règle est
+   affichée en clair sous le toggle (LAUNCH_RULE) — ce n'est pas une
+   fausse urgence, c'est une condition réelle de l'offre.
+   ---------------------------------------------------------------------
    TODO(owner) — à confirmer avant publication :
-   1. Limites réelles : "jusqu'à 50 réponses automatiques / mois"
-      (Essentials) et "jusqu'à 100 / mois" (Standard). Chiffres proposés
-      par défaut, à ajuster dans FEATURES ci-dessous.
-   2. Fréquence de publication Essentials : "3 fois / semaine sur
+   1. Fréquence de publication Essentials : "3 fois / semaine sur
       Facebook" — à confirmer (réseaux + rythme exacts).
-   3. Garantie : le libellé "Premier lot refait gratuitement si non
+   2. Garantie : le libellé "Premier lot refait gratuitement si non
       satisfait" (TRUST_ITEMS) doit être validé juridiquement.
-   4. Prix de lancement : renseigner LAUNCH_INFO (date de fin OU places
-      restantes) quand la vraie valeur est connue. Tant que c'est null,
-      aucune fausse urgence n'est affichée.
-   5. Témoignage : renseigner TESTIMONIAL pour afficher la citation.
+   3. Témoignage : renseigner TESTIMONIAL pour afficher la citation.
+      Laisser null tant qu'il n'y a aucun témoignage client.
    ===================================================================== */
 
 const WHATSAPP_NUMBER = "22605830599";
 const ANNUAL_DISCOUNT = 0.15;
 const KEY_FEATURE_COUNT = 6;
 
-/** Launch urgency — leave null until a REAL value exists. */
-const LAUNCH_INFO: { endsOn: string } | { spotsLeft: number } | null = null;
+/** Règle réelle du prix de lancement : 3 premiers mois, puis tarif normal. */
+const LAUNCH_RULE =
+  "Prix de lancement valable les 3 premiers mois, puis tarif normal (50 000 / 90 000 / 120 000 FCFA)";
 /** Client testimonial slot — hidden until content is provided. */
 const TESTIMONIAL: { quote: string; author: string } | null = null;
 
@@ -86,7 +88,7 @@ const PLANS: Plan[] = [
       { group: "Distribution", text: "Publication Facebook, 3 fois / semaine" },
       {
         group: "Community",
-        text: "Réponses automatiques aux commentaires Facebook — jusqu'à 50 / mois",
+        text: "Réponses automatiques aux commentaires Facebook (sans limite)",
       },
       { group: "Pilotage", text: "Calendrier de contenu mensuel" },
       { group: "Pilotage", text: "Rapport d'activité mensuel" },
@@ -114,7 +116,7 @@ const PLANS: Plan[] = [
       { group: "Distribution", text: "Publication Facebook, Instagram, TikTok" },
       {
         group: "Community",
-        text: "Réponses aux commentaires Instagram + Facebook — jusqu'à 100 / mois",
+        text: "Réponses aux commentaires Instagram + Facebook (sans limite)",
       },
       { group: "Pilotage", text: "1 nouveau format testé chaque mois" },
       { group: "Pilotage", text: "Rapport chiffré toutes les 2 semaines", highlight: true },
@@ -474,13 +476,9 @@ export default function PricingSection4() {
               Facturation {billing === "mensuel" ? "mensuelle" : "annuelle"} : {liveSummary} FCFA
               par mois.
             </p>
-            {LAUNCH_INFO !== null && (
-              <p className="text-[13px] font-bold uppercase tracking-[1px] text-primary">
-                {"endsOn" in LAUNCH_INFO
-                  ? `Prix de lancement jusqu'au ${LAUNCH_INFO.endsOn}`
-                  : `${LAUNCH_INFO.spotsLeft} places restantes au prix de lancement`}
-              </p>
-            )}
+            <p className="text-[13px] font-bold uppercase tracking-[1px] text-primary">
+              {LAUNCH_RULE}
+            </p>
           </div>
         </article>
 
