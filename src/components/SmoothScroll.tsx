@@ -13,6 +13,8 @@ import { SCROLL_OFFSET, getLenis, setLenis } from '@/lib/lenis';
 export function SmoothScroll() {
   useEffect(() => {
     if (getLenis()) return;
+    // Lenis is a desktop enhancement — native scroll on touch devices.
+    if (window.matchMedia('(pointer: coarse)').matches) return;
     const lenis = new Lenis({
       autoRaf: true,
       duration: 1.15,
