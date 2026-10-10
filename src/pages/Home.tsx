@@ -75,7 +75,11 @@ export function Home() {
     },
     {
       q: "Quels sont vos prix et que comprennent-ils ?",
-      a: "Essentials à 30 000 FCFA/mois (90+ visuels, publication, réponses auto aux commentaires Facebook limitées), Standard à 60 000 FCFA/mois (+ jusqu'à 3 vidéos/semaine 15s, community Instagram et Facebook), Business à 90 000 FCFA/mois (+ jusqu'à 5 vidéos/semaine 45s, gestion ads, prospection et support WhatsApp dédié). Le budget média est toujours séparé des honoraires."
+      a: "Essentials à 30 000 FCFA/mois (90+ visuels, publication, réponses auto aux commentaires Facebook limitées), Standard à 60 000 FCFA/mois (+ jusqu'à 3 vidéos/semaine 15s, community Instagram et Facebook), Business à 90 000 FCFA/mois (+ jusqu'à 5 vidéos/semaine 45s, gestion ads, prospection et support WhatsApp dédié). Ces tarifs sont nos honoraires. Le budget pub versé aux plateformes est en plus et estimé selon vos objectifs."
+    },
+    {
+      q: "C'est quoi le budget média séparé des honoraires ?",
+      a: "Nos tarifs paient notre travail : stratégie, création, publication et pilotage. Le budget média, c'est l'argent versé à Meta, TikTok ou Google pour diffuser vos publicités. Il ne nous est pas versé. Après le diagnostic gratuit, on l'estime selon vos objectifs et vos besoins : on peut démarrer sans pub pour être visible, ou prévoir un budget mensuel dédié pour générer des prospects."
     },
     {
       q: "En combien de temps je reçois mes premiers contenus ?",
@@ -500,7 +504,7 @@ export function Home() {
                 </tbody>
               </table>
               <div className="bg-card/90 dark:bg-foreground/10  p-5 text-center border-t border-foreground/5 relative z-10">
-                <p className="text-[12px] text-gray-400 italic">Note : Le budget média est séparé des honoraires. Vidéos, volumes et révisions limités par formule. Support WhatsApp + prospection : Business (90 000 FCFA) uniquement.</p>
+                <p className="text-[12px] text-gray-400 italic">Note : 30 000 / 60 000 / 90 000 FCFA = nos honoraires (stratégie, création, publication, pilotage). Le budget pub versé à Meta / TikTok / Google est en plus, estimé selon vos objectifs et besoins après diagnostic. Support WhatsApp + prospection : Business (90 000 FCFA) uniquement.</p>
               </div>
             </div>
           </div>

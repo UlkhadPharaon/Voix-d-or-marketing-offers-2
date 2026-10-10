@@ -330,6 +330,7 @@ Pas de surprise.
                   <div className={cn("h-px my-6", plan.popular ? "bg-gradient-to-r from-transparent via-primary/30 to-transparent" : "bg-foreground/10")}></div>
 
                   <div className="space-y-4 flex-grow">
+                    <p className="text-[11px] uppercase tracking-[2px] font-bold text-gray-400">Ce que vous gagnez :</p>
                     <ul className="space-y-3">
                       {plan.includes.map((feature, featureIndex) => (
                         <li
@@ -355,14 +356,41 @@ Pas de surprise.
                     >
                       → {plan.buttonText}
                     </button>
-                    <p className="text-center text-[11px] text-primary mt-3 uppercase tracking-wider font-bold">
-                      Budget média séparé des honoraires
+                    <p className="text-center text-[11px] text-muted-foreground mt-3 leading-snug">
+                      <span className="text-primary font-bold uppercase tracking-wider">ⓘ Honoraires uniquement.</span><br />
+                      Budget pub Meta / TikTok / Google en plus — estimé selon vos objectifs, payé aux plateformes, pas à nous.
                     </p>
                   </div>
                 </CardContent>
               </Card>
             </TimelineContent>
-          ))}
+            ))}
+          </div>
+
+          {/* Budget média expliqué */}
+          <div className="max-w-6xl mx-auto mt-10 relative z-20">
+            <div className="rounded-[12px] border border-primary/25 bg-primary/[0.05] p-6 md:p-8">
+              <p className="text-[11px] uppercase tracking-[2px] font-bold text-primary mb-2">Budget média, c'est quoi ?</p>
+              <h3 className="text-[18px] md:text-[22px] font-heading uppercase tracking-[1px] text-foreground leading-tight">
+                Nos tarifs = nos honoraires. Le budget pub est à part.
+              </h3>
+              <div className="grid md:grid-cols-3 gap-4 mt-5 text-left">
+                <div className="rounded-[8px] border border-foreground/10 bg-background/40 p-4">
+                  <p className="text-[12px] font-bold uppercase tracking-[1px] text-foreground mb-1">1. Honoraires NEFERTEM</p>
+                  <p className="text-[12px] text-muted-foreground leading-relaxed">30 000 / 60 000 / 90 000 FCFA selon l'offre. C'est la stratégie, la création, la publication, le community et le pilotage.</p>
+                </div>
+                <div className="rounded-[8px] border border-foreground/10 bg-background/40 p-4">
+                  <p className="text-[12px] font-bold uppercase tracking-[1px] text-foreground mb-1">2. Budget pub plateformes</p>
+                  <p className="text-[12px] text-muted-foreground leading-relaxed">Somme versée à Meta, TikTok ou Google pour diffuser vos pubs. Elle ne nous est pas versée et varie selon vos objectifs.</p>
+                </div>
+                <div className="rounded-[8px] border border-foreground/10 bg-background/40 p-4">
+                  <p className="text-[12px] font-bold uppercase tracking-[1px] text-foreground mb-1">3. Estimé sur mesure</p>
+                  <p className="text-[12px] text-muted-foreground leading-relaxed">Après le diagnostic gratuit, on estime votre budget pub selon vos objectifs, votre zone et vos besoins. Démarrage petit, on augmente ce qui marche.</p>
+                </div>
+              </div>
+              <p className="text-[11px] text-muted-foreground mt-4 leading-snug">Exemple : une boutique qui veut juste être visible peut démarrer sans pub. Une clinique qui veut des rendez-vous prévoit un budget pub mensuel dédié, ajusté à chaque stratégie.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
