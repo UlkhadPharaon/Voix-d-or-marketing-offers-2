@@ -1,547 +1,626 @@
+import { useEffect, useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { ArrowDown, Play, Clock, Smartphone, Wallet, TrendingUp, Send, Calendar, FileText, User as UserIcon, MessagesSquare, Lightbulb, PenTool, PhoneCall, Zap, Search } from 'lucide-react';
-import { useState } from 'react';
+import { Card } from '@/components/ui/card';
+import { ArrowDown, BadgeCheck, CalendarCheck, ChevronDown, Clock, HeartHandshake, Lock, MessageCircle, Play, ShieldCheck, Sparkles, TrendingUp, Wallet } from 'lucide-react';
 import { SEO } from '@/components/SEO';
 import { PageTransition } from '@/components/PageTransition';
-import { InfiniteMarquee } from '@/components/InfiniteMarquee';
-import { SplineScene } from "@/components/ui/splite";
 import { Spotlight } from "@/components/ui/spotlight";
-import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import PricingSection4 from "@/components/ui/pricing-section-4";
-import { EcosystemRadar } from "@/components/ui/ecosystem-radar";
+import { PhoneFeedMockup } from '@/components/home/PhoneFeedMockup';
+import { SHOWCASE_ITEMS, youtubeThumb } from '@/data/showcase';
+import { track } from '@/lib/analytics';
+import { cn } from '@/lib/utils';
 
-const timelineData = [
+/* Reveal on scroll — fade + 12px, once, 400ms. Disabled with reduced motion. */
+function Reveal({ children, delay = 0, className }: { children: ReactNode; delay?: number; className?: string }) {
+  const reduce = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return <div className={className}>{children}</div>;
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.4, delay }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function Eyebrow({ children }: { children: ReactNode }) {
+  return (
+    <p className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[2px] text-primary">
+      {children}
+    </p>
+  );
+}
+
+/* Animated number — counts once when visible, static with reduced motion. */
+function CountUp({ to, suffix = '' }: { to: number; suffix?: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [value, setValue] = useState(0);
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setValue(to);
+      setDone(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !done) {
+          setDone(true);
+          const start = performance.now();
+          const tick = (now: number) => {
+            const p = Math.min((now - start) / 800, 1);
+            setValue(Math.round(to * (1 - Math.pow(1 - p, 3))));
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [to, done]);
+
+  return (
+    <span ref={ref} className="tabular-nums">
+      {value}
+      {suffix}
+    </span>
+  );
+}
+
+const PROOFS = [
+  { icon: Sparkles, big: <CountUp to={90} suffix="+" />, label: "visuels par mois" },
+  { icon: Clock, big: <CountUp to={72} suffix=" h" />, label: "pour votre premier lot" },
+  { icon: HeartHandshake, big: "0", label: "engagement, résiliable à tout moment" },
+  { icon: Wallet, big: "4", label: "moyens de paiement Mobile Money et virement" },
+];
+
+const PAINS = [
   {
-    id: 1,
-    title: "Intelligence & Stratégie",
-    date: "Lun - Mar",
-    content: "Recherche marché, audience et concurrents. Hypothèses, mix de contenu et tests définis pour la semaine.",
-    category: "Analyse",
-    icon: Calendar,
-    relatedIds: [2],
-    status: "completed" as const,
-    energy: 100,
+    num: "01",
+    title: "« Je disparais »",
+    quote: "Je n'ai pas le temps de publier.",
+    text: "Pendant ce temps, vos clients voient vos concurrents.",
   },
   {
-    id: 2,
-    title: "Production Créative",
-    date: "Mer - Jeu",
-    content: "Concepts, scripts, génération IA et édition. Images, vidéos et motions validés avec vous en quelques minutes.",
-    category: "Studio",
-    icon: PenTool,
-    relatedIds: [1, 3],
-    status: "completed" as const,
-    energy: 80,
+    num: "02",
+    title: "« Je publie dans le vide »",
+    quote: "Personne ne réagit.",
+    text: "Des visuels sans plan coûtent du temps et ne ramènent personne.",
   },
   {
-    id: 3,
-    title: "Distribution & Community",
-    date: "Ven - Sam",
-    content: "Planning, publication, repurposing. Commentaires, DMs et qualification traités chaque jour.",
-    category: "Growth",
-    icon: PhoneCall,
-    relatedIds: [2, 4],
-    status: "in-progress" as const,
-    energy: 95,
-  },
-  {
-    id: 4,
-    title: "Performance & Learning",
-    date: "Dim",
-    content: "KPIs, diagnostics, attribution honnête. Chaque cycle alimente la mémoire : ce qui marche est amplifié.",
-    category: "Data",
-    icon: Lightbulb,
-    relatedIds: [1, 3],
-    status: "pending" as const,
-    energy: 100,
+    num: "03",
+    title: "« Je perds des clients dans mes messages »",
+    quote: "Je réponds trop tard.",
+    text: "Un message sans réponse, c'est une vente qui part ailleurs.",
   },
 ];
 
-export function Home() {
-  const [billingCycle, setBillingCycle] = useState<'mensuel' | 'trimestriel'>('mensuel');
-  const [faqSearchQuery, setFaqSearchQuery] = useState('');
+const PROMISES = [
+  { icon: Sparkles, title: "Vous êtes vu", text: "Des visuels qui donnent envie, chaque semaine." },
+  { icon: MessageCircle, title: "Vous êtes choisi", text: "Vos clients sont accueillis dès le premier message." },
+  { icon: TrendingUp, title: "Vous savez ce qui marche", text: "Un bilan simple, en français courant." },
+];
 
-  const faqs = [
-    {
-      q: "Que fait concrètement NEFERTEM chaque semaine ?",
-      a: "Nous opérons votre système marketing : recherche, stratégie, création de contenu, publication, community management et analyse. Chaque mois, nous testons, mesurons et ajustons ce qui fonctionne pour votre marché."
-    },
-    {
-      q: "En quoi êtes-vous différents d'une agence classique ?",
-      a: "Nous ne vendons pas des posts. Nous sommes le système marketing qui tourne chaque semaine pour votre entreprise. La stratégie décide, l'IA exécute, la donnée arbitre. Vous restez visible et actif pendant que vous vous concentrez sur le business."
-    },
-    {
-      q: "Quels sont vos prix et que comprennent-ils ?",
-      a: "Essentials à 30 000 FCFA/mois (90+ visuels, publication, réponses auto aux commentaires Facebook), Standard à 60 000 FCFA/mois (+ 12 vidéos 15 s, community Instagram et Facebook), Business à 90 000 FCFA/mois (+ 20 vidéos 45 s, gestion ads, prospection et support WhatsApp dédié). Prix de lancement : en annuel (-15 %), cela revient à 25 500 / 51 000 / 76 500 FCFA par mois. Le budget pub versé aux plateformes est en plus et estimé selon vos objectifs."
-    },
-    {
-      q: "C'est quoi le budget média séparé des honoraires ?",
-      a: "Nos tarifs paient notre travail : stratégie, création, publication et pilotage. Le budget média, c'est l'argent versé à Meta, TikTok ou Google pour diffuser vos publicités. Il ne nous est pas versé. Après le diagnostic gratuit, on l'estime selon vos objectifs et vos besoins : on peut démarrer sans pub pour être visible, ou prévoir un budget mensuel dédié pour générer des prospects."
-    },
-    {
-      q: "En combien de temps je reçois mes premiers contenus ?",
-      a: "De la signature au premier livrable : 72 heures. T+0 paiement, T+24h intake business & marque, T+48h stratégie & plan à 7 jours, T+72h premier lot livré. Puis un cycle mensuel continu."
-    },
-    {
-      q: "Comment démarrer ?",
-      a: "Remplissez notre brief en 2 minutes. Nous vous contactons sur WhatsApp dans l'heure pour l'intake et le lancement."
-    }
-  ];
+const STEPS = [
+  {
+    num: "1",
+    title: "Vous nous parlez de votre activité",
+    text: "2 minutes, sur WhatsApp. On vous pose les bonnes questions.",
+  },
+  {
+    num: "2",
+    title: "Votre premier lot est prêt en 72 h",
+    text: "Votre plan de 7 jours + vos premiers visuels à publier.",
+  },
+  {
+    num: "3",
+    title: "Chaque semaine, on s'occupe de tout",
+    text: "On publie, on répond à vos clients, vous recevez le bilan.",
+  },
+];
 
-  const filteredFaqs = faqs.filter(faq => 
-    faq.q.toLowerCase().includes(faqSearchQuery.toLowerCase()) || 
-    faq.a.toLowerCase().includes(faqSearchQuery.toLowerCase())
+const WEEK = [
+  { days: "Lundi – Mardi", title: "On décide quoi dire", text: "On choisit les sujets de la semaine avec vous." },
+  { days: "Mercredi – Jeudi", title: "Vos visuels sont créés", text: "Photos, vidéos courtes et textes, prêts à publier." },
+  { days: "Vendredi – Samedi", title: "Tout est publié", text: "Vos pages restent actives et vos clients reçoivent une réponse." },
+  { days: "Dimanche", title: "Vous recevez votre bilan", text: "Ce qui a marché, en une page simple." },
+];
+
+const FAQS = [
+  {
+    q: "Que fait NEFERTEM chaque semaine ?",
+    a: "On crée vos visuels, on publie sur vos pages, on répond aux commentaires et aux messages, et on vous envoie un bilan simple. Chaque mois, on garde ce qui marche et on corrige le reste.",
+  },
+  {
+    q: "Est-ce adapté à mon activité ?",
+    a: "Oui, si vous vendez à des particuliers : restaurants, boutiques, supermarchés, beauté, parfum, bijoux, immobilier, cliniques, écoles, hôtels. Si votre cas est particulier, le diagnostic gratuit vous le dira franchement.",
+  },
+  {
+    q: "Mes visuels vont-ils ressembler à ceux de tout le monde ?",
+    a: "Non. Chaque lot est créé pour votre marque : vos couleurs, vos produits, votre ton. Vous validez le style dès la première semaine.",
+  },
+  {
+    q: "Dois-je fournir mes photos et mes infos ?",
+    a: "Envoyez ce que vous avez — les photos prises avec votre téléphone sont les bienvenues. S'il nous manque quelque chose, on crée quand même vos visuels et on vous dit quoi nous envoyer.",
+  },
+  {
+    q: "En combien de temps je reçois mes premiers contenus ?",
+    a: "72 heures après votre paiement : vous recevez votre plan de 7 jours et votre premier lot à publier. Ensuite, le rythme continue chaque semaine.",
+  },
+  {
+    q: "Suis-je engagé ?",
+    a: "Non. C'est sans engagement et résiliable à tout moment. Le prix de lancement s'applique à vos 3 premiers mois, puis le tarif normal prend le relais.",
+  },
+  {
+    q: "Mes comptes et ma marque restent-ils à moi ?",
+    a: "Oui, toujours. Vos pages, vos contenus, votre base clients : tout est à vous, même si vous partez.",
+  },
+  {
+    q: "Comment payer ?",
+    a: "Par Orange Money, Moov Money, Wave ou virement, chaque mois. Aucun paiement n'est demandé avant le diagnostic.",
+  },
+  {
+    q: "Que se passe-t-il si je n'aime pas ?",
+    // TODO(owner): valider le libellé de garantie.
+    a: "Dites-le-nous vite : le premier lot est refait gratuitement, une fois, si le style ne vous convient pas.",
+  },
+  {
+    q: "Budget publicitaire : comment ça marche ?",
+    a: "Nos tarifs paient notre travail : visuels, publication, réponses et bilan. Le budget publicitaire, c'est l'argent versé à Meta, TikTok ou Google pour diffuser vos publicités. Il ne nous est pas versé. Après le diagnostic gratuit, on l'estime selon vos objectifs : on peut démarrer sans publicité pour être visible, ou prévoir un budget mensuel pour attirer des clients.",
+  },
+];
+
+// TODO(owner): ajouter de vrais témoignages ici pour les afficher.
+// const TESTIMONIALS: { quote: string; author: string }[] = [];
+const TESTIMONIALS: { quote: string; author: string }[] = [];
+
+function FaqSection() {
+  const [open, setOpen] = useState<number | null>(0);
+  return (
+    <div className="w-full">
+      {FAQS.map((faq, i) => {
+        const isOpen = open === i;
+        return (
+          <div key={faq.q} className="border-b border-foreground/10">
+            <button
+              type="button"
+              aria-expanded={isOpen}
+              aria-controls={`faq-panel-${i}`}
+              id={`faq-button-${i}`}
+              onClick={() => {
+                setOpen(isOpen ? null : i);
+                if (!isOpen) track("faq_opened", { id: `faq-${i}` });
+              }}
+              className="flex min-h-[56px] w-full items-center justify-between gap-4 py-4 text-left text-[15px] font-bold text-foreground hover:text-primary"
+            >
+              {faq.q}
+              <ChevronDown
+                className={cn("h-5 w-5 shrink-0 text-primary transition-transform", isOpen && "rotate-180")}
+                aria-hidden="true"
+              />
+            </button>
+            {isOpen && (
+              <p id={`faq-panel-${i}`} role="region" aria-labelledby={`faq-button-${i}`} className="pb-6 text-[14px] leading-relaxed text-muted-foreground">
+                {faq.a}
+              </p>
+            )}
+          </div>
+        );
+      })}
+    </div>
   );
+}
 
-  // Hash + route scroll is handled globally by <ScrollManager /> (Lenis).
+function BeforeAfter() {
+  const [tab, setTab] = useState<"avant" | "apres">("avant");
+  const avant = ["Des publications irrégulières, quand vous avez le temps.", "Des messages qui attendent le soir, sans réponse.", "Vous ne savez pas ce qui marche vraiment."];
+  const apres = ["Des visuels soignés, publiés chaque semaine.", "Chaque message reçoit une réponse.", "Un bilan simple, chaque dimanche."];
+  return (
+    <div>
+      {/* Mobile tabs */}
+      <div className="mb-4 flex gap-2 md:hidden" role="tablist" aria-label="Avant et après NEFERTEM">
+        {(["avant", "apres"] as const).map((t) => (
+          <button
+            key={t}
+            role="tab"
+            aria-selected={tab === t}
+            onClick={() => setTab(t)}
+            className={cn(
+              "min-h-[44px] flex-1 rounded-[4px] text-[13px] font-bold uppercase tracking-[1px]",
+              tab === t ? "bg-primary text-black-deep" : "border border-foreground/15 text-muted-foreground"
+            )}
+          >
+            {t === "avant" ? "Avant" : "Avec NEFERTEM"}
+          </button>
+        ))}
+      </div>
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className={cn("rounded-[12px] border border-foreground/10 bg-foreground/[0.02] p-6 md:p-8", tab !== "avant" && "hidden md:block")}>
+          <p className="mb-4 text-[12px] font-bold uppercase tracking-[2px] text-muted-foreground">Avant</p>
+          <ul className="space-y-3">
+            {avant.map((t) => (
+              <li key={t} className="flex items-start gap-3 text-[14px] text-muted-foreground">
+                <span aria-hidden="true" className="mt-0.5">✕</span> {t}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className={cn("rounded-[12px] border border-primary/40 bg-primary/[0.07] p-6 md:p-8", tab !== "apres" && "hidden md:block")}>
+          <p className="mb-4 text-[12px] font-bold uppercase tracking-[2px] text-primary">Avec NEFERTEM</p>
+          <ul className="space-y-3">
+            {apres.map((t) => (
+              <li key={t} className="flex items-start gap-3 text-[14px] font-bold text-foreground">
+                <span aria-hidden="true" className="mt-0.5 text-primary">✓</span> {t}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function Home() {
+  const [weekOpen, setWeekOpen] = useState(false);
 
   return (
     <PageTransition className="w-full relative">
-      <SEO 
-        title="NEFERTEM - AI Growth Systems | La croissance devient un système"
-        description="NEFERTEM construit et opère votre système marketing : contenu, distribution, conversations et optimisation. 90+ visuels/mois dès 30 000 FCFA. Premier lot sous 72h. Ouagadougou, Burkina Faso."
+      <SEO
+        title="Votre marque reste visible, même quand vous êtes débordé"
+        description="NEFERTEM crée vos visuels, publie, répond à vos clients et vous envoie un bilan clair chaque semaine. Dès 30 000 FCFA/mois. Premier lot en 72 h. Ouagadougou, Burkina Faso."
+        path="/"
         schemas={[
           {
             "@context": "https://schema.org",
-            "@type": "ProfessionalService",
-            "name": "NEFERTEM - AI Growth Systems",
-            "image": "./logo/nefertem-full.png",
-            "description": "AI Growth Systems for African Businesses. Système marketing continu : contenu, distribution, conversations et optimisation.",
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": "Ouagadougou",
-              "addressCountry": "Burkina Faso"
-            },
-            "telephone": "+22605830599"
-          }
+            "@type": "Organization",
+            name: "NEFERTEM - AI Growth Systems",
+            description: "Abonnement marketing mensuel pour PME africaines : visuels, publication, réponses clients et bilan hebdomadaire.",
+            address: { "@type": "PostalAddress", addressLocality: "Ouagadougou", addressCountry: "BF" },
+            telephone: "+22605830599",
+          },
         ]}
       />
 
-      {/* Background moved to Layout */}
-
-      {/* SECTION 1: HERO */}
-      <section className="relative min-h-screen flex items-center justify-start bg-background/0 overflow-hidden pt-32 pb-[140px] px-6 md:px-[40px]">
-        {/* Spotlight Effect */}
+      {/* S1 HERO */}
+      <section className="relative overflow-hidden px-6 pb-16 pt-28 md:px-10 md:pt-36">
         <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="#D4AF37" />
-
-        {/* splite 3D integration with proper z-index */}
-        <div className="absolute inset-0 z-0 h-full w-full opacity-60 pointer-events-none">
-          <SplineScene 
-            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-            className="w-full h-full pointer-events-auto"
-          />
-          <div className="absolute inset-0 bg-background/50 pointer-events-none"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background pointer-events-none"></div>
-          <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-primary/10 blur-[120px] rounded-full pointer-events-none"></div>
-        </div>
-
-        <div className="container relative z-10 mx-auto w-full flex flex-col md:flex-row items-center justify-between pointer-events-none">
-          {/* Content */}
-          <div className="flex flex-col items-start justify-center max-w-2xl mt-12 mb-8 pointer-events-auto">
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.8 }}
-              className="font-heading text-[36px] sm:text-[46px] md:text-[52px] lg:text-[60px] font-normal leading-[1.1] mb-[28px] text-foreground shadow-black-deep drop-shadow-2xl"
-            >
-              Adoptez votre <span className="text-primary italic font-serif">système marketing complet</span> <br className="hidden lg:block"/> dès 30 000 FCFA/mois.
-            </motion.h1>
-
-            <motion.p 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-[15px] sm:text-[16px] md:text-[18px] text-muted-foreground max-w-[650px] leading-[1.6] mb-[40px] drop-shadow-md text-left"
-            >
-              Votre entreprise reste visible et active pendant que vous vous concentrez sur le business. NEFERTEM combine IA, contenu, distribution, community management et analyse continue. Chaque mois, nous testons, mesurons et ajustons ce qui fonctionne pour votre marché.
-            </motion.p>
-
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="flex flex-col sm:flex-row items-start justify-start gap-[15px] w-full"
-            >
-              <Button onClick={() => window.location.href = '/#offres'} className="w-full sm:w-auto px-[32px] py-[16px] h-auto text-[13px] uppercase font-bold tracking-[1px] bg-primary text-black-deep rounded-[4px] shadow-[0_0_40px_rgba(212,175,55,0.3)] hover:shadow-[0_0_60px_rgba(212,175,55,0.5)] hover:-translate-y-1 transition-all">
-                → Voir les offres
-              </Button>
-              <Button onClick={() => window.location.href = '/portfolio'} className="w-full sm:w-auto flex items-center justify-center gap-3 px-[32px] py-[16px] h-auto text-[13px] uppercase font-bold tracking-[1px] border-b-2 border-transparent text-foreground bg-background/0 rounded-none hover:border-primary hover:text-primary transition-colors">
-                → Voir des exemples
-              </Button>
-            </motion.div>
-          </div>
-          
-          <div className="hidden lg:block flex-1">
-             {/* Spline area */}
-          </div>
-        </div>
-
-        {/* Proof Bar - Positioned at bottom */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="absolute bottom-0 left-0 w-full bg-background/80  border-t border-foreground/10 py-5"
-        >
-          <div className="container mx-auto px-6 md:px-[40px]">
-            <div className="grid grid-cols-2 lg:flex lg:flex-row items-center justify-center lg:gap-[40px] max-w-6xl mx-auto gap-4 text-center">
-              <span className="text-[12px] md:text-[14px] uppercase text-muted-foreground tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> 90+ visuels / mois</span>
-              <span className="text-[12px] md:text-[14px] uppercase text-muted-foreground tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> Premier lot sous 72h</span>
-              <span className="text-[12px] md:text-[14px] uppercase text-muted-foreground tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> Contenu + Distribution + Community</span>
-              <span className="text-[12px] md:text-[14px] uppercase text-muted-foreground tracking-[1px] font-bold"><span className="text-primary hidden lg:inline">•</span> La donnée arbitre</span>
-            </div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Infinite Marquee Section */}
-      <div className="relative z-10 pointer-events-auto">
-        <InfiniteMarquee />
-      </div>
-
-      {/* SECTION 2: VOTRE SITUATION AUJOURD'HUI */}
-      <section className="py-[60px] md:py-[120px] bg-foreground/[0.02]  text-foreground relative border-t border-foreground/10 shadow-xl dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col justify-center min-h-[80vh]">
-        {/* Cyber Mannequin Background removed for performance */}
-        <div className="absolute md:top-0 md:right-0 inset-0 md:inset-auto md:w-[60vw] md:h-full z-0 opacity-40 md:opacity-50 flex items-end md:items-center justify-center md:justify-end translate-y-32 md:-translate-y-10 scale-125 md:scale-100">
-          {/* Gradient to blend with background seamlessly */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background pointer-events-none"></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-transparent pointer-events-none"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-transparent hidden md:block pointer-events-none"></div>
-        </div>
-
-        {/* Background glow */}
-        <div className="absolute top-1/4 -left-[20%] w-[50%] h-[50%] rounded-full bg-red-900/10 blur-[120px] pointer-events-none"></div>
-        <div className="absolute bottom-1/4 -right-[20%] w-[50%] h-[50%] rounded-full bg-primary/5 blur-[120px] pointer-events-none"></div>
-
-        <div className="container mx-auto px-4 relative z-10 pointer-events-none">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 max-w-7xl mx-auto">
-            {/* Left Column: Context */}
-            <div className="lg:col-span-5 flex flex-col justify-center pointer-events-auto">
-              <div className="sticky top-32">
-                <div className="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 text-red-400 px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[24px] rounded-full">
-                  <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-                  Le Constat
-                </div>
-                <h2 className="text-[32px] sm:text-[40px] md:text-[48px] font-heading font-normal mb-[24px] uppercase tracking-[1px] leading-[1.1]">
-                  Ce que vivent la plupart des PME
-                </h2>
-                <p className="text-gray-400 text-[15px] sm:text-[16px] leading-[1.8] mb-[32px] max-w-md">
-                  Ni temps, ni équipe, ni système marketing continu. Publier sans apprendre, payer sans mesurer, répondre tard aux messages : c'est ce chaos que NEFERTEM transforme en système de croissance.
-                </p>
-                <div className="hidden lg:block w-full h-[1px] bg-gradient-to-r from-red-500/20 to-transparent"></div>
-              </div>
-            </div>
-
-            {/* Right Column: Problem Cards */}
-            <div className="lg:col-span-7 flex flex-col gap-6 pointer-events-auto">
-              <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.6 }}>
-                <Card className="group bg-card/90 dark:bg-foreground/10  border border-foreground/5 rounded-[12px] shadow-xl dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] hover:border-red-500/30 hover:bg-background hover:shadow-[0_0_40px_rgba(239,68,68,0.05)] transition-all overflow-hidden relative p-[32px] md:p-[40px]">
-                  <div className="absolute inset-0 bg-gradient-to-br from-red-500/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="absolute top-0 left-0 w-[4px] h-0 bg-red-500 group-hover:h-full transition-all duration-500 ease-out"></div>
-                  <CardContent className="p-0 relative z-10 flex flex-col sm:flex-row gap-6">
-                    <div className="shrink-0">
-                      <div className="w-14 h-14 rounded-full border border-red-500/20 bg-red-500/10 flex items-center justify-center text-red-500 font-heading text-[20px] shadow-[inset_0_0_20px_rgba(239,68,68,0.2)]">
-                        01
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="font-heading uppercase tracking-[1px] text-[20px] mb-[12px] text-foreground">
-                        Présence irrégulière
-                      </h3>
-                      <p className="text-gray-400 text-[14px] leading-[1.7]">
-                        « Je manque de temps pour publier. » « Je ne sais pas quoi poster. » Sans calendrier ni production continue, votre marque disparaît des fils pendant que vous gérez le business.
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-
-              <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.6, delay: 0.1 }}>
-                <Card className="group bg-card/90 dark:bg-foreground/10  border border-foreground/5 rounded-[12px] shadow-xl dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] hover:border-red-500/30 hover:bg-background hover:shadow-[0_0_40px_rgba(239,68,68,0.05)] transition-all overflow-hidden relative p-[32px] md:p-[40px]">
-                  <div className="absolute inset-0 bg-gradient-to-br from-red-500/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="absolute top-0 left-0 w-[4px] h-0 bg-red-500 group-hover:h-full transition-all duration-500 ease-out"></div>
-                  <CardContent className="p-0 relative z-10 flex flex-col sm:flex-row gap-6">
-                    <div className="shrink-0">
-                      <div className="w-14 h-14 rounded-full border border-red-500/20 bg-red-500/10 flex items-center justify-center text-red-500 font-heading text-[20px] shadow-[inset_0_0_20px_rgba(239,68,68,0.2)]">
-                        02
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="font-heading uppercase tracking-[1px] text-[20px] mb-[12px] text-foreground">
-                        Contenu sans effet
-                      </h3>
-                      <p className="text-gray-400 text-[14px] leading-[1.7]">
-                        « Je publie, mais personne ne réagit. » « Je paie des visuels sans savoir si cela apporte des clients. » Du volume sans apprentissage : chaque publication faible devrait devenir une <strong className="text-foreground font-normal">information exploitable</strong>.
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-
-              <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.6, delay: 0.2 }}>
-                <Card className="group bg-card/90 dark:bg-foreground/10  border border-foreground/5 rounded-[12px] shadow-xl dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] hover:border-red-500/30 hover:bg-background hover:shadow-[0_0_40px_rgba(239,68,68,0.05)] transition-all overflow-hidden relative p-[32px] md:p-[40px]">
-                  <div className="absolute inset-0 bg-gradient-to-br from-red-500/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="absolute top-0 left-0 w-[4px] h-0 bg-red-500 group-hover:h-full transition-all duration-500 ease-out"></div>
-                  <CardContent className="p-0 relative z-10 flex flex-col sm:flex-row gap-6">
-                    <div className="shrink-0">
-                      <div className="w-14 h-14 rounded-full border border-red-500/20 bg-red-500/10 flex items-center justify-center text-red-500 font-heading text-[20px] shadow-[inset_0_0_20px_rgba(239,68,68,0.2)]">
-                        03
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="font-heading uppercase tracking-[1px] text-[20px] mb-[12px] text-foreground">
-                        Messages & pubs sans pilotage
-                      </h3>
-                      <p className="text-gray-400 text-[14px] leading-[1.7]">
-                        « Mon équipe répond tard aux messages. » « Je fais des pubs, mais je ne sais pas ce qui marche. » NEFERTEM <strong className="text-foreground font-normal">opère le cycle complet</strong> : contenu, distribution, conversations, analyse et apprentissage.
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            </div>
-          </div>
-
-          <div className="mt-24 flex flex-col items-center justify-center text-center pointer-events-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8">
-              <Zap className="w-4 h-4 text-primary" />
-              <span className="text-[12px] font-bold uppercase tracking-[1px] text-primary">La Solution Intelligente</span>
-            </div>
-            <p className="font-heading uppercase tracking-[1px] text-[24px] text-foreground mb-4 max-w-2xl">Nous ne sommes pas une usine à posts. Nous sommes le système marketing qui tourne chaque semaine pour votre entreprise.</p>
-            
-            <EcosystemRadar />
-
-            <motion.div 
-              animate={{ y: [0, 10, 0] }} 
-              transition={{ repeat: Infinity, duration: 2 }}
-              className="mt-12"
-            >
-              <ArrowDown className="text-primary w-8 h-8 opacity-50" />
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 3: CALENDRIER OPERATOIRE DE L'ASSISTANT */}
-      <section className="py-[60px] md:py-[120px] bg-card/90 dark:bg-foreground/10  text-foreground relative border-t border-foreground/10 shadow-xl dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden">
-        {/* Robot Background */}
-        <div className="absolute inset-0 z-0 h-full w-full opacity-30 md:opacity-50 flex items-center justify-center pointer-events-none">
-          <SplineScene 
-            scene="/genkub_greeting_robot.splinecode"
-            className="w-full h-full pointer-events-none"
-          />
-          {/* Gradients pour fondre le robot dans le fond */}
-          <div className="absolute inset-0 bg-background/0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-[#0a0a0a] pointer-events-none"></div>
-          <div className="absolute inset-0 bg-background/40 pointer-events-none"></div>
-        </div>
-
-        <div className="container mx-auto px-4 max-w-5xl relative z-20 pointer-events-none">
-          <div className="text-center mb-10 md:mb-16 flex flex-col items-center pointer-events-auto">
-            <div className="inline-flex self-center bg-background/0 border border-foreground/20 text-muted-foreground px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[24px]">
-              Efficacité Systématique
-            </div>
-            <h2 className="text-[28px] sm:text-[40px] md:text-[48px] font-heading font-normal mb-[16px] uppercase tracking-[1px]">Le système NEFERTEM, chaque semaine</h2>
-            <p className="text-muted-foreground text-[15px] max-w-2xl mx-auto">
-              La stratégie décide. L'IA exécute. La donnée arbitre. Cliquez sur un axe pour explorer le cycle continu.
+        <div className="container relative z-10 mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-2">
+          <div>
+            <h1 className="font-heading text-[36px] font-normal leading-[1.1] text-foreground sm:text-[46px] lg:text-[56px]">
+              Votre marque reste visible, <span className="italic text-primary">même quand vous êtes débordé.</span>
+            </h1>
+            <p className="mt-6 max-w-xl text-[15px] leading-[1.7] text-muted-foreground md:text-[17px]">
+              NEFERTEM crée vos visuels, publie, répond à vos clients et vous envoie un bilan
+              clair chaque semaine. Premier lot prêt en 72 h.
             </p>
-          </div>
-        </div>
-        
-        <div className="md:-my-[100px] xl:-my-[150px] relative z-10 w-full pointer-events-auto">
-          {/* We import the new orbital timeline component here */}
-          <RadialOrbitalTimeline timelineData={timelineData} />
-        </div>
-
-        <div className="container mx-auto px-4 max-w-5xl relative z-20 pointer-events-none">
-          <div className="mt-12 text-center border border-primary/30 bg-primary/10  shadow-[0_8px_32px_rgba(212,175,55,0.1)] p-8 rounded-[8px] pointer-events-auto">
-            <p className="text-[18px] md:text-[20px] font-heading uppercase tracking-[1px] text-primary mb-2">NOS PRINCIPES :</p>
-            <p className="text-foreground text-[15px] md:text-[17px] max-w-3xl mx-auto leading-relaxed">
-              Donnée avant intuition. Une tendance est une piste, pas une stratégie. Nous ne promettons jamais la viralité et n'inventons aucune preuve : chaque expérience a un objectif et un signal mesuré.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 4: COMMENT ÇA MARCHE / NOTRE DÉMO LIVE */}
-      <section className="py-[60px] md:py-[120px] bg-foreground/[0.02]  text-foreground relative border-t border-foreground/10 shadow-xl dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden">
-        {/* Futuristic Rays Background (Optimized) */}
-        <div className="absolute inset-0 z-0 h-full w-full pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[100px] mix-blend-screen"></div>
-          {/* Gradients to fade blending with the section */}
-          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent"></div>
-          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent"></div>
-        </div>
-
-        <div className="container mx-auto px-4 max-w-5xl relative z-20 pointer-events-none">
-          <div className="mb-10 text-center flex flex-col items-center pointer-events-auto">
-            <div className="inline-flex bg-background/0 border border-foreground/20 text-muted-foreground px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[24px]">
-              La Méthodologie Imbattable
-            </div>
-            <h2 className="text-[28px] sm:text-[40px] md:text-[48px] font-heading font-normal mb-[16px] leading-tight uppercase tracking-[1px]">
-              Notre Diagnostic <br/> <span className="text-primary italic font-serif">Vaut 10 000 mots</span>
-            </h2>
-            <p className="text-muted-foreground text-[15px] max-w-2xl mx-auto">
-              Pas de discours commerciaux. Des systèmes visibles : calendrier, dashboards, experiments et apprentissages.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-[40px] pointer-events-auto">
-            {[
-              { num: 'I', title: 'Le Constat', desc: 'Temps manquant, présence irrégulière, contenu inefficace, messages sans suivi, pubs sans mesure. Diagnostic en 24h.' },
-              { num: 'II', title: 'Le Diagnostic', desc: 'Intake business et marque, stratégie et plan à 7 jours, puis premier lot livré sous 72h.' },
-              { num: 'III', title: 'Votre Croissance', desc: 'Presence active + apprentissage + conversations. Votre marque reste votre propriete.' },
-            ].map((step, i) => (
-              <motion.div 
-                key={i} 
-                initial={{ opacity: 0, y: 20 }} 
-                whileInView={{ opacity: 1, y: 0 }} 
-                viewport={{ once: true }} 
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="flex flex-col items-start border border-foreground/10 bg-foreground/[0.03]  shadow-[0_8px_32px_rgba(0,0,0,0.2)] p-6 rounded-[8px] hover:border-primary/50 transition-colors"
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link
+                to="/demarrer?src=hero"
+                onClick={() => track("cta_click", { location: "hero", label: "diagnostic" })}
+                className="inline-flex min-h-[52px] items-center justify-center rounded-[4px] bg-primary px-8 text-[13px] font-bold uppercase tracking-[1px] text-black-deep shadow-[0_0_40px_rgba(212,175,55,0.3)] hover:bg-gold-accent"
               >
-                <div className="font-heading text-[24px] text-primary mb-[16px]">
-                  {step.num}
-                </div>
-                <h4 className="font-bold text-[13px] mb-[12px] uppercase tracking-[1px] text-foreground">{step.title}</h4>
-                <p className="text-muted-foreground text-[13px] leading-relaxed">{step.desc}</p>
-              </motion.div>
+                → Recevoir mon diagnostic gratuit
+              </Link>
+              <Link
+                to="/exemples"
+                onClick={() => track("cta_click", { location: "hero", label: "exemples" })}
+                className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-[4px] border border-foreground/20 px-8 text-[13px] font-bold uppercase tracking-[1px] text-foreground hover:border-primary hover:text-primary"
+              >
+                <Play className="h-4 w-4" aria-hidden="true" /> Voir ce que nous créons
+              </Link>
+            </div>
+            <p className="mt-5 text-[12px] font-bold uppercase tracking-[1px] text-muted-foreground">
+              Dès 30 000 FCFA/mois · Sans engagement · Paiement Mobile Money
+            </p>
+          </div>
+          <PhoneFeedMockup />
+        </div>
+      </section>
+
+      {/* S2 PROOF STRIP */}
+      <section aria-label="NEFERTEM en chiffres" className="border-y border-primary/20 bg-primary/[0.07] py-6">
+        <div className="container mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 lg:hidden">
+          {PROOFS.map((p) => (
+            <div key={p.label} className="flex items-center gap-3">
+              <p.icon className="h-6 w-6 shrink-0 text-primary" aria-hidden="true" />
+              <p className="text-[13px] leading-snug text-foreground">
+                <span className="block text-[20px] font-bold text-primary">{p.big}</span>
+                {p.label}
+              </p>
+            </div>
+          ))}
+        </div>
+        <div className="relative hidden overflow-hidden lg:block" aria-hidden="true">
+          <div className="drift flex w-max gap-16 pr-16">
+            {[...PROOFS, ...PROOFS, ...PROOFS, ...PROOFS].map((p, i) => (
+              <span key={i} className="flex items-center gap-3 whitespace-nowrap text-[14px] font-bold uppercase tracking-[1px] text-foreground">
+                <p.icon className="h-5 w-5 text-primary" /> {p.big} {p.label}
+              </span>
             ))}
           </div>
         </div>
       </section>
 
-      {/* SECTION 4: PRICING */}
-      <section id="offres" className="scroll-mt-[96px] bg-card/90 dark:bg-foreground/10  border-t border-primary/20 relative pointer-events-auto pb-28 shadow-xl dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+      {/* S3 PAIN */}
+      <section className="px-4 py-16 md:py-24">
+        <div className="container mx-auto max-w-5xl">
+          <Reveal className="mb-10 text-center">
+            <Eyebrow>Vous vous reconnaissez ?</Eyebrow>
+            <h2 className="mt-4 font-heading text-[28px] font-normal uppercase leading-tight tracking-[1px] text-foreground md:text-[40px]">
+              Vous gérez tout. Vos réseaux, eux, sont à l'arrêt.
+            </h2>
+          </Reveal>
+          <div className="grid gap-4 md:grid-cols-3">
+            {PAINS.map((pain, i) => (
+              <Reveal key={pain.num} delay={i * 0.08}>
+                <Card className="h-full rounded-[12px] border border-foreground/10 bg-foreground/[0.03] p-6 md:p-8">
+                  <p className="font-heading text-[20px] text-primary">{pain.num}</p>
+                  <h3 className="mt-2 font-heading text-[20px] uppercase tracking-[1px] text-foreground">{pain.title}</h3>
+                  <p className="mt-3 text-[15px] italic text-foreground">« {pain.quote} »</p>
+                  <p className="mt-2 text-[14px] leading-relaxed text-muted-foreground">{pain.text}</p>
+                </Card>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal className="mt-10 text-center">
+            <p className="font-heading text-[20px] uppercase tracking-[1px] text-primary md:text-[24px]">
+              Chaque jour sans présence, un client choisit quelqu'un d'autre.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* S4 CURE */}
+      <section className="border-t border-foreground/10 bg-foreground/[0.02] px-4 py-16 md:py-24">
+        <div className="container mx-auto max-w-5xl">
+          <Reveal className="mb-10 text-center">
+            <h2 className="font-heading text-[28px] font-normal uppercase leading-tight tracking-[1px] text-foreground md:text-[40px]">
+              Imaginez votre semaine, sans y penser.
+            </h2>
+          </Reveal>
+          <Reveal>
+            <BeforeAfter />
+          </Reveal>
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            {PROMISES.map((pr, i) => (
+              <Reveal key={pr.title} delay={i * 0.08}>
+                <div className="flex h-full items-start gap-4 rounded-[12px] border border-primary/25 bg-primary/[0.05] p-6">
+                  <pr.icon className="h-6 w-6 shrink-0 text-primary" aria-hidden="true" />
+                  <div>
+                    <h3 className="text-[15px] font-bold uppercase tracking-[1px] text-foreground">{pr.title}</h3>
+                    <p className="mt-1 text-[14px] text-muted-foreground">{pr.text}</p>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* S5 HOW IT WORKS */}
+      <section id="comment" className="scroll-mt-[96px] border-t border-foreground/10 px-4 py-16 md:py-24">
+        <div className="container mx-auto max-w-4xl text-center">
+          <Reveal>
+            <Eyebrow>Simple comme bonjour</Eyebrow>
+            <h2 className="mt-4 font-heading text-[28px] font-normal uppercase leading-tight tracking-[1px] text-foreground md:text-[40px]">
+              Démarrer prend 2 minutes. Le reste, c'est nous.
+            </h2>
+          </Reveal>
+          <div className="mt-10 grid gap-4 text-left md:grid-cols-3">
+            {STEPS.map((s, i) => (
+              <Reveal key={s.num} delay={i * 0.08}>
+                <div className="h-full rounded-[12px] border border-foreground/10 bg-foreground/[0.03] p-6">
+                  <p className="font-heading text-[40px] leading-none text-primary">{s.num}</p>
+                  <h3 className="mt-3 text-[15px] font-bold uppercase tracking-[1px] text-foreground">{s.title}</h3>
+                  <p className="mt-2 text-[14px] leading-relaxed text-muted-foreground">{s.text}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal className="mt-6 text-left">
+            <div className="rounded-[12px] border border-foreground/10 bg-foreground/[0.02] p-6">
+              <button
+                type="button"
+                aria-expanded={weekOpen}
+                aria-controls="semaine-type"
+                onClick={() => setWeekOpen((v) => !v)}
+                className="flex min-h-[44px] w-full items-center justify-between gap-3 text-left text-[14px] font-bold uppercase tracking-[1px] text-foreground"
+              >
+                Voir votre semaine type
+                <ChevronDown className={cn("h-5 w-5 shrink-0 text-primary transition-transform", weekOpen && "rotate-180")} aria-hidden="true" />
+              </button>
+              {weekOpen && (
+                <ul id="semaine-type" className="mt-4 space-y-4 border-t border-foreground/10 pt-4">
+                  {WEEK.map((w) => (
+                    <li key={w.days} className="flex flex-col gap-1 sm:flex-row sm:gap-4">
+                      <span className="w-36 shrink-0 text-[12px] font-bold uppercase tracking-[1px] text-primary">{w.days}</span>
+                      <span className="text-[14px] text-foreground">
+                        <strong>{w.title} — </strong>
+                        <span className="text-muted-foreground">{w.text}</span>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* S6 SHOWCASE TEASER */}
+      <section className="border-t border-foreground/10 bg-foreground/[0.02] px-4 py-16 md:py-24">
+        <div className="container mx-auto max-w-6xl">
+          <Reveal className="mb-10 text-center">
+            <Eyebrow>Exemples de production</Eyebrow>
+            <h2 className="mt-4 font-heading text-[28px] font-normal uppercase leading-tight tracking-[1px] text-foreground md:text-[40px]">
+              Des visuels pensés pour votre secteur
+            </h2>
+          </Reveal>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {SHOWCASE_ITEMS.map((item, i) => (
+              <Reveal key={item.id} delay={i * 0.06}>
+                <article className="group h-full overflow-hidden rounded-[12px] border border-foreground/10 bg-background">
+                  {item.youtubeId && !item.youtubeId.startsWith("PL") ? (
+                    <img
+                      src={youtubeThumb(item.youtubeId)}
+                      alt={`Exemple ${item.title} — ${item.sector}`}
+                      width={480}
+                      height={360}
+                      loading="lazy"
+                      className="aspect-video w-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex aspect-video w-full items-center justify-center bg-gradient-to-br from-primary/30 to-teal-deep/40">
+                      <Play className="h-10 w-10 text-primary" aria-hidden="true" />
+                      <span className="sr-only">Exemple {item.title}</span>
+                    </div>
+                  )}
+                  <div className="p-4">
+                    <p className="text-[11px] font-bold uppercase tracking-[2px] text-primary">{item.sector} · {item.plan}</p>
+                    <h3 className="mt-1 font-heading text-[18px] uppercase tracking-[1px] text-foreground">{item.title}</h3>
+                    <Link
+                      to={`/demarrer?src=showcase&sector=${item.sectorKey}`}
+                      onClick={() => track("cta_click", { location: "showcase_teaser", label: item.id })}
+                      className="mt-2 inline-block min-h-[44px] text-[13px] font-bold uppercase tracking-[1px] text-primary hover:underline"
+                    >
+                      Je veux ça →
+                    </Link>
+                  </div>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+          <div className="mt-8 text-center">
+            <Link
+              to="/exemples"
+              onClick={() => track("cta_click", { location: "showcase_teaser", label: "all" })}
+              className="inline-flex min-h-[52px] items-center justify-center rounded-[4px] border border-primary/60 px-8 text-[13px] font-bold uppercase tracking-[1px] text-primary hover:bg-primary hover:text-black-deep"
+            >
+              → Voir tous les exemples
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* S7 PRICING */}
+      <section id="offres" className="scroll-mt-[96px] border-t border-primary/20 bg-card/90 pb-28 dark:bg-foreground/10">
         <PricingSection4 />
       </section>
 
-      {/* SECTION 6: LEAD MAGNET */}
-      <section className="py-[60px] md:py-[120px] bg-foreground/[0.03]  text-foreground border-t border-foreground/10 relative overflow-hidden pointer-events-none shadow-xl dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
-        {/* Glow effect */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-primary/10 blur-[80px] md:blur-[120px] pointer-events-none rounded-full"></div>
-        
-        <div className="container mx-auto px-4 max-w-4xl relative z-10 pointer-events-auto">
-          <Card className="bg-foreground/[0.05]  border border-primary/30 rounded-[8px] p-6 sm:p-8 md:p-[60px] text-center shadow-[0_8px_32px_rgba(212,175,55,0.15)] relative overflow-hidden">
-            {/* Inner accent line */}
-            <div className="absolute top-0 left-0 w-full h-[4px] bg-gradient-to-r from-transparent via-primary to-transparent"></div>
-            
-            <h2 className="text-[20px] sm:text-[24px] md:text-[30px] font-heading font-normal mb-[20px] md:mb-[24px] uppercase tracking-[1px] leading-tight text-foreground drop-shadow-md">
-              Recevez notre diagnostic gratuit : <br/>
-              <span className="text-primary italic font-serif leading-snug block mt-4 mb-2">"Le Système NEFERTEM en 7 Jours : contenu, distribution, conversations"</span>
-              <span className="text-sm sm:text-base font-sans tracking-widest opacity-80 block my-2">&</span>
-              <span className="text-primary italic font-serif leading-snug block mt-2">"Pourquoi Votre Présence Stagne (Et Comment La Transformer En Système)"</span>
+      {/* S8 TRUST */}
+      <section className="border-t border-foreground/10 px-4 py-16 md:py-24">
+        <div className="container mx-auto max-w-4xl">
+          <Reveal className="mb-8 text-center">
+            <Eyebrow>En toute confiance</Eyebrow>
+            <h2 className="mt-4 font-heading text-[28px] font-normal uppercase leading-tight tracking-[1px] text-foreground md:text-[40px]">
+              Vous ne prenez aucun risque
             </h2>
-
-            <div className="bg-primary/10 border border-primary/20 rounded-[8px] p-4 my-6 inline-block">
-              <span className="text-primary font-bold uppercase tracking-[1px] text-[13px] block mb-1">🎁 Bonus Inclus</span>
-              <span className="text-foreground text-[14px]">Le plan de vos 7 premiers jours + la grille Essentials / Standard / Business !</span>
+          </Reveal>
+          <Reveal>
+            {/* TODO(owner): valider ce libellé de garantie avant publication. */}
+            <div className="rounded-[12px] border border-primary/30 bg-primary/[0.06] p-6 text-center md:p-10">
+              <ShieldCheck className="mx-auto h-10 w-10 text-primary" aria-hidden="true" />
+              <h3 className="mt-4 font-heading text-[20px] uppercase tracking-[1px] text-foreground">Notre engagement</h3>
+              <p className="mx-auto mt-2 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
+                Premier lot refait gratuitement, une fois, si le style ne vous convient pas.
+              </p>
             </div>
-            
-            <form className="flex flex-col sm:flex-row gap-[16px] max-w-lg mx-auto w-full mb-6 mt-4" onSubmit={(e) => {
-              e.preventDefault();
-              const formData = new FormData(e.currentTarget);
-              const phone = formData.get('whatsapp');
-              if (phone) {
-                window.location.href = `https://wa.me/22605830599?text=Bonjour,%20je%20souhaite%20recevoir%20vos%20guides%20gratuits%20et%20le%20bonus.%20Mon%20numéro%20:%20${phone}`;
-              }
-            }}>
-              <input 
-                type="tel" 
-                name="whatsapp"
-                placeholder="Votre numéro WhatsApp..." 
-                required
-                className="flex-1 w-full bg-card border border-foreground/20 rounded-[4px] px-[24px] py-[16px] text-foreground text-[14px] outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-gray-500 h-[56px]"
-              />
-              <Button type="submit" className="w-full sm:w-auto h-[56px] px-[32px] text-[13px] uppercase font-bold tracking-[1px] bg-primary text-black-deep rounded-[4px] shadow-none hover:bg-gold-accent hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] transition-all shrink-0">
-                → Envoyer
-              </Button>
-            </form>
-            <div className="text-[12px] text-gray-500 flex justify-center gap-4 uppercase tracking-[1px] font-bold mt-8">
-               <span>✓ Envoi immédiat</span>
-               <span>✓ Zéro spam</span>
+          </Reveal>
+          {TESTIMONIALS.length > 0 && (
+            <div className="mt-6 grid gap-4 md:grid-cols-2">
+              {TESTIMONIALS.map((t) => (
+                <figure key={t.author} className="rounded-[12px] border border-foreground/10 bg-foreground/[0.03] p-6">
+                  <blockquote className="text-[14px] italic leading-relaxed text-foreground">« {t.quote} »</blockquote>
+                  <figcaption className="mt-3 text-[12px] font-bold uppercase tracking-[1px] text-primary">— {t.author}</figcaption>
+                </figure>
+              ))}
             </div>
-          </Card>
-        </div>
-      </section>
-
-      {/* SECTION 7: FAQ */}
-      <section id="faq" className="py-[60px] md:py-[120px] bg-card/90 dark:bg-foreground/10  text-foreground border-t border-foreground/10 relative pointer-events-none shadow-xl dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
-        <div className="container mx-auto px-4 max-w-4xl relative z-10 pointer-events-auto">
-          <div className="text-center mb-[40px] md:mb-[60px] flex flex-col items-center">
-            <div className="inline-flex self-center bg-primary/10 border border-primary text-primary px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[24px]">
-              FAQ
+          )}
+          <Reveal className="mt-6">
+            <div className="grid gap-3 sm:grid-cols-3">
+              {[
+                { icon: Lock, text: "Vos conversations restent privées." },
+                { icon: BadgeCheck, text: "Vos comptes et votre marque restent à vous." },
+                { icon: CalendarCheck, text: "Vos contenus créés pour vous sont votre propriété." },
+              ].map((s) => (
+                <div key={s.text} className="flex items-start gap-3 rounded-[8px] border border-foreground/10 bg-foreground/[0.02] p-4">
+                  <s.icon className="h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
+                  <span className="text-[13px] leading-snug text-foreground">{s.text}</span>
+                </div>
+              ))}
             </div>
-            
-            <div className="w-full max-w-md relative mt-4">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
-              <input 
-                type="text" 
-                placeholder="Rechercher une question..."
-                value={faqSearchQuery}
-                onChange={(e) => setFaqSearchQuery(e.target.value)}
-                className="w-full bg-foreground/[0.05]  border border-foreground/20 rounded-[8px] pl-12 pr-4 py-3 text-foreground placeholder:text-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)]"
-              />
-            </div>
-          </div>
-
-          <Accordion className="w-full">
-            {filteredFaqs.length > 0 ? (
-              filteredFaqs.map((faq, i) => (
-                <AccordionItem key={i} value={`item-${i}`} className="border-b border-foreground/10">
-                  <AccordionTrigger className="text-left font-bold text-[14px] uppercase tracking-[1px] py-[24px] hover:text-primary transition-colors hover:no-underline text-foreground">
-                    {faq.q}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground text-[14px] leading-relaxed pb-[24px]">
-                    {faq.a}
-                  </AccordionContent>
-                </AccordionItem>
-              ))
-            ) : (
-              <div className="text-center py-12 text-gray-500">
-                Aucune réponse trouvée pour "{faqSearchQuery}". N'hésitez pas à nous contacter directement.
-              </div>
-            )}
-          </Accordion>
-        </div>
-      </section>
-
-      {/* SECTION 8: CTA TOTAL */}
-      <section className="py-[60px] md:py-[120px] relative overflow-hidden bg-foreground/[0.02]  border-t border-primary/20 pointer-events-none shadow-[0_-8px_32px_rgba(0,0,0,0.5)]">
-        <div className="absolute inset-0 pointer-events-none z-0 opacity-10" 
-             style={{ backgroundImage: 'repeating-linear-gradient(90deg, #d4af37 0px, #d4af37 1px, transparent 1px, transparent 40px), repeating-linear-gradient(0deg, #d4af37 0px, #d4af37 1px, transparent 1px, transparent 40px)' }}>
-        </div>
-        
-        <div className="container relative mx-auto px-4 text-center z-10 flex flex-col items-center pointer-events-auto">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="w-full">
-            <h2 className="text-[24px] sm:text-[40px] md:text-[48px] lg:text-[56px] font-heading font-normal text-foreground mb-[16px] md:mb-[24px] uppercase tracking-[1px] max-w-4xl mx-auto leading-tight break-words">Dès 30 000 FCFA/mois, votre marketing devient un système.</h2>
-            <p className="text-[15px] sm:text-[16px] md:text-[18px] text-muted-foreground max-w-3xl mx-auto mb-[40px] md:mb-[48px] leading-[1.6]">
-              Construisons votre système. <strong className="text-foreground block sm:inline mt-2 sm:mt-0">Diagnostic gratuit sous 24h. Premier lot sous 72h.</strong>
+            <p className="mt-4 text-center text-[13px] text-muted-foreground">
+              <Link to="/securite" className="font-bold text-primary hover:underline">
+                En savoir plus sur la sécurité →
+              </Link>
             </p>
-            
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-[15px] w-full max-w-sm sm:max-w-none mx-auto">
-              <Button onClick={() => window.location.href = '/contact'} className="w-full sm:w-auto px-[24px] sm:px-[32px] py-[16px] h-auto text-[13px] sm:text-[14px] uppercase font-bold tracking-[1px] bg-primary text-black-deep rounded-[2px] hover:bg-gold-accent transition-colors relative overflow-hidden group shadow-[0_0_30px_rgba(212,175,55,0.4)] whitespace-normal min-h-[56px]">
-                <span className="relative z-10 text-center">→ Remplir mon brief</span>
-              </Button>
-              <Button onClick={() => window.location.href = '/contact'} className="w-full sm:w-auto px-[24px] sm:px-[32px] py-[16px] h-auto text-[13px] sm:text-[14px] uppercase font-bold tracking-[1px] border border-foreground text-foreground bg-background/0 rounded-[2px] hover:bg-white hover:text-black-deep transition-colors whitespace-normal min-h-[56px]">
-                → Parler à un conseiller
-              </Button>
-            </div>
-            
-            <div className="mt-[48px] flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-[12px] text-foreground border border-foreground/10 bg-card p-4 sm:px-[24px] sm:py-[12px] rounded-[2px] w-full max-w-sm sm:max-w-max mx-auto">
-              <span className="text-[#25D366] text-xl mb-1 sm:mb-0">📱</span>
-              <span className="font-mono font-bold text-[14px] sm:text-[15px]">+226 05 83 05 99</span>
-              <span className="text-muted-foreground text-[11px] sm:text-[12px] italic sm:ml-[8px] uppercase tracking-[1px] text-center mt-1 sm:mt-0">- Réponse en moins d'1 heure.</span>
-            </div>
-          </motion.div>
+          </Reveal>
         </div>
       </section>
+
+      {/* S9 FAQ */}
+      <section id="faq" className="scroll-mt-[96px] border-t border-foreground/10 bg-card/90 px-4 py-16 dark:bg-foreground/10 md:py-24">
+        <div className="container mx-auto max-w-3xl">
+          <Reveal className="mb-8 text-center">
+            <Eyebrow>Vos questions</Eyebrow>
+            <h2 className="mt-4 font-heading text-[28px] font-normal uppercase leading-tight tracking-[1px] text-foreground md:text-[40px]">
+              On vous dit tout
+            </h2>
+          </Reveal>
+          <FaqSection />
+        </div>
+      </section>
+
+      {/* S10 FINAL CTA */}
+      <section className="relative overflow-hidden border-t border-primary/20 bg-foreground/[0.02] px-4 py-16 md:py-24">
+        <div className="container relative z-10 mx-auto max-w-3xl text-center">
+          <Reveal>
+            <h2 className="font-heading text-[28px] font-normal uppercase leading-tight tracking-[1px] text-foreground md:text-[44px]">
+              Votre marque a des clients à rencontrer. Commençons aujourd'hui.
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-muted-foreground md:text-[17px]">
+              Diagnostic gratuit sous 24 h. Premier lot sous 72 h.
+            </p>
+            <div className="mx-auto mt-8 flex max-w-lg flex-col gap-3">
+              <Link
+                to="/demarrer?src=final"
+                onClick={() => track("cta_click", { location: "final", label: "diagnostic" })}
+                className="inline-flex min-h-[56px] items-center justify-center rounded-[4px] bg-primary px-8 text-[13px] font-bold uppercase tracking-[1px] text-black-deep shadow-[0_0_30px_rgba(212,175,55,0.4)] hover:bg-gold-accent"
+              >
+                → Recevoir mon diagnostic gratuit
+              </Link>
+              <a
+                href="https://wa.me/22605830599?text=Bonjour%20NEFERTEM%2C%20j%27ai%20une%20question."
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => track("whatsapp_opened", { src: "final" })}
+                className="inline-flex min-h-[48px] items-center justify-center text-[13px] font-bold uppercase tracking-[1px] text-primary hover:underline"
+              >
+                Ou écrivez-nous directement
+              </a>
+            </div>
+            <p className="mt-6 font-mono text-[15px] font-bold text-foreground">+226 05 83 05 99</p>
+            <p className="mt-1 text-[11px] uppercase tracking-[1px] text-muted-foreground">Réponse en moins d'1 heure</p>
+          </Reveal>
+        </div>
+      </section>
+
+      <div className="flex justify-center pb-10">
+        <ArrowDown className="h-6 w-6 animate-bounce text-primary/50" aria-hidden="true" />
+      </div>
     </PageTransition>
   );
 }

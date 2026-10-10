@@ -269,9 +269,45 @@
   animation: price-swap 220ms ease-out;
 }
 
+/* Hero phone feed */
+@keyframes feed-scroll {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+
+.feed-scroll {
+  animation: feed-scroll 14s linear infinite;
+}
+
+@keyframes notif-in {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.notif-in {
+  opacity: 0;
+  animation: notif-in 500ms ease-out forwards;
+}
+
+/* Desktop-only slow marquee */
+@keyframes drift {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.drift {
+  animation: drift 30s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .price-swap {
+  .price-swap,
+  .feed-scroll,
+  .notif-in,
+  .drift {
     animation: none;
+  }
+  .notif-in {
+    opacity: 1;
   }
 }
 

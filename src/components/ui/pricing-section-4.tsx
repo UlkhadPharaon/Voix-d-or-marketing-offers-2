@@ -1,8 +1,10 @@
 "use client";
 import { useId, useState } from "react";
-import type { KeyboardEvent } from "react";
+import type { KeyboardEvent as ReactKeyboardEvent } from "react";
+import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { track } from "@/lib/analytics";
 import {
   ChevronDown,
   Info,
@@ -90,8 +92,8 @@ const PLANS: Plan[] = [
         group: "Community",
         text: "Réponses automatiques aux commentaires Facebook (sans limite)",
       },
-      { group: "Pilotage", text: "Calendrier de contenu mensuel" },
-      { group: "Pilotage", text: "Rapport d'activité mensuel" },
+      { group: "Suivi", text: "Calendrier de contenu mensuel" },
+      { group: "Suivi", text: "Rapport d'activité mensuel" },
       { group: "Démarrage", text: "Diagnostic de présence digitale offert" },
     ],
   },
@@ -118,10 +120,10 @@ const PLANS: Plan[] = [
         group: "Community",
         text: "Réponses aux commentaires Instagram + Facebook (sans limite)",
       },
-      { group: "Pilotage", text: "1 nouveau format testé chaque mois" },
-      { group: "Pilotage", text: "Rapport chiffré toutes les 2 semaines", highlight: true },
-      { group: "Pilotage", text: "Ajustements chaque semaine selon vos résultats" },
-      { group: "Pilotage", text: "Rapport clair : quoi garder, quoi arrêter" },
+      { group: "Suivi", text: "1 nouveau format testé chaque mois" },
+      { group: "Suivi", text: "Rapport chiffré toutes les 2 semaines", highlight: true },
+      { group: "Suivi", text: "Ajustements chaque semaine selon vos résultats" },
+      { group: "Suivi", text: "Rapport clair : quoi garder, quoi arrêter" },
     ],
   },
   {
@@ -148,7 +150,7 @@ const PLANS: Plan[] = [
       },
       { group: "Prospection", text: "Prospection & relance de vos prospects", highlight: true },
       { group: "Prospection", text: "Base clients exploitée par campagne" },
-      { group: "Pilotage", text: "Rapport de performance chaque semaine" },
+      { group: "Suivi", text: "Rapport de performance chaque semaine" },
       { group: "Support", text: "Support WhatsApp dédié", highlight: true },
       { group: "Support", text: "Onboarding en 72 h + account manager dédié" },
     ],
@@ -173,11 +175,8 @@ const derived = (plan: Plan) => {
   return { annualMonthly, annualTotal, annualSavings, launchPct };
 };
 
-const waLink = (planName: string, billing: Billing) => {
-  const period = billing === "mensuel" ? "mensuelle" : "annuelle";
-  const message = `Bonjour, je souhaite démarrer avec l'offre ${planName} (facturation ${period})`;
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-};
+const demarrerLink = (planId: string, billing: Billing) =>
+  `/demarrer?plan=${planId}&period=${billing === "mensuel" ? "monthly" : "annual"}&src=pricing`;
 
 function BillingToggle({
   billing,
@@ -193,7 +192,7 @@ function BillingToggle({
   ];
   const activeIndex = options.findIndex((o) => o.value === billing);
 
-  const onKeyDown = (e: KeyboardEvent) => {
+  const onKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>) => {
     let next: number | null = null;
     if (e.key === "ArrowRight" || e.key === "ArrowDown") next = (activeIndex + 1) % options.length;
     if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = (activeIndex - 1 + options.length) % options.length;
@@ -325,10 +324,9 @@ function PlanCard({ plan, billing }: { plan: Plan; billing: Billing }) {
 
       <CardContent className="flex flex-grow flex-col p-8 pt-0 md:p-10 md:pt-0">
         <div className="mt-2 w-full">
-          <a
-            href={waLink(plan.name, billing)}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to={demarrerLink(plan.id, billing)}
+            onClick={() => track("cta_click", { location: "pricing", label: plan.id })}
             className={cn(
               "flex min-h-[56px] w-full items-center justify-center rounded-[4px] px-4 py-[16px] text-center text-[13px] font-bold uppercase tracking-[1px] transition-all duration-300",
               plan.recommended
@@ -337,7 +335,7 @@ function PlanCard({ plan, billing }: { plan: Plan; billing: Billing }) {
             )}
           >
             → Démarrer avec {plan.name}
-          </a>
+          </Link>
         </div>
 
         {/* Agency comparison — collapsed by default */}
@@ -365,7 +363,7 @@ function PlanCard({ plan, billing }: { plan: Plan; billing: Billing }) {
                 ))}
               </ul>
               <p className="mt-2 text-[12px] leading-snug text-muted-foreground">
-                Base : 2 000 FCFA / visuel + frais stratégie, pilotage et distribution en plus.
+                Base : 2 000 FCFA / visuel + frais stratégie, suivi et distribution en plus.
               </p>
               <p className="mt-2 text-[12px] font-bold leading-snug text-foreground tabular-nums">
                 Équivalent agence : {fmtPrice(plan.agencyTotal)} FCFA / mois, vous économisez{" "}
@@ -471,7 +469,13 @@ export default function PricingSection4() {
             <p className="mt-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-bold uppercase tracking-widest text-primary">
               🚀 Premier lot livré sous 72h
             </p>
-            <BillingToggle billing={billing} onChange={setBilling} />
+            <BillingToggle
+              billing={billing}
+              onChange={(b) => {
+                setBilling(b);
+                track("billing_toggle", { period: b });
+              }}
+            />
             <p aria-live="polite" className="sr-only">
               Facturation {billing === "mensuel" ? "mensuelle" : "annuelle"} : {liveSummary} FCFA
               par mois.
