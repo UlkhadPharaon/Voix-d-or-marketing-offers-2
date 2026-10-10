@@ -78,8 +78,7 @@ export const SHOWCASE_ITEMS: ShowcaseItem[] = [
     title: "Parfumerie et Luxe",
     caption: "Ce que nous avons créé : une campagne complète à l'image premium.",
     plan: "Business",
-    // TODO(owner): remplacer par des MP4 auto-hébergés (voir ASSETS.md).
-    youtubeId: "PL2QtNxnnsuX-3SU1j5AotUiZldOi5pU-Q",
+    youtubeId: "xyguAEQNeEg",
   },
 ];
 

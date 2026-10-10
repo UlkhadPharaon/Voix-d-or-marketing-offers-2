@@ -12,6 +12,7 @@ import {
   ShieldCheck,
   Timer,
   Wallet,
+  Zap,
 } from "lucide-react";
 
 /* =====================================================================
@@ -151,8 +152,8 @@ const PLANS: Plan[] = [
       { group: "Prospection", text: "Prospection & relance de vos prospects", highlight: true },
       { group: "Prospection", text: "Base clients exploitée par campagne" },
       { group: "Suivi", text: "Rapport de performance chaque semaine" },
-      { group: "Support", text: "Support WhatsApp dédié", highlight: true },
-      { group: "Support", text: "Onboarding en 72 h + account manager dédié" },
+      { group: "Site web", text: "Site web maintenu et mis à jour", highlight: true },
+      { group: "Support", text: "Onboarding en 72 h" },
     ],
   },
 ];
@@ -467,7 +468,7 @@ export default function PricingSection4() {
           </p>
           <div className="flex flex-col items-center gap-4">
             <p className="mt-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-bold uppercase tracking-widest text-primary">
-              🚀 Premier lot livré sous 72h
+              <Zap className="h-4 w-4" aria-hidden="true" /> Premier lot livré sous 72h
             </p>
             <BillingToggle
               billing={billing}
