@@ -29,11 +29,11 @@ export function NotFound() {
           </div>
           
           <h1 className="text-[40px] md:text-[56px] font-heading font-normal text-foreground mb-[16px] uppercase tracking-[1px] leading-tight">
-            Signal Perdu
+            Revenons à l'essentiel
           </h1>
           
           <p className="text-[16px] text-gray-400 mb-[40px] max-w-sm mx-auto leading-relaxed">
-            La page que vous recherchez semble avoir disparu dans le cyberespace.
+            Cette page n'existe pas. Votre marque, elle, a des clients à rencontrer.
           </p>
 
           <Link to="/">
@@ -42,6 +42,9 @@ export function NotFound() {
               <span className="relative z-10">Retour à l'Accueil</span>
               <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
             </button>
+          </Link>
+          <Link to="/demarrer?src=404" className="mt-4 inline-block min-h-[44px] text-[13px] font-bold uppercase tracking-[2px] text-primary hover:underline">
+            Diagnostic gratuit →
           </Link>
         </motion.div>
       </div>
