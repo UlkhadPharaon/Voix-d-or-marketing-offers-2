@@ -253,6 +253,28 @@
 .loader-letter:nth-child(9) { animation-delay: 0.8s; }
 .loader-letter:nth-child(10) { animation-delay: 0.9s; }
 
+@keyframes price-swap {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.price-swap {
+  display: inline-block;
+  animation: price-swap 220ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .price-swap {
+    animation: none;
+  }
+}
+
 @keyframes loader-letter-anim {
   0%,
   100% {

@@ -1,397 +1,534 @@
 "use client";
+import { useId, useState } from "react";
+import type { KeyboardEvent } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Sparkles } from "@/components/ui/sparkles";
-import { TimelineContent } from "@/components/ui/timeline-animation";
-import { VerticalCutReveal } from "@/components/ui/vertical-cut-reveal";
 import { cn } from "@/lib/utils";
-import NumberFlow from "@number-flow/react";
-import { motion } from "framer-motion";
-import { useRef, useState } from "react";
+import {
+  ChevronDown,
+  Info,
+  RefreshCcw,
+  ShieldCheck,
+  Timer,
+  Wallet,
+} from "lucide-react";
 
-const plans = [
+/* =====================================================================
+   PRICING — single source of truth. No hard-coded prices in markup.
+   ---------------------------------------------------------------------
+   TODO(owner) — à confirmer avant publication :
+   1. Limites réelles : "jusqu'à 50 réponses automatiques / mois"
+      (Essentials) et "jusqu'à 100 / mois" (Standard). Chiffres proposés
+      par défaut, à ajuster dans FEATURES ci-dessous.
+   2. Fréquence de publication Essentials : "3 fois / semaine sur
+      Facebook" — à confirmer (réseaux + rythme exacts).
+   3. Garantie : le libellé "Premier lot refait gratuitement si non
+      satisfait" (TRUST_ITEMS) doit être validé juridiquement.
+   4. Prix de lancement : renseigner LAUNCH_INFO (date de fin OU places
+      restantes) quand la vraie valeur est connue. Tant que c'est null,
+      aucune fausse urgence n'est affichée.
+   5. Témoignage : renseigner TESTIMONIAL pour afficher la citation.
+   ===================================================================== */
+
+const WHATSAPP_NUMBER = "22605830599";
+const ANNUAL_DISCOUNT = 0.15;
+const KEY_FEATURE_COUNT = 6;
+
+/** Launch urgency — leave null until a REAL value exists. */
+const LAUNCH_INFO: { endsOn: string } | { spotsLeft: number } | null = null;
+/** Client testimonial slot — hidden until content is provided. */
+const TESTIMONIAL: { quote: string; author: string } | null = null;
+
+const nf = new Intl.NumberFormat("fr-FR");
+/** fr-FR grouping with a non-breaking space (U+00A0) as separator. */
+const fmtPrice = (n: number): string =>
+  nf.format(n).replace(/[  ]/g, " ");
+
+type Feature = {
+  group: string;
+  text: string;
+  /** Bold differentiator vs the previous tier. */
+  highlight?: boolean;
+  /** Small info note with tooltip (Budget média, Business only). */
+  info?: string;
+};
+
+type Plan = {
+  id: string;
+  name: string;
+  tier: string;
+  outcome: string;
+  idealFor: string;
+  normal: number;
+  launch: number;
+  agencyTotal: number;
+  agencyLines: string[];
+  features: Feature[];
+  recommended?: boolean;
+};
+
+const PLANS: Plan[] = [
   {
+    id: "essentials",
     name: "Essentials",
     tier: "Lancement",
-    description: "Votre présence reste visible et active pendant que vous vous concentrez sur le business.",
-    price: 30000,
-    promoPrice: 30000,
-    yearlyPrice: 30000,
-    buttonText: "Choisir Essentials",
-    buttonVariant: "outline" as const,
-    idealFor: "Idéal : Boutiques, Restaurants, Commerces locaux",
-    traditionalPrice: 250000,
-    traditionalDetails: [
+    outcome: "Restez visible chaque semaine, sans y penser.",
+    idealFor: "Idéal : boutiques, restaurants, commerces locaux",
+    normal: 50000,
+    launch: 30000,
+    agencyTotal: 250000,
+    agencyLines: [
       "90 visuels × 2 000 FCFA = 180 000 FCFA",
       "Stratégie + calendrier + publication + reporting = 70 000 FCFA",
     ],
-    savingsLabel: "Vous économisez 220 000 FCFA (-88%)",
-    includes: [
-      "90+ visuels commerciaux / mois",
-      "Publication & organisation selon scope",
-      "Réponses automatiques aux commentaires Facebook (limitées)",
-      "Calendrier de contenu mensuel",
-      "Rapport d'activité mensuel",
-      "Diagnostic de présence digitale",
-      "1 révision par lot de contenu"
+    features: [
+      { group: "Contenu", text: "90+ visuels commerciaux / mois", highlight: true },
+      { group: "Contenu", text: "1 révision par lot de contenu" },
+      { group: "Distribution", text: "Publication Facebook, 3 fois / semaine" },
+      {
+        group: "Community",
+        text: "Réponses automatiques aux commentaires Facebook — jusqu'à 50 / mois",
+      },
+      { group: "Pilotage", text: "Calendrier de contenu mensuel" },
+      { group: "Pilotage", text: "Rapport d'activité mensuel" },
+      { group: "Démarrage", text: "Diagnostic de présence digitale offert" },
     ],
   },
   {
+    id: "standard",
     name: "Standard",
-    tier: "Recommandé",
-    description: "Essentials + la puissance vidéo pour tester les formats qui convertissent.",
-    price: 60000,
-    promoPrice: 60000,
-    yearlyPrice: 60000,
-    buttonText: "Choisir Standard",
-    buttonVariant: "default" as const,
-    popular: true,
-    idealFor: "Idéal : Food, Beauty & Fashion, Éducation",
-    traditionalPrice: 490000,
-    traditionalDetails: [
+    tier: "Croissance",
+    outcome: "Ajoutez la vidéo pour trouver les formats qui vendent.",
+    idealFor: "Idéal : food, beauté, mode, éducation",
+    normal: 90000,
+    launch: 60000,
+    agencyTotal: 490000,
+    agencyLines: [
       "90 visuels × 2 000 FCFA = 180 000 FCFA",
-      "12 vidéos 15s × 15 000 FCFA = 180 000 FCFA",
+      "12 vidéos 15 s × 15 000 FCFA = 180 000 FCFA",
       "Stratégie + community + analyse + reporting = 130 000 FCFA",
     ],
-    savingsLabel: "Vous économisez 430 000 FCFA (-88%)",
-    includes: [
-      "Tout Essentials inclus",
-      "Jusqu'à 3 vidéos / semaine (15s max)",
-      "Distribution FB, IG, TikTok",
-      "Community management de base (commentaires Instagram et Facebook)",
-      "Test de formats vidéo mensuel",
-      "Analyse concurrentielle mensuelle",
-      "Rapport bimensuel chiffré",
-      "Optimisation continue",
-      "Journal des apprentissages"
+    recommended: true,
+    features: [
+      { group: "Inclus", text: "Tout Essentials inclus", highlight: true },
+      { group: "Vidéo", text: "12 vidéos 15 s / mois (3 / semaine)", highlight: true },
+      { group: "Distribution", text: "Publication Facebook, Instagram, TikTok" },
+      {
+        group: "Community",
+        text: "Réponses aux commentaires Instagram + Facebook — jusqu'à 100 / mois",
+      },
+      { group: "Pilotage", text: "1 nouveau format testé chaque mois" },
+      { group: "Pilotage", text: "Rapport chiffré toutes les 2 semaines", highlight: true },
+      { group: "Pilotage", text: "Ajustements chaque semaine selon vos résultats" },
+      { group: "Pilotage", text: "Rapport clair : quoi garder, quoi arrêter" },
     ],
   },
   {
+    id: "business",
     name: "Business",
     tier: "Performance",
-    description: "Le système complet pour les entreprises prêtes à accélérer avec la publicité.",
-    price: 90000,
-    promoPrice: 90000,
-    yearlyPrice: 90000,
-    buttonText: "Choisir Business",
-    buttonVariant: "outline" as const,
-    idealFor: "Idéal : Cliniques, Écoles, Hôtels, Promoteurs",
-    traditionalPrice: 900000,
-    traditionalDetails: [
+    outcome: "Le système complet pour accélérer avec la publicité.",
+    idealFor: "Idéal : cliniques, écoles, hôtels, promoteurs",
+    normal: 120000,
+    launch: 90000,
+    agencyTotal: 900000,
+    agencyLines: [
       "90 visuels × 2 000 FCFA = 180 000 FCFA",
-      "20 vidéos 45s × 25 000 FCFA = 500 000 FCFA",
+      "20 vidéos 45 s × 25 000 FCFA = 500 000 FCFA",
       "Gestion ads + landing + reporting hebdo + manager = 220 000 FCFA",
     ],
-    savingsLabel: "Vous économisez 810 000 FCFA (-90%)",
-    includes: [
-      "Tout Standard inclus",
-      "Jusqu'à 5 vidéos / semaine (45s max)",
-      "Gestion ads selon scope (budget média séparé)",
-      "Prospection & relance prospects",
-      "Base de données clients & qualification",
-      "Landing page maintenue",
-      "Analyse concurrentielle mensuelle",
-      "Rapport hebdo de performance",
-      "Stratégie & plan à 7 jours",
-      "Onboarding 72h garanti",
-      "Support WhatsApp dédié",
-      "Account manager dédié"
+    features: [
+      { group: "Inclus", text: "Tout Standard inclus", highlight: true },
+      { group: "Vidéo", text: "20 vidéos 45 s / mois (5 / semaine)", highlight: true },
+      {
+        group: "Publicité",
+        text: "Gestion de vos publicités",
+        info: "Budget média séparé des honoraires : la somme versée à Meta, TikTok ou Google est en plus, estimée selon vos objectifs.",
+      },
+      { group: "Prospection", text: "Prospection & relance de vos prospects", highlight: true },
+      { group: "Prospection", text: "Base clients exploitée par campagne" },
+      { group: "Pilotage", text: "Rapport de performance chaque semaine" },
+      { group: "Support", text: "Support WhatsApp dédié", highlight: true },
+      { group: "Support", text: "Onboarding en 72 h + account manager dédié" },
     ],
   },
 ];
 
-const PricingSwitch = ({ onSwitch }: { onSwitch: (value: string) => void }) => {
-  const [selected, setSelected] = useState("0");
+const TRUST_ITEMS = [
+  { icon: ShieldCheck, text: "Sans engagement, résiliable à tout moment" },
+  // TODO(owner) : valider le libellé de garantie avant publication.
+  { icon: RefreshCcw, text: "Premier lot refait gratuitement si non satisfait" },
+  { icon: Wallet, text: "Paiement : Orange Money, Moov Money, Wave, virement" },
+  { icon: Timer, text: "Onboarding en 72 h" },
+];
 
-  const handleSwitch = (value: string) => {
-    setSelected(value);
-    onSwitch(value);
+type Billing = "mensuel" | "annuel";
+
+const derived = (plan: Plan) => {
+  const annualMonthly = Math.round(plan.launch * (1 - ANNUAL_DISCOUNT));
+  const annualTotal = annualMonthly * 12;
+  const annualSavings = plan.launch * 12 - annualTotal;
+  const launchPct = Math.round((1 - plan.launch / plan.normal) * 100);
+  return { annualMonthly, annualTotal, annualSavings, launchPct };
+};
+
+const waLink = (planName: string, billing: Billing) => {
+  const period = billing === "mensuel" ? "mensuelle" : "annuelle";
+  const message = `Bonjour, je souhaite démarrer avec l'offre ${planName} (facturation ${period})`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+};
+
+function BillingToggle({
+  billing,
+  onChange,
+}: {
+  billing: Billing;
+  onChange: (b: Billing) => void;
+}) {
+  const groupId = useId();
+  const options: { value: Billing; label: string }[] = [
+    { value: "mensuel", label: "Mensuel" },
+    { value: "annuel", label: "Annuel" },
+  ];
+  const activeIndex = options.findIndex((o) => o.value === billing);
+
+  const onKeyDown = (e: KeyboardEvent) => {
+    let next: number | null = null;
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") next = (activeIndex + 1) % options.length;
+    if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = (activeIndex - 1 + options.length) % options.length;
+    if (e.key === "Home") next = 0;
+    if (e.key === "End") next = options.length - 1;
+    if (next !== null) {
+      e.preventDefault();
+      onChange(options[next].value);
+      document.getElementById(`${groupId}-${options[next].value}`)?.focus();
+    }
   };
 
   return (
     <div className="flex justify-center mt-6">
-      <div className="relative z-10 mx-auto flex w-fit rounded-[4px] bg-card/90 dark:bg-foreground/10  border border-foreground/10 p-1">
-        <button
-          onClick={() => handleSwitch("0")}
-          className={cn(
-            "relative z-10 w-fit h-10 rounded-[2px] sm:px-6 px-3 sm:py-2 py-1 uppercase tracking-[1px] text-[12px] font-bold transition-colors",
-            selected === "0" ? "text-black-deep" : "text-gray-400 hover:text-foreground"
-          )}
-        >
-          {selected === "0" && (
-            <motion.span
-              layoutId={"switch"}
-              className="absolute top-0 left-0 h-10 w-full rounded-[2px] bg-primary"
-              transition={{ type: "spring", stiffness: 500, damping: 30 }}
-            />
-          )}
-          <span className="relative">Mensuel</span>
-        </button>
-
-        <button
-          onClick={() => handleSwitch("1")}
-          className={cn(
-            "relative z-10 w-fit h-10 flex-shrink-0 rounded-[2px] sm:px-6 px-3 sm:py-2 py-1 uppercase tracking-[1px] text-[12px] font-bold transition-colors",
-            selected === "1" ? "text-black-deep" : "text-gray-400 hover:text-foreground"
-          )}
-        >
-          {selected === "1" && (
-            <motion.span
-              layoutId={"switch"}
-              className="absolute top-0 left-0 h-10 w-full rounded-[2px] bg-primary"
-              transition={{ type: "spring", stiffness: 500, damping: 30 }}
-            />
-          )}
-          <span className="relative flex items-center gap-2">
-            Annuel <span className="-mt-2 text-[10px] bg-white text-black-deep px-1 rounded-sm">-15%</span>
-          </span>
-        </button>
+      <div
+        role="radiogroup"
+        aria-label="Période de facturation"
+        onKeyDown={onKeyDown}
+        className="relative z-10 mx-auto flex w-fit rounded-[4px] bg-card border border-foreground/10 p-1"
+      >
+        {options.map((o) => {
+          const active = billing === o.value;
+          return (
+            <button
+              key={o.value}
+              id={`${groupId}-${o.value}`}
+              role="radio"
+              aria-checked={active}
+              onClick={() => onChange(o.value)}
+              className={cn(
+                "min-h-[44px] rounded-[2px] px-6 py-2 text-[12px] font-bold uppercase tracking-[1px] transition-colors",
+                active ? "bg-primary text-black-deep" : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <span className="flex items-center gap-2">
+                {o.label}
+                {o.value === "annuel" && (
+                  <span
+                    className={cn(
+                      "rounded-sm px-1.5 py-0.5 text-[10px]",
+                      active ? "bg-black-deep/15 text-black-deep" : "bg-primary/15 text-primary"
+                    )}
+                  >
+                    -15%
+                  </span>
+                )}
+              </span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
-};
+}
 
-export default function PricingSection4() {
-  const [isYearly, setIsYearly] = useState(false);
-  const pricingRef = useRef<HTMLDivElement>(null);
+function PlanCard({ plan, billing }: { plan: Plan; billing: Billing }) {
+  const [agencyOpen, setAgencyOpen] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const agencyId = useId();
+  const featuresId = useId();
+  const d = derived(plan);
+  const annual = billing === "annuel";
 
-  const revealVariants = {
-    visible: (i: number) => ({
-      y: 0,
-      opacity: 1,
-      filter: "blur(0px)",
-      transition: {
-        delay: i * 0.2,
-        duration: 0.5,
-      },
-    }),
-    hidden: {
-      filter: "blur(10px)",
-      y: -20,
-      opacity: 0,
-    },
-  };
-
-  const togglePricingPeriod = (value: string) =>
-    setIsYearly(Number.parseInt(value) === 1);
+  const shown = annual ? d.annualMonthly : plan.launch;
+  const crossed = annual ? plan.launch : plan.normal;
+  const agencySavings = plan.agencyTotal - shown;
+  const keyFeatures = plan.features.slice(0, KEY_FEATURE_COUNT);
+  const extraFeatures = plan.features.slice(KEY_FEATURE_COUNT);
 
   return (
-    <div
-      className="w-full relative bg-background/0 overflow-hidden pb-20"
-      ref={pricingRef}
+    <Card
+      className={cn(
+        "flex h-full w-full flex-col rounded-[8px] border transition-all duration-300",
+        plan.recommended
+          ? "border-primary bg-foreground/[0.05] shadow-[0_0_50px_rgba(212,175,55,0.15)] lg:-translate-y-3"
+          : "border-foreground/10 bg-foreground/[0.02] hover:border-foreground/20",
+        plan.recommended && "order-first lg:order-none"
+      )}
     >
-      <TimelineContent
-        animationNum={4}
-        timelineRef={pricingRef}
-        customVariants={revealVariants}
-        className="absolute top-0 h-full w-full overflow-hidden opacity-20 pointer-events-none"
-        style={{ WebkitMaskImage: 'radial-gradient(100% 100% at 50% 0%, white, transparent)' }}
-      >
-        <div className="absolute inset-x-0 top-0 h-full bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:40px_40px]"></div>
-        <Sparkles
-          density={800}
-          direction="top"
-          speed={0.5}
-          color="#28C2D3"
-          className="absolute inset-x-0 top-0 h-full w-full"
-          style={{ WebkitMaskImage: 'radial-gradient(100% 100% at 50% 0%, white, transparent 80%)' }}
-        />
-      </TimelineContent>
+      {plan.recommended && (
+        <div className="flex justify-center pt-5">
+          <span className="rounded-full bg-primary px-4 py-1 text-[11px] font-bold uppercase tracking-[1px] text-black-deep">
+            Meilleur rapport
+          </span>
+        </div>
+      )}
 
-      <div className="relative z-50 container mx-auto px-4 max-w-[1200px]">
-        <article className="text-center mb-16 pt-24 max-w-3xl mx-auto space-y-4">
-          <h2 className="text-[28px] sm:text-[40px] lg:text-[48px] font-heading font-normal uppercase tracking-[1px] text-foreground leading-tight">
-            <VerticalCutReveal
-              splitBy="words"
-              staggerDuration={0.1}
-              staggerFrom="first"
-              reverse={true}
-              containerClassName="justify-center"
-              transition={{
-                type: "spring",
-                stiffness: 250,
-                damping: 40,
-              }}
+      <CardHeader className="p-8 text-left md:p-10 md:pb-0">
+        <span className="mb-2 block font-heading text-[16px] uppercase tracking-[1px] text-muted-foreground">
+          {plan.tier}
+        </span>
+        <h3 className="font-heading text-[20px] uppercase leading-tight tracking-[1px] text-foreground md:text-[24px]">
+          {plan.name}
+        </h3>
+        <p className="mt-2 min-h-[44px] text-[13px] leading-relaxed text-muted-foreground">
+          {plan.outcome}
+        </p>
+        <p className="mt-1 text-[11px] font-bold uppercase tracking-[1px] text-muted-foreground">
+          {plan.idealFor}
+        </p>
+
+        {/* Price block — fixed heights so the toggle never shifts layout */}
+        <div className="mt-5 min-h-[176px]" aria-live="off">
+          <p className="min-h-[24px] text-[16px] font-medium text-muted-foreground line-through tabular-nums">
+            {fmtPrice(crossed)} FCFA
+          </p>
+          <p className="mt-1 flex items-end gap-2">
+            <span
+              key={shown}
+              className="price-swap text-[36px] font-bold leading-none text-foreground tabular-nums md:text-[44px]"
             >
-              Des offres claires.
-Pas de surprise.
-            </VerticalCutReveal>
-          </h2>
+              {fmtPrice(shown)}
+            </span>
+            <span className="mb-1 text-[13px] font-normal uppercase tracking-wide text-muted-foreground">
+              FCFA / mois
+            </span>
+          </p>
+          <p className="mt-3">
+            <span className="inline-block cursor-default rounded-[4px] border border-primary/40 bg-primary/10 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-primary">
+              Prix de lancement -{d.launchPct}%
+            </span>
+          </p>
+          <p className="mt-2 min-h-[40px] text-[12px] leading-snug text-muted-foreground">
+            {annual &&
+              `Facturé ${fmtPrice(d.annualTotal)} FCFA/an · vous économisez ${fmtPrice(d.annualSavings)} FCFA`}
+          </p>
+        </div>
+      </CardHeader>
 
-          <TimelineContent
-            as="p"
-            animationNum={0}
-            timelineRef={pricingRef}
-            customVariants={revealVariants}
-            className="text-muted-foreground text-[15px]"
+      <CardContent className="flex flex-grow flex-col p-8 pt-0 md:p-10 md:pt-0">
+        <div className="mt-2 w-full">
+          <a
+            href={waLink(plan.name, billing)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              "flex min-h-[56px] w-full items-center justify-center rounded-[4px] px-4 py-[16px] text-center text-[13px] font-bold uppercase tracking-[1px] transition-all duration-300",
+              plan.recommended
+                ? "bg-primary text-black-deep hover:bg-gold-accent hover:shadow-[0_0_20px_rgba(212,175,55,0.4)]"
+                : "border border-primary/60 text-primary hover:bg-primary hover:text-black-deep"
+            )}
           >
-            Que vous vouliez prouver le système ou confier toute votre croissance, il y a un plan conçu pour votre étape.
-          </TimelineContent>
+            → Démarrer avec {plan.name}
+          </a>
+        </div>
 
-          <TimelineContent
-            as="div"
-            animationNum={1}
-            timelineRef={pricingRef}
-            customVariants={revealVariants}
-            className="flex flex-col items-center gap-4"
+        {/* Agency comparison — collapsed by default */}
+        <div className="mt-4 rounded-[8px] border border-foreground/10 bg-foreground/[0.03] p-4">
+          <button
+            type="button"
+            aria-expanded={agencyOpen}
+            aria-controls={agencyId}
+            onClick={() => setAgencyOpen((v) => !v)}
+            className="flex min-h-[44px] w-full items-center justify-between gap-2 text-left text-[12px] font-bold uppercase tracking-[1px] text-muted-foreground hover:text-foreground"
           >
-            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary px-4 py-2 rounded-full text-sm font-bold uppercase tracking-widest mt-4">
-              🚀 Premier lot livré sous 72h
+            Voir l'équivalent agence
+            <ChevronDown
+              className={cn("h-4 w-4 shrink-0 transition-transform", agencyOpen && "rotate-180")}
+              aria-hidden="true"
+            />
+          </button>
+          {agencyOpen && (
+            <div id={agencyId} className="mt-2">
+              <ul className="space-y-1">
+                {plan.agencyLines.map((line) => (
+                  <li key={line} className="text-[12px] leading-snug text-muted-foreground tabular-nums">
+                    • {line}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-2 text-[12px] leading-snug text-muted-foreground">
+                Base : 2 000 FCFA / visuel + frais stratégie, pilotage et distribution en plus.
+              </p>
+              <p className="mt-2 text-[12px] font-bold leading-snug text-foreground tabular-nums">
+                Équivalent agence : {fmtPrice(plan.agencyTotal)} FCFA / mois, vous économisez{" "}
+                {fmtPrice(agencySavings)} FCFA
+              </p>
             </div>
-            <PricingSwitch onSwitch={togglePricingPeriod} />
-          </TimelineContent>
+          )}
+        </div>
+
+        <div className="my-6 h-px bg-foreground/10" />
+
+        {/* Features — 6 key items, rest behind an expander */}
+        <p className="mb-3 text-[11px] font-bold uppercase tracking-[2px] text-muted-foreground">
+          Ce que vous gagnez
+        </p>
+        <ul id={featuresId} className="flex-grow space-y-3">
+          {keyFeatures.map((f) => (
+            <li key={f.text} className="flex items-start gap-3">
+              <span className="mt-[2px] shrink-0 text-primary" aria-hidden="true">
+                ✓
+              </span>
+              <span className="text-[13px] text-foreground">
+                <span className="mb-0.5 block text-[10px] font-bold uppercase tracking-[1px] text-muted-foreground">
+                  {f.group}
+                </span>
+                <span className={cn(f.highlight && "font-bold")}>
+                  {f.text}
+                  {f.info && (
+                    <span
+                      className="ml-1 inline-flex items-center gap-1 align-middle text-[11px] font-normal text-muted-foreground"
+                      title={f.info}
+                    >
+                      <Info className="h-3.5 w-3.5" aria-hidden="true" />
+                      <span className="sr-only">{f.info}</span>
+                      <span aria-hidden="true">(budget pub en plus)</span>
+                    </span>
+                  )}
+                </span>
+              </span>
+            </li>
+          ))}
+          {expanded &&
+            extraFeatures.map((f) => (
+              <li key={f.text} className="flex items-start gap-3">
+                <span className="mt-[2px] shrink-0 text-primary" aria-hidden="true">
+                  ✓
+                </span>
+                <span className="text-[13px] text-foreground">
+                  <span className="mb-0.5 block text-[10px] font-bold uppercase tracking-[1px] text-muted-foreground">
+                    {f.group}
+                  </span>
+                  <span className={cn(f.highlight && "font-bold")}>{f.text}</span>
+                </span>
+              </li>
+            ))}
+        </ul>
+        {extraFeatures.length > 0 && (
+          <button
+            type="button"
+            aria-expanded={expanded}
+            aria-controls={featuresId}
+            onClick={() => setExpanded((v) => !v)}
+            className="mt-4 flex min-h-[44px] items-center gap-2 text-[12px] font-bold uppercase tracking-[1px] text-primary hover:underline"
+          >
+            <span>
+              {expanded ? "Masquer les détails" : "Voir toutes les fonctionnalités"}
+            </span>
+            <ChevronDown
+              className={cn("h-4 w-4 transition-transform", expanded && "rotate-180")}
+              aria-hidden="true"
+            />
+          </button>
+        )}
+
+        <div className="mt-8 w-full pt-4" />
+      </CardContent>
+    </Card>
+  );
+}
+
+export default function PricingSection4() {
+  const [billing, setBilling] = useState<Billing>("mensuel");
+
+  const liveSummary = PLANS.map((p) => {
+    const d = derived(p);
+    return `${p.name} ${fmtPrice(billing === "annuel" ? d.annualMonthly : p.launch)}`;
+  }).join(", ");
+
+  return (
+    <div className="relative w-full overflow-hidden bg-background/0 pb-20">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-full bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:40px_40px] opacity-60 [mask-image:radial-gradient(100%_100%_at_50%_0%,white,transparent)]" />
+
+      <div className="container relative z-10 mx-auto max-w-[1200px] px-4">
+        <article className="mx-auto mb-12 max-w-3xl space-y-4 pt-24 text-center">
+          <h2 className="font-heading text-[28px] font-normal uppercase leading-tight tracking-[1px] text-foreground sm:text-[40px] lg:text-[48px]">
+            Des offres claires. Pas de surprise.
+          </h2>
+          <p className="text-[15px] text-muted-foreground">
+            Que vous vouliez prouver le système ou confier toute votre croissance, il y a un plan
+            conçu pour votre étape.
+          </p>
+          <div className="flex flex-col items-center gap-4">
+            <p className="mt-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-bold uppercase tracking-widest text-primary">
+              🚀 Premier lot livré sous 72h
+            </p>
+            <BillingToggle billing={billing} onChange={setBilling} />
+            <p aria-live="polite" className="sr-only">
+              Facturation {billing === "mensuel" ? "mensuelle" : "annuelle"} : {liveSummary} FCFA
+              par mois.
+            </p>
+            {LAUNCH_INFO !== null && (
+              <p className="text-[13px] font-bold uppercase tracking-[1px] text-primary">
+                {"endsOn" in LAUNCH_INFO
+                  ? `Prix de lancement jusqu'au ${LAUNCH_INFO.endsOn}`
+                  : `${LAUNCH_INFO.spotsLeft} places restantes au prix de lancement`}
+              </p>
+            )}
+          </div>
         </article>
 
-        <div className="grid lg:grid-cols-3 max-w-6xl gap-6 mx-auto relative z-20">
-          {plans.map((plan, index) => (
-            <TimelineContent
-              key={plan.name}
-              as="div"
-              animationNum={2 + index}
-              timelineRef={pricingRef}
-              customVariants={revealVariants}
-              className={`flex h-full ${plan.popular ? 'lg:-mt-4 lg:mb-4 relative z-30' : 'relative z-10'}`}
-            >
-              <Card
-                className={cn("w-full border rounded-[8px] flex flex-col justify-between transition-all duration-300", 
-                  plan.popular 
-                  ? "bg-foreground/[0.05]  border-primary shadow-[0_0_50px_rgba(212,175,55,0.15)] overflow-hidden" 
-                  : "bg-foreground/[0.02]  border-foreground/10 hover:border-foreground/20"
-                )}
-              >
-                {plan.popular && (
-                  <>
-                    <div className="absolute top-[20px] right-[20px] bg-primary text-black-deep text-[11px] font-bold py-[4px] px-[12px] uppercase tracking-[1px] rounded-full z-20">
-                      ⭐ Le Plus Populaire
-                    </div>
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[200%] h-[200px] bg-primary/10 blur-[80px] pointer-events-none rounded-t-full"></div>
-                  </>
-                )}
-                
-                <CardHeader className="text-left p-[32px] md:p-[40px] relative z-10">
-                  <div className="mb-2">
-                    <span className={cn("font-heading text-[16px] uppercase tracking-[1px] mb-2 block", plan.popular ? "text-primary" : "text-gray-400")}>{plan.tier}</span>
-                    <h3 className="text-[20px] md:text-[24px] uppercase tracking-[1px] text-foreground font-heading leading-tight">{plan.name}</h3>
-                  </div>
-                  <p className="text-[13px] text-muted-foreground min-h-[48px] mt-2 leading-relaxed">{plan.description}</p>
-                  
-                  <div className="flex flex-col items-start mt-6 min-h-[80px]">
-                    {!isYearly && plan.promoPrice && (
-                      <span className="text-gray-500 line-through text-[16px] font-medium mb-1">
-                        {plan.price.toLocaleString('fr-FR')} FCFA
-                      </span>
-                    )}
-                    <div className="flex items-end gap-2">
-                      <span className={cn(
-                        "text-[36px] md:text-[44px] font-bold flex items-end leading-none transition-colors",
-                        !isYearly && plan.promoPrice ? "text-primary" : "text-foreground"
-                      )}>
-                        <NumberFlow
-                          format={{ useGrouping: true }}
-                          value={isYearly ? plan.yearlyPrice : (plan.promoPrice || plan.price)}
-                          className="text-[36px] md:text-[44px] font-bold leading-none"
-                        />
-                      </span>
-                      <span className="text-[13px] font-normal text-gray-500 mb-2 uppercase tracking-wide">
-                        FCFA/mo
-                      </span>
-                    </div>
-                    {!isYearly && plan.promoPrice && (
-                      <span className="bg-primary border border-primary/80 text-background px-3 py-1.5 rounded-[4px] text-[11px] uppercase font-bold tracking-wider mt-3 shadow-sm inline-block">
-                        Prix de lancement
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Comparatif voie classique */}
-                  <div className={cn("mt-5 w-full rounded-[8px] border p-4 text-left",
-                    plan.popular ? "border-primary/30 bg-primary/[0.07]" : "border-foreground/10 bg-foreground/[0.03]"
-                  )}>
-                    <p className="text-[10px] uppercase tracking-[2px] font-bold text-gray-400 mb-1">
-                      Voie classique — agence / graphiste
-                    </p>
-                    <p className="text-[15px] font-bold text-gray-400 line-through leading-tight">
-                      {plan.traditionalPrice.toLocaleString('fr-FR')} FCFA / mois
-                    </p>
-                    <ul className="mt-2 space-y-1">
-                      {plan.traditionalDetails.map((line, i) => (
-                        <li key={i} className="text-[11px] leading-snug text-muted-foreground">• {line}</li>
-                      ))}
-                    </ul>
-                    <p className="mt-2 text-[11px] text-muted-foreground leading-snug">
-                      Base : 2 000 FCFA / visuel + frais stratégie, pilotage et distribution en plus.
-                    </p>
-                    <span className="mt-3 inline-block bg-green-500/15 border border-green-500/30 text-green-400 px-3 py-1.5 rounded-[4px] text-[11px] uppercase font-bold tracking-wider">
-                      {plan.savingsLabel}
-                    </span>
-                  </div>
-                </CardHeader>
-
-                <CardContent className="p-[32px] md:p-[40px] pt-0 relative z-10 flex flex-col flex-grow">
-                  <div className={cn("h-px my-6", plan.popular ? "bg-gradient-to-r from-transparent via-primary/30 to-transparent" : "bg-foreground/10")}></div>
-
-                  <div className="space-y-4 flex-grow">
-                    <p className="text-[11px] uppercase tracking-[2px] font-bold text-gray-400">Ce que vous gagnez :</p>
-                    <ul className="space-y-3">
-                      {plan.includes.map((feature, featureIndex) => (
-                        <li
-                          key={featureIndex}
-                          className="flex items-start gap-3"
-                        >
-                          <span className="text-primary mt-[2px] shrink-0">✓</span>
-                          <span className={cn("text-[13px]", plan.popular ? "text-foreground font-bold" : "text-gray-300")}>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="mt-8 pt-4 w-full">
-                    <span className="text-[10px] uppercase text-gray-500 font-bold block mb-4 text-center tracking-wider">{plan.idealFor}</span>
-                    <button
-                      onClick={() => window.location.href = `/contact?offer=${plan.name.toLowerCase()}`}
-                      className={cn("w-full py-[16px] text-center text-[13px] uppercase font-bold tracking-[1px] rounded-[4px] transition-all duration-300",
-                        plan.buttonVariant === "default"
-                          ? "bg-primary text-black-deep hover:bg-gold-accent hover:shadow-[0_0_20px_rgba(212,175,55,0.4)]"
-                          : "border border-foreground/20 text-foreground hover:bg-white hover:text-black-deep bg-background/0"
-                      )}
-                    >
-                      → {plan.buttonText}
-                    </button>
-                    <p className="text-center text-[11px] text-muted-foreground mt-3 leading-snug">
-                      <span className="text-primary font-bold uppercase tracking-wider">ⓘ Honoraires uniquement.</span><br />
-                      Budget pub Meta / TikTok / Google en plus — estimé selon vos objectifs, payé aux plateformes, pas à nous.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </TimelineContent>
-            ))}
-          </div>
-
-          {/* Budget média expliqué */}
-          <div className="max-w-6xl mx-auto mt-10 relative z-20">
-            <div className="rounded-[12px] border border-primary/25 bg-primary/[0.05] p-6 md:p-8">
-              <p className="text-[11px] uppercase tracking-[2px] font-bold text-primary mb-2">Budget média, c'est quoi ?</p>
-              <h3 className="text-[18px] md:text-[22px] font-heading uppercase tracking-[1px] text-foreground leading-tight">
-                Nos tarifs = nos honoraires. Le budget pub est à part.
-              </h3>
-              <div className="grid md:grid-cols-3 gap-4 mt-5 text-left">
-                <div className="rounded-[8px] border border-foreground/10 bg-background/40 p-4">
-                  <p className="text-[12px] font-bold uppercase tracking-[1px] text-foreground mb-1">1. Honoraires NEFERTEM</p>
-                  <p className="text-[12px] text-muted-foreground leading-relaxed">30 000 / 60 000 / 90 000 FCFA selon l'offre. C'est la stratégie, la création, la publication, le community et le pilotage.</p>
-                </div>
-                <div className="rounded-[8px] border border-foreground/10 bg-background/40 p-4">
-                  <p className="text-[12px] font-bold uppercase tracking-[1px] text-foreground mb-1">2. Budget pub plateformes</p>
-                  <p className="text-[12px] text-muted-foreground leading-relaxed">Somme versée à Meta, TikTok ou Google pour diffuser vos pubs. Elle ne nous est pas versée et varie selon vos objectifs.</p>
-                </div>
-                <div className="rounded-[8px] border border-foreground/10 bg-background/40 p-4">
-                  <p className="text-[12px] font-bold uppercase tracking-[1px] text-foreground mb-1">3. Estimé sur mesure</p>
-                  <p className="text-[12px] text-muted-foreground leading-relaxed">Après le diagnostic gratuit, on estime votre budget pub selon vos objectifs, votre zone et vos besoins. Démarrage petit, on augmente ce qui marche.</p>
-                </div>
-              </div>
-              <p className="text-[11px] text-muted-foreground mt-4 leading-snug">Exemple : une boutique qui veut juste être visible peut démarrer sans pub. Une clinique qui veut des rendez-vous prévoit un budget pub mensuel dédié, ajusté à chaque stratégie.</p>
-            </div>
-          </div>
+        <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-3">
+          {PLANS.map((plan) => (
+            <PlanCard key={plan.id} plan={plan} billing={billing} />
+          ))}
         </div>
+
+        {/* Trust row */}
+        <div className="mx-auto mt-12 grid max-w-6xl gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {TRUST_ITEMS.map((t) => (
+            <div
+              key={t.text}
+              className="flex items-center gap-3 rounded-[8px] border border-foreground/10 bg-foreground/[0.03] px-4 py-3"
+            >
+              <t.icon className="h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
+              <span className="text-[12px] font-bold uppercase tracking-[1px] text-foreground">
+                {t.text}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {TESTIMONIAL !== null && (
+          <figure className="mx-auto mt-8 max-w-2xl rounded-[8px] border border-primary/25 bg-primary/[0.05] p-6 text-center">
+            <blockquote className="text-[15px] italic leading-relaxed text-foreground">
+              « {TESTIMONIAL.quote} »
+            </blockquote>
+            <figcaption className="mt-3 text-[12px] font-bold uppercase tracking-[1px] text-primary">
+              — {TESTIMONIAL.author}
+            </figcaption>
+          </figure>
+        )}
+
+        <p className="mt-10 text-center text-[14px] text-muted-foreground">
+          Besoin d'un sur-mesure ?{" "}
+          <a
+            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+              "Bonjour, j'ai besoin d'une offre sur-mesure. Pouvons-nous en discuter ?"
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-bold text-primary hover:underline"
+          >
+            Parlons-en sur WhatsApp
+          </a>
+        </p>
       </div>
     </div>
   );
