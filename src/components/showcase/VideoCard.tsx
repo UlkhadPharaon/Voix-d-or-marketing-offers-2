@@ -35,7 +35,7 @@ export function VideoCard({ item }: { item: ShowcaseItem }) {
       type="button"
       onClick={play}
       aria-label={`Lire la vidéo : ${item.title}`}
-      className="group relative block aspect-video w-full overflow-hidden rounded-[8px] border border-foreground/10 bg-foreground/[0.04] text-left"
+      className="group relative block aspect-video w-full touch-manipulation select-none overflow-hidden rounded-[8px] border border-foreground/10 bg-foreground/[0.04] text-left"
     >
       {!isPlaylist && item.youtubeId ? (
         <img

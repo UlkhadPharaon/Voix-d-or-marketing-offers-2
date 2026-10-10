@@ -9,7 +9,8 @@ import { PageTransition } from '@/components/PageTransition';
 import { Spotlight } from "@/components/ui/spotlight";
 import PricingSection4 from "@/components/ui/pricing-section-4";
 import { PhoneFeedMockup } from '@/components/home/PhoneFeedMockup';
-import { SHOWCASE_ITEMS, youtubeThumb } from '@/data/showcase';
+import { SHOWCASE_ITEMS } from '@/data/showcase';
+import { VideoCard } from '@/components/showcase/VideoCard';
 import { track } from '@/lib/analytics';
 import { cn } from '@/lib/utils';
 
@@ -473,21 +474,7 @@ export function Home() {
             {SHOWCASE_ITEMS.map((item, i) => (
               <Reveal key={item.id} delay={i * 0.06}>
                 <article className="group h-full overflow-hidden rounded-[12px] border border-foreground/10 bg-background">
-                  {item.youtubeId && !item.youtubeId.startsWith("PL") ? (
-                    <img
-                      src={youtubeThumb(item.youtubeId)}
-                      alt={`Exemple ${item.title} — ${item.sector}`}
-                      width={480}
-                      height={360}
-                      loading="lazy"
-                      className="aspect-video w-full object-cover"
-                    />
-                  ) : (
-                    <div className="flex aspect-video w-full items-center justify-center bg-gradient-to-br from-primary/30 to-teal-deep/40">
-                      <Play className="h-10 w-10 text-primary" aria-hidden="true" />
-                      <span className="sr-only">Exemple {item.title}</span>
-                    </div>
-                  )}
+                  <VideoCard item={item} />
                   <div className="p-4">
                     <p className="text-[11px] font-bold uppercase tracking-[2px] text-primary">{item.sector} · {item.plan}</p>
                     <h3 className="mt-1 font-heading text-[18px] uppercase tracking-[1px] text-foreground">{item.title}</h3>
