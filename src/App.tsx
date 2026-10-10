@@ -8,7 +8,7 @@ import { SmoothScroll, ScrollManager } from '@/components/SmoothScroll';
 
 // Route-level code splitting — each page loads on demand.
 const Home = lazy(() => import('@/pages/Home').then((m) => ({ default: m.Home })));
-const Contact = lazy(() => import('@/pages/Contact').then((m) => ({ default: m.Contact })));
+const Demarrer = lazy(() => import('@/pages/Demarrer').then((m) => ({ default: m.Demarrer })));
 const Exemples = lazy(() => import('@/pages/Exemples').then((m) => ({ default: m.Exemples })));
 const Securite = lazy(() => import('@/pages/Securite').then((m) => ({ default: m.Securite })));
 const NotFound = lazy(() => import('@/pages/NotFound').then((m) => ({ default: m.NotFound })));
@@ -27,7 +27,8 @@ function AnimatedRoutes() {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="contact" element={<Contact />} />
+          <Route path="demarrer" element={<Demarrer />} />
+          <Route path="contact" element={<Navigate to="/demarrer" replace />} />
           <Route path="portfolio" element={<Navigate to="/exemples" replace />} />
           <Route path="exemples" element={<Exemples />} />
           <Route path="securite" element={<Securite />} />

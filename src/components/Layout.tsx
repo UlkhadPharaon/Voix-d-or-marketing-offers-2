@@ -174,7 +174,7 @@ export function Layout() {
                 <li><Link to="/exemples" className="text-muted-foreground hover:text-primary transition-colors text-[14px] uppercase tracking-[1px]">Exemples</Link></li>
                 <li><Link to="/#faq" className="text-muted-foreground hover:text-primary transition-colors text-[14px] uppercase tracking-[1px]">FAQ</Link></li>
                 <li><Link to="/securite" className="text-muted-foreground hover:text-primary transition-colors text-[14px] uppercase tracking-[1px]">Sécurité</Link></li>
-                <li><Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors text-[14px] uppercase tracking-[1px]">Démarrer</Link></li>
+                <li><Link to="/demarrer?src=footer" className="text-muted-foreground hover:text-primary transition-colors text-[14px] uppercase tracking-[1px]">Démarrer</Link></li>
               </ul>
             </div>
             
