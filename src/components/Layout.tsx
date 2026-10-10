@@ -171,7 +171,7 @@ export function Layout() {
               <h4 className="font-heading text-primary text-[14px] uppercase tracking-widest mb-6 font-bold">Navigation</h4>
               <ul className="space-y-4">
                 <li><Link to="/#offres" className="text-muted-foreground hover:text-primary transition-colors text-[14px] uppercase tracking-[1px]">Offres</Link></li>
-                <li><Link to="/portfolio" className="text-muted-foreground hover:text-primary transition-colors text-[14px] uppercase tracking-[1px]">Exemples</Link></li>
+                <li><Link to="/exemples" className="text-muted-foreground hover:text-primary transition-colors text-[14px] uppercase tracking-[1px]">Exemples</Link></li>
                 <li><Link to="/#faq" className="text-muted-foreground hover:text-primary transition-colors text-[14px] uppercase tracking-[1px]">FAQ</Link></li>
                 <li><Link to="/securite" className="text-muted-foreground hover:text-primary transition-colors text-[14px] uppercase tracking-[1px]">Sécurité</Link></li>
                 <li><Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors text-[14px] uppercase tracking-[1px]">Démarrer</Link></li>
