@@ -75,7 +75,7 @@ export function Home() {
     },
     {
       q: "Quels sont vos prix et que comprennent-ils ?",
-      a: "Essentials à 30 000 FCFA/mois (90+ visuels, publication, réponses auto limitées), Standard à 60 000 FCFA/mois (+ jusqu'à 3 vidéos/semaine 15s), Business à 90 000 FCFA/mois (+ jusqu'à 5 vidéos/semaine 45s et gestion ads). Le budget média est toujours séparé des honoraires."
+      a: "Essentials à 30 000 FCFA/mois (90+ visuels, publication, réponses auto aux commentaires Facebook limitées), Standard à 60 000 FCFA/mois (+ jusqu'à 3 vidéos/semaine 15s, community Instagram et Facebook), Business à 90 000 FCFA/mois (+ jusqu'à 5 vidéos/semaine 45s, gestion ads, prospection et support WhatsApp dédié). Le budget média est toujours séparé des honoraires."
     },
     {
       q: "En combien de temps je reçois mes premiers contenus ?",
@@ -451,9 +451,9 @@ export function Home() {
                 <tbody className="divide-y divide-white/5 text-[14px]">
                   <tr className="hover:bg-foreground/[0.04] transition-colors duration-300 group">
                     <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-foreground transition-colors">Relance & Conversations</td>
-                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]">Réponses auto limitées</td>
-                    <td className="p-4 text-center text-primary font-bold bg-primary/[0.02]">Séquences + qualification</td>
-                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]">Relance multicanale + ads</td>
+                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]">Réponses auto aux commentaires Facebook (limitées)</td>
+                    <td className="p-4 text-center text-primary font-bold bg-primary/[0.02]">Community IG + Facebook</td>
+                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]">Prospection + relance multicanale + ads</td>
                   </tr>
                   <tr className="hover:bg-foreground/[0.04] transition-colors duration-300 group">
                     <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-foreground transition-colors">Production / mois</td>
@@ -469,8 +469,8 @@ export function Home() {
                   </tr>
                   <tr className="hover:bg-foreground/[0.04] transition-colors duration-300 group">
                     <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-foreground transition-colors">Base de Données Clients</td>
-                    <td className="p-4 text-center text-gray-400 bg-foreground/[0.01]">Capture + base clients</td>
-                    <td className="p-4 text-center text-foreground bg-foreground/[0.01]">Segmentée & enrichie</td>
+                    <td className="p-4 text-center text-gray-600 bg-foreground/[0.01]"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
+                    <td className="p-4 text-center text-gray-600 bg-foreground/[0.01]"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
                     <td className="p-4 text-center text-primary font-bold bg-primary/[0.02]">Exploitation par campagne</td>
                   </tr>
                   <tr className="hover:bg-foreground/[0.04] transition-colors duration-300 group">
@@ -491,10 +491,16 @@ export function Home() {
                     <td className="p-4 text-center text-gray-600 bg-primary/[0.02]"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
                     <td className="p-4 text-center text-foreground bg-foreground/[0.01]"><Check className="w-5 h-5 mx-auto text-primary" /> <span className="text-[12px] text-gray-400">Maintenue</span></td>
                   </tr>
+                  <tr className="hover:bg-foreground/[0.04] transition-colors duration-300 group">
+                    <td className="p-4 pl-6 text-gray-300 font-medium group-hover:text-foreground transition-colors">Support WhatsApp + Prospection</td>
+                    <td className="p-4 text-center text-gray-600 bg-foreground/[0.01]"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
+                    <td className="p-4 text-center text-gray-600 bg-primary/[0.02]"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
+                    <td className="p-4 text-center text-primary font-bold bg-foreground/[0.01]"><Check className="w-5 h-5 mx-auto text-primary" /> <span className="text-[12px] text-gray-400">Inclus (Business uniquement)</span></td>
+                  </tr>
                 </tbody>
               </table>
               <div className="bg-card/90 dark:bg-foreground/10  p-5 text-center border-t border-foreground/5 relative z-10">
-                <p className="text-[12px] text-gray-400 italic">Note : Le budget média est séparé des honoraires. Vidéos, volumes et révisions limités par formule.</p>
+                <p className="text-[12px] text-gray-400 italic">Note : Le budget média est séparé des honoraires. Vidéos, volumes et révisions limités par formule. Support WhatsApp + prospection : Business (90 000 FCFA) uniquement.</p>
               </div>
             </div>
           </div>
@@ -512,9 +518,10 @@ export function Home() {
               <AccordionItem value="item-1" className="border-foreground/10 bg-foreground/[0.03]  shadow-[0_8px_32px_rgba(0,0,0,0.2)] rounded-[8px] overflow-hidden px-4">
                 <AccordionTrigger className="text-foreground hover:no-underline hover:text-primary py-4 font-bold text-[14px]">Stratégie de Relance</AccordionTrigger>
                 <AccordionContent className="text-gray-400 pb-4 flex flex-col gap-3">
-                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Essentials</span> <span className="text-foreground">Réponses auto limitées</span></div>
-                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide text-primary">Standard</span> <span className="text-primary font-bold">Séquences + qualif.</span></div>
-                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Business</span> <span className="text-foreground">Multicanal + ads</span></div>
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Essentials</span> <span className="text-foreground text-right">Réponses auto commentaires Facebook (limitées)</span></div>
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide text-primary">Standard</span> <span className="text-primary font-bold text-right">Community IG + Facebook</span></div>
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Business</span> <span className="text-foreground text-right">Prospection + relance multicanale + ads</span></div>
+                  <div className="flex justify-between items-center"><span className="text-[13px] uppercase tracking-wide">Support WA</span> <span className="text-foreground text-right">Business uniquement</span></div>
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-2" className="border-foreground/10 bg-foreground/[0.03]  shadow-[0_8px_32px_rgba(0,0,0,0.2)] rounded-[8px] overflow-hidden px-4">
@@ -534,6 +541,106 @@ export function Home() {
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
+          </div>
+
+          {/* Comparatif NEFERTEM vs voie classique */}
+          <div className="mt-20 max-w-[1000px] mx-auto">
+            <div className="text-center mb-8 flex flex-col items-center">
+              <div className="inline-flex self-center bg-primary/10 border border-primary text-primary px-[12px] py-[4px] font-bold text-[10px] tracking-[2px] uppercase mb-[16px]">
+                Comparatif honnête
+              </div>
+              <h3 className="font-heading uppercase tracking-[1.5px] text-[24px] md:text-[28px] text-foreground">NEFERTEM vs la voie classique</h3>
+              <p className="text-muted-foreground text-[14px] mt-3 max-w-2xl text-center">
+                Même volume, même exigence. Prix agence / graphiste calculés sur la base de <strong className="text-foreground">2 000 FCFA / visuel</strong>, hors stratégie, hors pilotage, hors distribution.
+              </p>
+            </div>
+
+            {/* Prix équivalents */}
+            <div className="grid md:grid-cols-3 gap-4 mb-8">
+              {[
+                { name: "Essentials", nefertem: "30 000 FCFA", classique: "≈ 250 000 FCFA", detail: "90 visuels × 2 000 = 180 000 + stratégie & pilotage 70 000" },
+                { name: "Standard", nefertem: "60 000 FCFA", classique: "≈ 490 000 FCFA", detail: "90 visuels 180 000 + 12 vidéos 180 000 + pilotage 130 000" },
+                { name: "Business", nefertem: "90 000 FCFA", classique: "≈ 900 000 FCFA", detail: "90 visuels 180 000 + 20 vidéos 500 000 + ads & pilotage 220 000" },
+              ].map((row) => (
+                <div key={row.name} className="bg-foreground/[0.03] border border-foreground/10 rounded-[12px] p-5 relative overflow-hidden">
+                  <p className="text-[11px] uppercase tracking-[2px] font-bold text-gray-400 mb-2">{row.name}</p>
+                  <p className="text-[13px] text-muted-foreground">Voie classique</p>
+                  <p className="text-[20px] font-bold text-gray-400 line-through leading-tight">{row.classique}</p>
+                  <p className="text-[13px] text-muted-foreground mt-3">NEFERTEM</p>
+                  <p className="text-[26px] font-bold text-primary leading-tight">{row.nefertem}<span className="text-[12px] font-normal text-gray-500"> /mois</span></p>
+                  <p className="text-[11px] text-muted-foreground mt-3 leading-relaxed">{row.detail}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Tableau détaillé desktop */}
+            <div className="hidden lg:block bg-foreground/[0.02] border border-foreground/10 rounded-[12px] overflow-hidden relative">
+              <table className="w-full text-left border-collapse relative z-10">
+                <thead>
+                  <tr>
+                    <th className="p-6 text-[13px] text-gray-400 uppercase tracking-[1px] font-bold border-b border-foreground/10 w-1/4">Critère</th>
+                    <th className="p-6 text-[13px] text-primary uppercase tracking-[1px] font-bold border-b border-primary/30 text-center w-1/4 bg-primary/[0.05]">NEFERTEM</th>
+                    <th className="p-6 text-[13px] text-foreground uppercase tracking-[1px] font-bold border-b border-foreground/10 text-center w-1/4">Agence classique</th>
+                    <th className="p-6 text-[13px] text-foreground uppercase tracking-[1px] font-bold border-b border-foreground/10 text-center w-1/4">Graphiste freelance</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5 text-[14px]">
+                  <tr className="hover:bg-foreground/[0.04] transition-colors">
+                    <td className="p-4 pl-6 text-gray-300 font-medium">Prix pour 90 visuels / mois</td>
+                    <td className="p-4 text-center text-primary font-bold bg-primary/[0.02]">Inclus dès 30 000 FCFA</td>
+                    <td className="p-4 text-center text-foreground">≈ 180 000 FCFA + frais</td>
+                    <td className="p-4 text-center text-foreground">≈ 180 000 FCFA, délais longs</td>
+                  </tr>
+                  <tr className="hover:bg-foreground/[0.04] transition-colors">
+                    <td className="p-4 pl-6 text-gray-300 font-medium">Stratégie + calendrier</td>
+                    <td className="p-4 text-center text-primary font-bold bg-primary/[0.02]"><Check className="w-5 h-5 mx-auto text-primary" /> Incluse</td>
+                    <td className="p-4 text-center text-foreground">Facturée en plus</td>
+                    <td className="p-4 text-center text-gray-500">Rarement incluse</td>
+                  </tr>
+                  <tr className="hover:bg-foreground/[0.04] transition-colors">
+                    <td className="p-4 pl-6 text-gray-300 font-medium">Vidéos + distribution + community</td>
+                    <td className="p-4 text-center text-primary font-bold bg-primary/[0.02]"><Check className="w-5 h-5 mx-auto text-primary" /> Incluses selon formule</td>
+                    <td className="p-4 text-center text-foreground">Options facturées séparément</td>
+                    <td className="p-4 text-center text-gray-500"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
+                  </tr>
+                  <tr className="hover:bg-foreground/[0.04] transition-colors">
+                    <td className="p-4 pl-6 text-gray-300 font-medium">Délai premier lot</td>
+                    <td className="p-4 text-center text-primary font-bold bg-primary/[0.02]">72h garanties</td>
+                    <td className="p-4 text-center text-foreground">1 à 3 semaines</td>
+                    <td className="p-4 text-center text-foreground">Selon disponibilité</td>
+                  </tr>
+                  <tr className="hover:bg-foreground/[0.04] transition-colors">
+                    <td className="p-4 pl-6 text-gray-300 font-medium">Pilotage par la donnée</td>
+                    <td className="p-4 text-center text-primary font-bold bg-primary/[0.02]">Rapport + optimisation continue</td>
+                    <td className="p-4 text-center text-foreground">Rapport sur demande</td>
+                    <td className="p-4 text-center text-gray-500"><Minus className="w-5 h-5 mx-auto opacity-50" /></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div className="p-5 text-center border-t border-foreground/5">
+                <p className="text-[12px] text-gray-400 italic">Estimation prudente : un graphiste à 2 000 FCFA / visuel sans stratégie revient déjà à 180 000 FCFA pour 90 visuels. Tout le reste est facturé en plus.</p>
+              </div>
+            </div>
+
+            {/* Version mobile */}
+            <div className="lg:hidden grid gap-4">
+              {[
+                { title: "Prix pour 90 visuels", nef: "Inclus dès 30 000 FCFA", agence: "≈ 180 000 FCFA + frais", free: "≈ 180 000 FCFA, délais longs" },
+                { title: "Stratégie + calendrier", nef: "Incluse", agence: "Facturée en plus", free: "Rarement incluse" },
+                { title: "Vidéos + distribution", nef: "Incluses selon formule", agence: "Options séparées", free: "Non inclus" },
+                { title: "Délai premier lot", nef: "72h garanties", agence: "1 à 3 semaines", free: "Selon dispo" },
+                { title: "Pilotage data", nef: "Rapport + optimisation", agence: "Sur demande", free: "Non inclus" },
+              ].map((r) => (
+                <div key={r.title} className="border border-foreground/10 bg-foreground/[0.03] rounded-[8px] p-4">
+                  <p className="font-bold text-[13px] uppercase tracking-[1px] text-foreground mb-3">{r.title}</p>
+                  <div className="space-y-2 text-[13px]">
+                    <div className="flex justify-between gap-3"><span className="text-primary font-bold">NEFERTEM</span><span className="text-primary font-bold text-right">{r.nef}</span></div>
+                    <div className="flex justify-between gap-3"><span className="text-gray-400">Agence</span><span className="text-foreground text-right">{r.agence}</span></div>
+                    <div className="flex justify-between gap-3"><span className="text-gray-400">Freelance</span><span className="text-gray-400 text-right">{r.free}</span></div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="text-center mt-12 md:mt-16 flex flex-col items-center justify-center">

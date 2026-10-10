@@ -19,15 +19,20 @@ const plans = [
     buttonText: "Choisir Essentials",
     buttonVariant: "outline" as const,
     idealFor: "Idéal : Boutiques, Restaurants, Commerces locaux",
+    traditionalPrice: 250000,
+    traditionalDetails: [
+      "90 visuels × 2 000 FCFA = 180 000 FCFA",
+      "Stratégie + calendrier + publication + reporting = 70 000 FCFA",
+    ],
+    savingsLabel: "Vous économisez 220 000 FCFA (-88%)",
     includes: [
       "90+ visuels commerciaux / mois",
       "Publication & organisation selon scope",
-      "Réponses automatiques limitées",
+      "Réponses automatiques aux commentaires Facebook (limitées)",
       "Calendrier de contenu mensuel",
       "Rapport d'activité mensuel",
       "Diagnostic de présence digitale",
-      "1 révision par lot de contenu",
-      "Support WhatsApp"
+      "1 révision par lot de contenu"
     ],
   },
   {
@@ -41,16 +46,22 @@ const plans = [
     buttonVariant: "default" as const,
     popular: true,
     idealFor: "Idéal : Food, Beauty & Fashion, Éducation",
+    traditionalPrice: 490000,
+    traditionalDetails: [
+      "90 visuels × 2 000 FCFA = 180 000 FCFA",
+      "12 vidéos 15s × 15 000 FCFA = 180 000 FCFA",
+      "Stratégie + community + analyse + reporting = 130 000 FCFA",
+    ],
+    savingsLabel: "Vous économisez 430 000 FCFA (-88%)",
     includes: [
       "Tout Essentials inclus",
       "Jusqu'à 3 vidéos / semaine (15s max)",
       "Distribution FB, IG, TikTok",
-      "Community management de base",
+      "Community management de base (commentaires Instagram et Facebook)",
       "Test de formats vidéo mensuel",
       "Analyse concurrentielle mensuelle",
       "Rapport bimensuel chiffré",
       "Optimisation continue",
-      "Support prioritaire",
       "Journal des apprentissages"
     ],
   },
@@ -64,17 +75,25 @@ const plans = [
     buttonText: "Choisir Business",
     buttonVariant: "outline" as const,
     idealFor: "Idéal : Cliniques, Écoles, Hôtels, Promoteurs",
+    traditionalPrice: 900000,
+    traditionalDetails: [
+      "90 visuels × 2 000 FCFA = 180 000 FCFA",
+      "20 vidéos 45s × 25 000 FCFA = 500 000 FCFA",
+      "Gestion ads + landing + reporting hebdo + manager = 220 000 FCFA",
+    ],
+    savingsLabel: "Vous économisez 810 000 FCFA (-90%)",
     includes: [
       "Tout Standard inclus",
       "Jusqu'à 5 vidéos / semaine (45s max)",
       "Gestion ads selon scope (budget média séparé)",
-      "Séquences de relance prospects",
+      "Prospection & relance prospects",
       "Base de données clients & qualification",
       "Landing page maintenue",
       "Analyse concurrentielle mensuelle",
       "Rapport hebdo de performance",
       "Stratégie & plan à 7 jours",
       "Onboarding 72h garanti",
+      "Support WhatsApp dédié",
       "Account manager dédié"
     ],
   },
@@ -281,6 +300,29 @@ Pas de surprise.
                         Prix de lancement
                       </span>
                     )}
+                  </div>
+
+                  {/* Comparatif voie classique */}
+                  <div className={cn("mt-5 w-full rounded-[8px] border p-4 text-left",
+                    plan.popular ? "border-primary/30 bg-primary/[0.07]" : "border-foreground/10 bg-foreground/[0.03]"
+                  )}>
+                    <p className="text-[10px] uppercase tracking-[2px] font-bold text-gray-400 mb-1">
+                      Voie classique — agence / graphiste
+                    </p>
+                    <p className="text-[15px] font-bold text-gray-400 line-through leading-tight">
+                      {plan.traditionalPrice.toLocaleString('fr-FR')} FCFA / mois
+                    </p>
+                    <ul className="mt-2 space-y-1">
+                      {plan.traditionalDetails.map((line, i) => (
+                        <li key={i} className="text-[11px] leading-snug text-muted-foreground">• {line}</li>
+                      ))}
+                    </ul>
+                    <p className="mt-2 text-[11px] text-muted-foreground leading-snug">
+                      Base : 2 000 FCFA / visuel + frais stratégie, pilotage et distribution en plus.
+                    </p>
+                    <span className="mt-3 inline-block bg-green-500/15 border border-green-500/30 text-green-400 px-3 py-1.5 rounded-[4px] text-[11px] uppercase font-bold tracking-wider">
+                      {plan.savingsLabel}
+                    </span>
                   </div>
                 </CardHeader>
 
