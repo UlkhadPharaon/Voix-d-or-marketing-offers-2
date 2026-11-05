@@ -7,7 +7,8 @@
  *
  * Events used across the site:
  * cta_click {location, label} · billing_toggle {period} ·
- * onboarding_started {} · onboarding_step {n} · onboarding_completed {plan, period} ·
+ * onboarding_started {} · onboarding_opened {src} · onboarding_step {n} ·
+ * onboarding_completed {plan, period} · contact_popover_submitted {src} ·
  * whatsapp_opened {src, plan?} · showcase_item_opened {sector, id} ·
  * faq_opened {id} · lead_api_failed {step}
  */

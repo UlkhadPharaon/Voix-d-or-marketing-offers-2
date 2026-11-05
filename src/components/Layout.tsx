@@ -1,9 +1,14 @@
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { PlayCircle, Menu, X, MessageCircle } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { Button } from './ui/button';
-import { ThemeToggle } from './ThemeToggle';
+import { MagnetizeButton } from './ui/magnetize-button';
+import { ContactPopover } from './ContactPopover';
+import { LiquidNavbar, NimbusIcons, type LiquidNavbarItem } from './ui/liquid-glass-navbar';
+import { LiquidToggle, NimbusToggleIcons } from './ui/liquid-glass-toggle';
+import { HalftoneWordmarkFooter } from './ui/halftone-wordmark-footer';
+import { useTheme } from './ThemeProvider';
+import { track } from '@/lib/analytics';
 // @ts-ignore
 import logoImg from '../../logo/nefertem-mark.png';
 
@@ -32,6 +37,8 @@ export function Layout() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,6 +59,36 @@ export function Layout() {
     { label: 'Offres', href: '/#offres' },
     { label: 'FAQ', href: '/#faq' },
   ];
+
+  /* Liquid glass navbar items — water drop travels between stops (Nimbus Waterline). */
+  const liquidItems: LiquidNavbarItem[] = [
+    { label: 'Accueil', icon: NimbusIcons.home, fx: 'glow' },
+    { label: 'Comment', icon: NimbusIcons.compass, fx: 'spin' },
+    { label: 'Exemples', icon: NimbusIcons.film, fx: 'plane' },
+    { label: 'Offres', icon: NimbusIcons.gem, fx: 'drop' },
+    { label: 'FAQ', icon: NimbusIcons.help, fx: 'wave' },
+  ];
+  const liquidHrefs = ['/', '/#comment', '/exemples', '/#offres', '/#faq'];
+
+  const liquidActive =
+    location.pathname === '/exemples'
+      ? 2
+      : location.pathname === '/'
+        ? location.hash === '#comment'
+          ? 1
+          : location.hash === '#offres'
+            ? 3
+            : location.hash === '#faq'
+              ? 4
+              : 0
+        : -1;
+
+  const handleLiquidNav = (i: number, src: string = 'desktop') => {
+    const target = liquidHrefs[i];
+    if (!target) return;
+    track('nav_click', { item: i, label: liquidItems[i]?.label, from: src });
+    navigate(target);
+  };
 
   return (
     <div className="min-h-screen bg-background/0 text-foreground flex flex-col font-sans selection:bg-primary selection:text-black-deep relative">
@@ -75,7 +112,7 @@ export function Layout() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 h-[80px] flex items-center px-6 md:px-[40px] border-b border-foreground/10 bg-background/85 backdrop-blur-md ${isScrolled ? 'shadow-[0_4px_30px_rgba(0,0,0,0.25)]' : 'shadow-none'}`}
       >
-        <div className="w-full flex items-center justify-between">
+        <div className="w-full flex items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-[12px] z-50 group">
             <Logo />
             <div className="flex flex-col leading-none">
@@ -84,29 +121,48 @@ export function Layout() {
             </div>
           </Link>
 
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-[30px]">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="text-[14px] uppercase tracking-[1px] text-foreground/80 hover:text-primary transition-colors cursor-pointer"
-              >
-                {link.label}
-              </a>
-            ))}
-            <Link
-              to="/demarrer?src=header"
-              className="min-h-[44px] inline-flex items-center rounded-[4px] bg-primary px-5 text-[13px] uppercase font-bold tracking-[1px] text-black-deep hover:bg-gold-accent transition-colors"
+          {/* Desktop Nav — liquid glass navbar (Waterline drop) */}
+          <div className="hidden flex-1 justify-center md:flex">
+            <LiquidNavbar
+              items={liquidItems}
+              active={liquidActive}
+              onSelect={handleLiquidNav}
+              tone={theme === 'dark' ? 'dark' : 'light'}
+              size={44}
+              label="Navigation principale"
+            />
+          </div>
+
+          {/* Desktop actions — magnetized CTA + liquid glass theme toggle */}
+          <div className="hidden items-center gap-4 md:flex">
+            <MagnetizeButton
+              render={<Link to="/demarrer?src=header" />}
+              onClick={() => track('cta_click', { location: 'header', label: 'diagnostic' })}
+              particleCount={10}
+              className="min-h-[44px] h-[44px] rounded-[4px] px-5 text-[13px] uppercase font-bold tracking-[1px] text-black-deep dark:text-black-deep"
             >
               Diagnostic gratuit
-            </Link>
-            <ThemeToggle />
-          </nav>
+            </MagnetizeButton>
+            <LiquidToggle
+              checked={theme === 'dark'}
+              onCheckedChange={(c) => setTheme(c ? 'dark' : 'light')}
+              tone={theme === 'dark' ? 'dark' : 'light'}
+              size={28}
+              icons={{ off: NimbusToggleIcons.sun, on: NimbusToggleIcons.moon }}
+              label="Changer le thème"
+            />
+          </div>
 
           {/* Mobile Menu Toggle */}
           <div className="flex items-center gap-2 md:hidden">
-            <ThemeToggle />
+            <LiquidToggle
+              checked={theme === 'dark'}
+              onCheckedChange={(c) => setTheme(c ? 'dark' : 'light')}
+              tone={theme === 'dark' ? 'dark' : 'light'}
+              size={28}
+              icons={{ off: NimbusToggleIcons.sun, on: NimbusToggleIcons.moon }}
+              label="Changer le thème"
+            />
             <button
               className="z-50 p-2 text-foreground"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -185,10 +241,13 @@ export function Layout() {
                   <span className="text-primary mt-0.5">📍</span> Ouagadougou, Burkina Faso
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-primary mt-0.5">📱</span> WhatsApp : +226 05 83 05 99
+                  <span className="text-primary mt-0.5">📱</span> WhatsApp : +226 73 76 48 82
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-0.5">✉️</span> contact@nefertem.africa
+                </li>
+                <li>
+                  <ContactPopover />
                 </li>
               </ul>
             </div>
@@ -202,6 +261,13 @@ export function Layout() {
             </div>
           </div>
         </div>
+
+        {/* Halftone wordmark — giant NEFERTEM printed in dots that part around
+            the cursor (click for a shock ring). Cropped by the bottom edge. */}
+        <HalftoneWordmarkFooter
+          word="NEFERTEM"
+          className="relative z-10 h-[240px] border-t border-primary/15 md:h-[340px]"
+        />
       </footer>
 
       {/* WhatsApp Floating Button — desktop only (mobile uses the bottom bar).
@@ -219,14 +285,16 @@ export function Layout() {
 
       {/* Mobile sticky bottom bar — Diagnostic (gold) + direct WhatsApp icon */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-30 border-t border-foreground/10 bg-background/95 backdrop-blur-md px-4 pt-3 flex gap-3" style={{ paddingBottom: 'calc(12px + env(safe-area-inset-bottom))' }}>
-        <Link
-          to="/demarrer?src=mobilebar"
-          className="flex-1 min-h-[48px] inline-flex items-center justify-center rounded-[4px] bg-primary px-4 text-[13px] uppercase font-bold tracking-[1px] text-black-deep"
+        <MagnetizeButton
+          render={<Link to="/demarrer?src=mobilebar" />}
+          onClick={() => track('cta_click', { location: 'mobilebar', label: 'diagnostic' })}
+          particleCount={8}
+          className="h-12 flex-1 min-w-0 rounded-[4px] px-4 text-[13px] uppercase font-bold tracking-[1px] text-black-deep dark:text-black-deep"
         >
           Diagnostic gratuit
-        </Link>
+        </MagnetizeButton>
         <a
-          href="https://wa.me/22605830599?text=Bonjour%20NEFERTEM%2C%20j%27ai%20une%20question."
+          href="https://wa.me/22673764882?text=Bonjour%20NEFERTEM%2C%20j%27ai%20une%20question."
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Ouvrir WhatsApp directement"

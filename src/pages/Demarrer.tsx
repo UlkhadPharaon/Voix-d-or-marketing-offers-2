@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import {
   ArrowLeft,
+  ArrowRight,
   Building2,
   CalendarX,
   Check,
@@ -23,6 +24,11 @@ import {
 } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { PageTransition } from "@/components/PageTransition";
+import {
+  ExpandableScreen,
+  ExpandableScreenContent,
+  ExpandableScreenTrigger,
+} from "@/components/ui/expandable-screen";
 import { track } from "@/lib/analytics";
 import {
   GOALS,
@@ -116,6 +122,7 @@ export function Demarrer() {
   const [phoneError, setPhoneError] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [waUrl, setWaUrl] = useState("");
+  const [screenOpen, setScreenOpen] = useState(false);
   const started = useRef(false);
 
   const src = params.get("src") || "direct";
@@ -138,6 +145,8 @@ export function Demarrer() {
         const saved = JSON.parse(raw) as { step: number; answers: Answers };
         setStep(saved.step);
         setAnswers({ ...EMPTY, ...saved.answers });
+        // A dossier already in progress goes straight back into the wizard.
+        if (saved.step > 1) setScreenOpen(true);
         return;
       }
     } catch {
@@ -197,6 +206,7 @@ export function Demarrer() {
     goalKey: answers.goalKey,
     networks: answers.networks,
     pageUrl: answers.pageUrl.trim(),
+    message: "",
     plan: answers.plan,
     period: answers.period,
     price,
@@ -313,29 +323,90 @@ export function Demarrer() {
           : true;
 
   return (
-    <PageTransition className="min-h-screen bg-background/0 px-4 pb-12 pt-[100px] text-foreground md:pt-[120px]">
-      <SEO
-        title="Recevez votre diagnostic gratuit"
-        description="2 minutes pour nous parler de votre activité. Diagnostic gratuit sous 24 h, premier lot sous 72 h."
-        path="/demarrer"
-      />
-      <div className="mx-auto w-full max-w-2xl">
-        {/* Minimal header */}
-        <p className="text-center text-[12px] font-bold uppercase tracking-[2px] text-primary">Diagnostic gratuit</p>
-        <h1 className="mt-2 text-center font-heading text-[26px] font-normal uppercase leading-tight tracking-[1px] md:text-[36px]">
-          Parlons de votre activité
-        </h1>
-        <p className="mt-2 text-center text-[13px] text-muted-foreground">
-          Aucun paiement maintenant · Réponse en moins d'1 heure ·{" "}
-          <a
-            href="https://wa.me/22605830599?text=Bonjour%20NEFERTEM%2C%20j%27ai%20une%20question."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-bold text-primary hover:underline"
+    <ExpandableScreen
+      layoutId="demarrer-screen"
+      triggerRadius="100px"
+      contentRadius="24px"
+      open={screenOpen}
+      setOpen={setScreenOpen}
+      onOpenChange={(next) => {
+        if (next) track("onboarding_opened", { src });
+      }}
+    >
+      {/* LANDING — the pill expands into the wizard below. */}
+      <PageTransition className="flex min-h-screen items-center justify-center bg-background/0 px-4 pb-12 pt-[100px] md:pt-[120px]">
+        <SEO
+          title="Recevez votre diagnostic gratuit"
+          description="2 minutes pour nous parler de votre activité. Diagnostic gratuit sous 24 h, premier lot sous 72 h."
+          path="/demarrer"
+        />
+        <div className="w-full max-w-2xl text-center">
+          <p className="text-[12px] font-bold uppercase tracking-[2px] text-primary">Diagnostic gratuit</p>
+          <h1 className="mt-3 font-heading text-[30px] font-normal uppercase leading-tight tracking-[1px] md:text-[46px]">
+            Parlons de votre activité
+          </h1>
+          <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-muted-foreground md:text-[17px]">
+            2 minutes pour nous parler de votre activité. Diagnostic gratuit sous 24 h, premier lot sous 72 h.
+          </p>
+
+          <ExpandableScreenTrigger
+            onClick={() => track("cta_click", { location: "demarrer_landing", label: "diagnostic" })}
+            className="group mt-8 inline-flex min-h-[56px] items-center justify-center gap-2 rounded-full bg-primary px-8 text-[13px] font-bold uppercase tracking-[1px] text-black-deep shadow-[0_0_40px_rgba(212,175,55,0.35)] transition-transform hover:scale-[1.02] active:scale-[0.99]"
           >
-            Préférez-vous écrire directement ? Ouvrir WhatsApp
-          </a>
-        </p>
+            Recevoir mon diagnostic gratuit
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+          </ExpandableScreenTrigger>
+
+          <ul className="mx-auto mt-10 grid max-w-2xl gap-3 sm:grid-cols-3">
+            {[
+              "Réponse en moins d'1 heure",
+              "Diagnostic gratuit sous 24 h",
+              "Premier lot sous 72 h",
+            ].map((t) => (
+              <li
+                key={t}
+                className="flex items-center justify-center gap-2 rounded-[8px] border border-foreground/10 bg-foreground/[0.03] px-4 py-3 text-[13px] font-bold text-foreground"
+              >
+                <Check className="h-4 w-4 shrink-0 text-primary" aria-hidden="true" /> {t}
+              </li>
+            ))}
+          </ul>
+
+          <p className="mt-8 text-[13px] text-muted-foreground">
+            Préférez-vous écrire directement ?{" "}
+            <a
+              href="https://wa.me/22673764882?text=Bonjour%20NEFERTEM%2C%20j%27ai%20une%20question."
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track("whatsapp_opened", { src })}
+              className="font-bold text-primary hover:underline"
+            >
+              Ouvrir WhatsApp
+            </a>
+          </p>
+        </div>
+      </PageTransition>
+
+      {/* WIZARD — expanded full screen. */}
+      <ExpandableScreenContent className="bg-background">
+        <div className="mx-auto min-h-full w-full max-w-2xl px-4 pb-16 pt-[84px] text-foreground">
+          {/* Minimal header */}
+          <p className="text-center text-[12px] font-bold uppercase tracking-[2px] text-primary">Diagnostic gratuit</p>
+          <h1 className="mt-2 text-center font-heading text-[26px] font-normal uppercase leading-tight tracking-[1px] md:text-[36px]">
+            Parlons de votre activité
+          </h1>
+          <p className="mt-2 text-center text-[13px] text-muted-foreground">
+            Aucun paiement maintenant · Réponse en moins d'1 heure ·{" "}
+            <a
+              href="https://wa.me/22673764882?text=Bonjour%20NEFERTEM%2C%20j%27ai%20une%20question."
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track("whatsapp_opened", { src })}
+              className="font-bold text-primary hover:underline"
+            >
+              Préférez-vous écrire directement ? Ouvrir WhatsApp
+            </a>
+          </p>
 
         {/* Progress */}
         <div className="mt-6">
@@ -629,8 +700,9 @@ export function Demarrer() {
             </div>
           )}
         </div>
-      </div>
-    </PageTransition>
+        </div>
+      </ExpandableScreenContent>
+    </ExpandableScreen>
   );
 }
 

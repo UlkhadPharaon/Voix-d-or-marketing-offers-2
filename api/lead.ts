@@ -27,6 +27,7 @@ const LeadSchema = z.object({
   goalKey: z.string().max(32).optional().default(""),
   networks: z.array(z.string().max(40)).max(8).optional().default([]),
   pageUrl: z.string().max(300).optional().default(""),
+  message: z.string().max(2000).optional().default(""),
   plan: z.enum(["essentials", "standard", "business"]).optional().default("essentials"),
   period: z.enum(["monthly", "annual"]).optional().default("monthly"),
   price: z.number().int().min(0).max(10000000).optional().default(0),
@@ -105,6 +106,9 @@ export default async function handler(req: any, res: any) {
       `Dossier : ${payload.id}`,
       `Entreprise : ${payload.business || "—"} (${payload.sector || "—"}, ${payload.city || "—"})`,
       `Contact : ${payload.firstName || "—"} — ${payload.whatsapp || "—"}`,
+      ...(payload.message
+        ? [`Message : ${payload.message}`]
+        : []),
       `Offre : ${payload.plan} / ${payload.period} — ${payload.price} FCFA/mois`,
       `Source : ${payload.src || "direct"}`,
     ].join("\n");

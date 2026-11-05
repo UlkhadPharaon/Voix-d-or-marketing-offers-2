@@ -4,7 +4,7 @@
  * (see scripts/check-lead.mjs note in README).
  */
 
-export const WHATSAPP_NUMBER = "22605830599";
+export const WHATSAPP_NUMBER = "22673764882";
 
 export type PlanKey = "essentials" | "standard" | "business";
 export type PeriodKey = "monthly" | "annual";
@@ -69,6 +69,7 @@ export interface Lead {
   goalKey: string;
   networks: string[];
   pageUrl: string;
+  message: string;
   plan: PlanKey;
   period: PeriodKey;
   price: number;

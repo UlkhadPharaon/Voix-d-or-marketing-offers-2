@@ -2,11 +2,15 @@
 import { useId, useState } from "react";
 import type { KeyboardEvent as ReactKeyboardEvent } from "react";
 import { Link } from "react-router-dom";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { motion, useReducedMotion } from "motion/react";
+import { Badge } from "@/components/ui/badge";
+import { MagnetizeButton } from "@/components/ui/magnetize-button";
 import { cn } from "@/lib/utils";
 import { track } from "@/lib/analytics";
 import {
+  Check,
   ChevronDown,
+  Flame,
   Info,
   RefreshCcw,
   ShieldCheck,
@@ -17,6 +21,8 @@ import {
 
 /* =====================================================================
    PRICING — single source of truth. No hard-coded prices in markup.
+   Layout adapted from ShadcnSpace "pricing-02" (scalable three-tier
+   table: recommended tier halo, feature checklists, staggered reveal).
    ---------------------------------------------------------------------
    Règle prix de lancement : le tarif réduit s'applique aux 3 premiers
    mois de chaque nouvelle entreprise cliente, puis le tarif normal
@@ -33,7 +39,7 @@ import {
       Laisser null tant qu'il n'y a aucun témoignage client.
    ===================================================================== */
 
-const WHATSAPP_NUMBER = "22605830599";
+const WHATSAPP_NUMBER = "22673764882";
 const ANNUAL_DISCOUNT = 0.15;
 const KEY_FEATURE_COUNT = 6;
 
@@ -46,7 +52,7 @@ const TESTIMONIAL: { quote: string; author: string } | null = null;
 const nf = new Intl.NumberFormat("fr-FR");
 /** fr-FR grouping with a non-breaking space (U+00A0) as separator. */
 const fmtPrice = (n: number): string =>
-  nf.format(n).replace(/[  ]/g, " ");
+  nf.format(n).replace(/[  ]/g, " ");
 
 type Feature = {
   group: string;
@@ -212,7 +218,7 @@ function BillingToggle({
         role="radiogroup"
         aria-label="Période de facturation"
         onKeyDown={onKeyDown}
-        className="relative z-10 mx-auto flex w-fit rounded-[4px] bg-card border border-foreground/10 p-1"
+        className="relative z-10 mx-auto flex w-fit rounded-full border border-foreground/10 bg-card/90 p-1 shadow-[0_4px_20px_rgba(0,0,0,0.25)]"
       >
         {options.map((o) => {
           const active = billing === o.value;
@@ -224,7 +230,7 @@ function BillingToggle({
               aria-checked={active}
               onClick={() => onChange(o.value)}
               className={cn(
-                "min-h-[44px] rounded-[2px] px-6 py-2 text-[12px] font-bold uppercase tracking-[1px] transition-colors",
+                "min-h-[44px] rounded-full px-6 py-2 text-[12px] font-bold uppercase tracking-[1px] transition-colors",
                 active ? "bg-primary text-black-deep" : "text-muted-foreground hover:text-foreground"
               )}
             >
@@ -249,13 +255,32 @@ function BillingToggle({
   );
 }
 
-function PlanCard({ plan, billing }: { plan: Plan; billing: Billing }) {
+/** Staggered reveal adapted from pricing-02 (x: -60 → 0, 0.6s, per-index delay). */
+const pricingCardVariants = {
+  hidden: {
+    opacity: 0,
+    x: -60,
+  },
+  visible: (index: number) => ({
+    opacity: 1,
+    x: 0,
+    transition: {
+      delay: index * 0.25,
+      duration: 0.6,
+      ease: "easeInOut" as const,
+    },
+  }),
+};
+
+function PlanCard({ plan, billing, index }: { plan: Plan; billing: Billing; index: number }) {
   const [agencyOpen, setAgencyOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const agencyId = useId();
   const featuresId = useId();
-  const d = derived(plan);
+  const reduce = useReducedMotion();
+  const featured = !!plan.recommended;
   const annual = billing === "annuel";
+  const d = derived(plan);
 
   const shown = annual ? d.annualMonthly : plan.launch;
   const crossed = annual ? plan.launch : plan.normal;
@@ -263,51 +288,76 @@ function PlanCard({ plan, billing }: { plan: Plan; billing: Billing }) {
   const keyFeatures = plan.features.slice(0, KEY_FEATURE_COUNT);
   const extraFeatures = plan.features.slice(KEY_FEATURE_COUNT);
 
-  return (
-    <Card
-      className={cn(
-        "flex h-full w-full flex-col rounded-[8px] border transition-all duration-300",
-        plan.recommended
-          ? "border-primary bg-foreground/[0.05] shadow-[0_0_50px_rgba(212,175,55,0.15)] lg:-translate-y-3"
-          : "border-foreground/10 bg-foreground/[0.02] hover:border-foreground/20",
-        plan.recommended && "order-first lg:order-none"
-      )}
-    >
-      {plan.recommended && (
-        <div className="flex justify-center pt-5">
-          <span className="rounded-full bg-primary px-4 py-1 text-[11px] font-bold uppercase tracking-[1px] text-black-deep">
-            Meilleur rapport
-          </span>
-        </div>
-      )}
+  /* Featured tier: an animated conic halo of NEFERTEM gold behind the card. */
+  const halo = featured && (
+    <div aria-hidden="true" className="absolute -inset-0.5 overflow-hidden rounded-[10px]">
+      <div
+        className="absolute -inset-full animate-spin [animation-duration:2s]"
+        style={{
+          background:
+            "conic-gradient(from 0deg, rgba(212,175,55,0), #D4AF37 22%, rgba(40,194,211,0.5) 45%, #B8941F 65%, rgba(212,175,55,0) 88%)",
+          filter: "blur(4px)",
+        }}
+      />
+      <div className="absolute inset-0.5 rounded-[9px] bg-card" />
+    </div>
+  );
 
-      <CardHeader className="p-8 text-left md:p-10 md:pb-0">
-        <span className="mb-2 block font-heading text-[16px] uppercase tracking-[1px] text-muted-foreground">
-          {plan.tier}
-        </span>
-        <h3 className="font-heading text-[20px] uppercase leading-tight tracking-[1px] text-foreground md:text-[24px]">
+  return (
+    <motion.div
+      className={cn(
+        "relative flex w-full flex-1 flex-col",
+        featured && "z-10 order-first lg:order-none lg:scale-[1.02]"
+      )}
+      variants={pricingCardVariants}
+      initial={reduce ? "visible" : "hidden"}
+      animate={reduce ? ("visible" as const) : undefined}
+      whileInView={reduce ? undefined : ("visible" as const)}
+      viewport={{ once: true, margin: "-80px" }}
+      custom={index}
+    >
+      {halo}
+
+      <div
+        className={cn(
+          "relative flex h-full flex-col rounded-[8px] border p-8 transition-colors duration-300",
+          featured
+            ? "border-primary/20 bg-card shadow-[0_0_50px_rgba(212,175,55,0.12)]"
+            : "border-foreground/10 bg-foreground/[0.02] hover:border-foreground/20"
+        )}
+      >
+        {/* Plan header */}
+        <div className="flex items-center justify-between gap-3">
+          <span className="block font-heading text-[15px] uppercase tracking-[1px] text-muted-foreground">
+            {plan.tier}
+          </span>
+          {featured && (
+            <Badge className="w-fit gap-1.5 rounded-full border-primary/40 bg-primary px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-black-deep [&>svg]:size-4!">
+              <Flame aria-hidden="true" /> Meilleur rapport
+            </Badge>
+          )}
+        </div>
+        <h3 className="mt-3 font-heading text-[24px] font-medium leading-none text-primary md:text-[28px]">
           {plan.name}
         </h3>
-        <p className="mt-2 min-h-[44px] text-[13px] leading-relaxed text-muted-foreground">
-          {plan.outcome}
-        </p>
-        <p className="mt-1 text-[11px] font-bold uppercase tracking-[1px] text-muted-foreground">
+        <p className="mt-3 flex-1 text-[14px] leading-relaxed text-muted-foreground">{plan.outcome}</p>
+        <p className="mt-2 text-[11px] font-bold uppercase tracking-[1px] text-muted-foreground">
           {plan.idealFor}
         </p>
 
-        {/* Price block — fixed heights so the toggle never shifts layout */}
+        {/* Price block — fixed heights so the billing toggle never shifts layout */}
         <div className="mt-5 min-h-[176px]" aria-live="off">
           <p className="min-h-[24px] text-[16px] font-medium text-muted-foreground line-through tabular-nums">
             {fmtPrice(crossed)} FCFA
           </p>
-          <p className="mt-1 flex items-end gap-2">
+          <p className="mt-1 flex items-baseline gap-2">
             <span
               key={shown}
               className="price-swap text-[36px] font-bold leading-none text-foreground tabular-nums md:text-[44px]"
             >
               {fmtPrice(shown)}
             </span>
-            <span className="mb-1 text-[13px] font-normal uppercase tracking-wide text-muted-foreground">
+            <span className="text-[13px] font-normal uppercase tracking-wide text-muted-foreground">
               FCFA / mois
             </span>
           </p>
@@ -321,22 +371,81 @@ function PlanCard({ plan, billing }: { plan: Plan; billing: Billing }) {
               `Facturé ${fmtPrice(d.annualTotal)} FCFA/an · vous économisez ${fmtPrice(d.annualSavings)} FCFA`}
           </p>
         </div>
-      </CardHeader>
 
-      <CardContent className="flex flex-grow flex-col p-8 pt-0 md:p-10 md:pt-0">
-        <div className="mt-2 w-full">
-          <Link
-            to={demarrerLink(plan.id, billing)}
+        <div className="my-4 h-px bg-foreground/10" />
+
+        {/* Features — 6 key items, the rest behind the expander */}
+        <p className="mb-3 text-[11px] font-bold uppercase tracking-[2px] text-muted-foreground">
+          Ce que vous gagnez
+        </p>
+        <ul id={featuresId} className="flex-grow space-y-3.5">
+          {keyFeatures.map((f) => (
+            <li key={f.text} className="flex items-start gap-3 text-[14px] text-muted-foreground">
+              <Check className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
+              <span>
+                <span className="mb-0.5 block text-[10px] font-bold uppercase tracking-[1px] text-foreground/50">
+                  {f.group}
+                </span>
+                <span className={cn(f.highlight && "font-bold text-foreground")}>
+                  {f.text}
+                  {f.info && (
+                    <span
+                      className="ml-1 inline-flex cursor-default items-center gap-1 align-middle text-[11px] font-normal text-muted-foreground"
+                      title={f.info}
+                    >
+                      <Info className="h-3.5 w-3.5" aria-hidden="true" />
+                      <span className="sr-only">{f.info}</span>
+                      <span aria-hidden="true">(budget pub en plus)</span>
+                    </span>
+                  )}
+                </span>
+              </span>
+            </li>
+          ))}
+          {expanded &&
+            extraFeatures.map((f) => (
+              <li key={f.text} className="flex items-start gap-3 text-[14px] text-muted-foreground">
+                <Check className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
+                <span>
+                  <span className="mb-0.5 block text-[10px] font-bold uppercase tracking-[1px] text-foreground/50">
+                    {f.group}
+                  </span>
+                  <span className={cn(f.highlight && "font-bold text-foreground")}>{f.text}</span>
+                </span>
+              </li>
+            ))}
+        </ul>
+        {extraFeatures.length > 0 && (
+          <button
+            type="button"
+            aria-expanded={expanded}
+            aria-controls={featuresId}
+            onClick={() => setExpanded((v) => !v)}
+            className="mt-4 flex min-h-[44px] items-center gap-2 self-start text-[12px] font-bold uppercase tracking-[1px] text-primary hover:underline"
+          >
+            <span>{expanded ? "Masquer les détails" : "Voir toutes les fonctionnalités"}</span>
+            <ChevronDown
+              className={cn("h-4 w-4 transition-transform", expanded && "rotate-180")}
+              aria-hidden="true"
+            />
+          </button>
+        )}
+
+        {/* CTA — magnetized particles pull toward the button on hover */}
+        <div className="mt-6 w-full">
+          <MagnetizeButton
+            render={<Link to={demarrerLink(plan.id, billing)} />}
             onClick={() => track("cta_click", { location: "pricing", label: plan.id })}
+            particleCount={10}
             className={cn(
-              "flex min-h-[56px] w-full items-center justify-center rounded-[4px] px-4 py-[16px] text-center text-[13px] font-bold uppercase tracking-[1px] transition-all duration-300",
-              plan.recommended
-                ? "bg-primary text-black-deep hover:bg-gold-accent hover:shadow-[0_0_20px_rgba(212,175,55,0.4)]"
-                : "border border-primary/60 text-primary hover:bg-primary hover:text-black-deep"
+              "h-12 min-h-[52px] w-full rounded-[4px] px-4 text-[13px] font-bold uppercase tracking-[1px]",
+              featured
+                ? "text-black-deep shadow-[0_0_24px_rgba(212,175,55,0.35)] dark:text-black-deep"
+                : "border-primary/60 bg-transparent text-primary shadow-none hover:bg-primary/10 hover:text-primary dark:bg-transparent dark:text-primary dark:shadow-none dark:hover:bg-primary/10 dark:hover:text-primary"
             )}
           >
             → Démarrer avec {plan.name}
-          </Link>
+          </MagnetizeButton>
         </div>
 
         {/* Agency comparison — collapsed by default */}
@@ -373,75 +482,8 @@ function PlanCard({ plan, billing }: { plan: Plan; billing: Billing }) {
             </div>
           )}
         </div>
-
-        <div className="my-6 h-px bg-foreground/10" />
-
-        {/* Features — 6 key items, rest behind an expander */}
-        <p className="mb-3 text-[11px] font-bold uppercase tracking-[2px] text-muted-foreground">
-          Ce que vous gagnez
-        </p>
-        <ul id={featuresId} className="flex-grow space-y-3">
-          {keyFeatures.map((f) => (
-            <li key={f.text} className="flex items-start gap-3">
-              <span className="mt-[2px] shrink-0 text-primary" aria-hidden="true">
-                ✓
-              </span>
-              <span className="text-[13px] text-foreground">
-                <span className="mb-0.5 block text-[10px] font-bold uppercase tracking-[1px] text-muted-foreground">
-                  {f.group}
-                </span>
-                <span className={cn(f.highlight && "font-bold")}>
-                  {f.text}
-                  {f.info && (
-                    <span
-                      className="ml-1 inline-flex items-center gap-1 align-middle text-[11px] font-normal text-muted-foreground"
-                      title={f.info}
-                    >
-                      <Info className="h-3.5 w-3.5" aria-hidden="true" />
-                      <span className="sr-only">{f.info}</span>
-                      <span aria-hidden="true">(budget pub en plus)</span>
-                    </span>
-                  )}
-                </span>
-              </span>
-            </li>
-          ))}
-          {expanded &&
-            extraFeatures.map((f) => (
-              <li key={f.text} className="flex items-start gap-3">
-                <span className="mt-[2px] shrink-0 text-primary" aria-hidden="true">
-                  ✓
-                </span>
-                <span className="text-[13px] text-foreground">
-                  <span className="mb-0.5 block text-[10px] font-bold uppercase tracking-[1px] text-muted-foreground">
-                    {f.group}
-                  </span>
-                  <span className={cn(f.highlight && "font-bold")}>{f.text}</span>
-                </span>
-              </li>
-            ))}
-        </ul>
-        {extraFeatures.length > 0 && (
-          <button
-            type="button"
-            aria-expanded={expanded}
-            aria-controls={featuresId}
-            onClick={() => setExpanded((v) => !v)}
-            className="mt-4 flex min-h-[44px] items-center gap-2 text-[12px] font-bold uppercase tracking-[1px] text-primary hover:underline"
-          >
-            <span>
-              {expanded ? "Masquer les détails" : "Voir toutes les fonctionnalités"}
-            </span>
-            <ChevronDown
-              className={cn("h-4 w-4 transition-transform", expanded && "rotate-180")}
-              aria-hidden="true"
-            />
-          </button>
-        )}
-
-        <div className="mt-8 w-full pt-4" />
-      </CardContent>
-    </Card>
+      </div>
+    </motion.div>
   );
 }
 
@@ -458,16 +500,25 @@ export default function PricingSection4() {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-full bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:40px_40px] opacity-60 [mask-image:radial-gradient(100%_100%_at_50%_0%,white,transparent)]" />
 
       <div className="container relative z-10 mx-auto max-w-[1200px] px-4">
-        <article className="mx-auto mb-12 max-w-3xl space-y-4 pt-24 text-center">
-          <h2 className="font-heading text-[28px] font-normal uppercase leading-tight tracking-[1px] text-foreground sm:text-[40px] lg:text-[48px]">
-            Des offres claires. Pas de surprise.
-          </h2>
-          <p className="text-[15px] text-muted-foreground">
-            Que vous vouliez prouver le système ou confier toute votre croissance, il y a un plan
-            conçu pour votre étape.
-          </p>
-          <div className="flex flex-col items-center gap-4">
-            <p className="mt-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-bold uppercase tracking-widest text-primary">
+        <article className="mx-auto mb-12 max-w-3xl pt-16 text-center md:pt-24">
+          <div className="flex flex-col items-center justify-center gap-4">
+            <Badge
+              variant="outline"
+              className="h-7 w-fit border-primary/25 px-3 py-1 font-sans text-[11px] font-bold uppercase tracking-widest text-primary"
+            >
+              Offres
+            </Badge>
+            <h2 className="font-heading text-[28px] font-normal uppercase leading-tight tracking-[1px] text-foreground sm:text-[40px] lg:text-[48px]">
+              Des offres claires. Pas de surprise.
+            </h2>
+            <p className="text-[15px] text-muted-foreground">
+              Que vous vouliez prouver le système ou confier toute votre croissance, il y a un plan
+              conçu pour votre étape.
+            </p>
+          </div>
+
+          <div className="mt-6 flex flex-col items-center gap-4">
+            <p className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-bold uppercase tracking-widest text-primary">
               <Zap className="h-4 w-4" aria-hidden="true" /> Premier lot livré sous 72h
             </p>
             <BillingToggle
@@ -487,9 +538,9 @@ export default function PricingSection4() {
           </div>
         </article>
 
-        <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-3">
-          {PLANS.map((plan) => (
-            <PlanCard key={plan.id} plan={plan} billing={billing} />
+        <div className="mx-auto grid max-w-6xl items-stretch gap-6 px-1 py-2 lg:grid-cols-3 lg:py-6">
+          {PLANS.map((plan, index) => (
+            <PlanCard key={plan.id} plan={plan} billing={billing} index={index} />
           ))}
         </div>
 
@@ -513,7 +564,7 @@ export default function PricingSection4() {
             <blockquote className="text-[15px] italic leading-relaxed text-foreground">
               « {TESTIMONIAL.quote} »
             </blockquote>
-            <figcaption className="mt-3 text-[12px] font-bold uppercase tracking-[1px] text-primary">
+            <figcaption className="mt-3 text-[12px] font-bold tracking-[1px] text-primary">
               — {TESTIMONIAL.author}
             </figcaption>
           </figure>

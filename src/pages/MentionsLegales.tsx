@@ -22,7 +22,7 @@ export function MentionsLegales() {
               NEFERTEM - AI Growth Systems<br />
               Ouagadougou, Burkina Faso<br />
               {/* TODO(owner): raison sociale + adresse complète */}
-              WhatsApp : +226 05 83 05 99<br />
+              WhatsApp : +226 73 76 48 82<br />
               E-mail : contact@nefertem.africa
             </p>
           </section>

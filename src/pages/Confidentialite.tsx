@@ -35,7 +35,7 @@ export function Confidentialite() {
             <h2 className="text-[16px] font-bold uppercase tracking-[1px] text-foreground mb-2">Vos droits</h2>
             <p>
               Vous pouvez à tout moment demander à voir, corriger ou supprimer vos données en
-              nous écrivant sur WhatsApp (+226 05 83 05 99) ou à contact@nefertem.africa.
+              nous écrivant sur WhatsApp (+226 73 76 48 82) ou à contact@nefertem.africa.
             </p>
           </section>
           <section>

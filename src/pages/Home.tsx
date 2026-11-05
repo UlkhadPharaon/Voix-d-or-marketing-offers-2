@@ -2,13 +2,15 @@ import { useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { Card } from '@/components/ui/card';
-import { ArrowDown, BadgeCheck, CalendarCheck, ChevronDown, Clock, HeartHandshake, Lock, MessageCircle, Play, ShieldCheck, Sparkles, TrendingUp, Wallet } from 'lucide-react';
+import { ArrowDown, BadgeCheck, CalendarCheck, CheckCircle2, ChevronDown, Clock, HeartHandshake, Lock, MessageCircle, Play, ShieldCheck, Sparkles, TrendingUp, Wallet } from 'lucide-react';
 import { SEO } from '@/components/SEO';
 import { PageTransition } from '@/components/PageTransition';
 import { Spotlight } from "@/components/ui/spotlight";
+import { TiltCard } from '@/components/ui/tilt-card';
+import { MagnetizeButton } from '@/components/ui/magnetize-button';
 import PricingSection4 from "@/components/ui/pricing-section-4";
-import { PhoneFeedMockup } from '@/components/home/PhoneFeedMockup';
+import Testimonials2 from "@/components/ui/testimonials-2";
+import { PhoneMockup3D } from '@/components/hero/PhoneMockup3D';
 import { SHOWCASE_ITEMS } from '@/data/showcase';
 import { VideoCard } from '@/components/showcase/VideoCard';
 import { track } from '@/lib/analytics';
@@ -290,14 +292,18 @@ export function Home() {
             name: "NEFERTEM - AI Growth Systems",
             description: "Abonnement marketing mensuel pour PME africaines : visuels, publication, réponses clients et bilan hebdomadaire.",
             address: { "@type": "PostalAddress", addressLocality: "Ouagadougou", addressCountry: "BF" },
-            telephone: "+22605830599",
+            telephone: "+226****4882",
           },
         ]}
       />
 
-      {/* S1 HERO */}
-      <section className="relative overflow-hidden px-6 pb-16 pt-28 md:px-10 md:pt-36">
-        <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="#D4AF37" />
+      {/* S1 HERO — no overflow-hidden here: the 3D phone canvas spans the
+          whole section (see PhoneMockup3D). The Spotlight keeps its own clip
+          so the SVG glow never bleeds beyond the hero. */}
+      <section className="relative px-6 pb-16 pt-28 md:px-10 md:pt-36">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+          <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="#D4AF37" />
+        </div>
         <div className="container relative z-10 mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-2">
           <div>
             <h1 className="font-heading text-[36px] font-normal leading-[1.1] text-foreground sm:text-[46px] lg:text-[56px]">
@@ -308,13 +314,14 @@ export function Home() {
               clair chaque semaine. Premier lot prêt en 72 h.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                to="/demarrer?src=hero"
+              <MagnetizeButton
+                render={<Link to="/demarrer?src=hero" />}
                 onClick={() => track("cta_click", { location: "hero", label: "diagnostic" })}
-                className="inline-flex min-h-[52px] items-center justify-center rounded-[4px] bg-primary px-8 text-[13px] font-bold uppercase tracking-[1px] text-black-deep shadow-[0_0_40px_rgba(212,175,55,0.3)] hover:bg-gold-accent"
+                particleCount={12}
+                className="h-[52px] rounded-[4px] px-8 text-[13px] font-bold uppercase tracking-[1px] text-black-deep shadow-[0_0_40px_rgba(212,175,55,0.3)] dark:text-black-deep"
               >
                 → Recevoir mon diagnostic gratuit
-              </Link>
+              </MagnetizeButton>
               <Link
                 to="/exemples"
                 onClick={() => track("cta_click", { location: "hero", label: "exemples" })}
@@ -327,7 +334,23 @@ export function Home() {
               Dès 30 000 FCFA/mois · Sans engagement · Paiement Mobile Money
             </p>
           </div>
-          <PhoneFeedMockup />
+          {/* 3D interactive phone mockup */}
+          <div className="relative">
+            {/* Desktop notifications */}
+            <div className="absolute -left-44 top-10 z-20 hidden w-48 flex-col gap-2 sm:flex">
+              {["Votre lot de la semaine est prêt", "Un client vient d'être accueilli sur WhatsApp"].map((text, i) => (
+                <div
+                  key={text}
+                  style={{ animationDelay: `${0.8 + i * 1.4}s` }}
+                  className="notif-in flex items-start gap-2 rounded-[10px] border border-primary/30 bg-background/95 p-3 shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur"
+                >
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                  <p className="text-[11px] font-bold leading-snug text-foreground">{text}</p>
+                </div>
+              ))}
+            </div>
+            <PhoneMockup3D />
+          </div>
         </div>
       </section>
 
@@ -367,12 +390,15 @@ export function Home() {
           <div className="grid gap-4 md:grid-cols-3">
             {PAINS.map((pain, i) => (
               <Reveal key={pain.num} delay={i * 0.08}>
-                <Card className="h-full rounded-[12px] border border-foreground/10 bg-foreground/[0.03] p-6 md:p-8">
+                <TiltCard
+                  max={7}
+                  className="h-full rounded-[12px] border border-foreground/10 bg-foreground/[0.03] p-6 md:p-8"
+                >
                   <p className="font-heading text-[20px] text-primary">{pain.num}</p>
                   <h3 className="mt-2 font-heading text-[20px] uppercase tracking-[1px] text-foreground">{pain.title}</h3>
                   <p className="mt-3 text-[15px] italic text-foreground">« {pain.quote} »</p>
                   <p className="mt-2 text-[14px] leading-relaxed text-muted-foreground">{pain.text}</p>
-                </Card>
+                </TiltCard>
               </Reveal>
             ))}
           </div>
@@ -473,19 +499,25 @@ export function Home() {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {SHOWCASE_ITEMS.map((item, i) => (
               <Reveal key={item.id} delay={i * 0.06}>
-                <article className="group h-full overflow-hidden rounded-[12px] border border-foreground/10 bg-background">
-                  <VideoCard item={item} />
-                  <div className="p-4">
-                    <p className="text-[11px] font-bold uppercase tracking-[2px] text-primary">{item.sector} · {item.plan}</p>
-                    <h3 className="mt-1 font-heading text-[18px] uppercase tracking-[1px] text-foreground">{item.title}</h3>
-                    <Link
-                      to={`/demarrer?src=showcase&sector=${item.sectorKey}`}
-                      onClick={() => track("cta_click", { location: "showcase_teaser", label: item.id })}
-                      className="mt-2 inline-block min-h-[44px] text-[13px] font-bold uppercase tracking-[1px] text-primary hover:underline"
-                    >
-                      Je veux ça →
-                    </Link>
-                  </div>
+                <article className="group h-full">
+                  <TiltCard
+                    glare={false}
+                    max={6}
+                    className="h-full overflow-hidden rounded-[12px] border border-foreground/10 bg-background"
+                  >
+                    <VideoCard item={item} />
+                    <div className="p-4">
+                      <p className="text-[11px] font-bold uppercase tracking-[2px] text-primary">{item.sector} · {item.plan}</p>
+                      <h3 className="mt-1 font-heading text-[18px] uppercase tracking-[1px] text-foreground">{item.title}</h3>
+                      <Link
+                        to={`/demarrer?src=showcase&sector=${item.sectorKey}`}
+                        onClick={() => track("cta_click", { location: "showcase_teaser", label: item.id })}
+                        className="mt-2 inline-block min-h-[44px] text-[13px] font-bold uppercase tracking-[1px] text-primary hover:underline"
+                      >
+                        Je veux ça →
+                      </Link>
+                    </div>
+                  </TiltCard>
                 </article>
               </Reveal>
             ))}
@@ -501,6 +533,9 @@ export function Home() {
           </div>
         </div>
       </section>
+
+      {/* S6.5 TESTIMONIALS — vertical autoplay carousel */}
+      <Testimonials2 />
 
       {/* S7 PRICING */}
       <section id="offres" className="scroll-mt-[96px] border-t border-primary/20 bg-card/90 pb-28 dark:bg-foreground/10">
@@ -582,15 +617,16 @@ export function Home() {
               Diagnostic gratuit sous 24 h. Premier lot sous 72 h.
             </p>
             <div className="mx-auto mt-8 flex max-w-lg flex-col gap-3">
-              <Link
-                to="/demarrer?src=final"
+              <MagnetizeButton
+                render={<Link to="/demarrer?src=final" />}
                 onClick={() => track("cta_click", { location: "final", label: "diagnostic" })}
-                className="inline-flex min-h-[56px] items-center justify-center rounded-[4px] bg-primary px-8 text-[13px] font-bold uppercase tracking-[1px] text-black-deep shadow-[0_0_30px_rgba(212,175,55,0.4)] hover:bg-gold-accent"
+                particleCount={14}
+                className="h-[56px] rounded-[4px] px-8 text-[13px] font-bold uppercase tracking-[1px] text-black-deep shadow-[0_0_30px_rgba(212,175,55,0.4)] dark:text-black-deep"
               >
                 → Recevoir mon diagnostic gratuit
-              </Link>
+              </MagnetizeButton>
               <a
-                href="https://wa.me/22605830599?text=Bonjour%20NEFERTEM%2C%20j%27ai%20une%20question."
+                href="https://wa.me/22673764882?text=Bonjour%20NEFERTEM%2C%20j%27ai%20une%20question."
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => track("whatsapp_opened", { src: "final" })}
@@ -599,7 +635,7 @@ export function Home() {
                 Ou écrivez-nous directement
               </a>
             </div>
-            <p className="mt-6 font-mono text-[15px] font-bold text-foreground">+226 05 83 05 99</p>
+            <p className="mt-6 font-mono text-[15px] font-bold text-foreground">+226 73 76 48 82</p>
             <p className="mt-1 text-[11px] uppercase tracking-[1px] text-muted-foreground">Réponse en moins d'1 heure</p>
           </Reveal>
         </div>
