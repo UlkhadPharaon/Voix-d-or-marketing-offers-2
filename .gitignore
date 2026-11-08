@@ -6,3 +6,6 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Playwright MCP tool logs
+.playwright-mcp/

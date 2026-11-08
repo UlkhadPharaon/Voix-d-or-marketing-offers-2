@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Autoplay from 'embla-carousel-autoplay';
+import AutoScroll from 'embla-carousel-auto-scroll';
 import { Quote } from 'lucide-react';
 import { Card, CardContent } from '@/components/base-ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/base-ui/avatar';
@@ -49,10 +49,12 @@ const TESTIMONIALS: Testimonial[] = [
 ];
 
 export default function Testimonials2() {
+  /* Réglage vitesse : « speed » = pixels par frame en 60 fps (speed × 60 px/s).
+     0.6 ≈ 4–5 s par carte. Augmentez pour accélérer, baissez pour ralentir. */
   const plugin = React.useMemo(
     () =>
-      Autoplay({
-        delay: 500,
+      AutoScroll({
+        speed: 0.6,
         stopOnInteraction: false,
         stopOnMouseEnter: true,
         playOnInit:
